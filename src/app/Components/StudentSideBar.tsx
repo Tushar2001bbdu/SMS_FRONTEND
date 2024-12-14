@@ -3,9 +3,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AuthContext } from "../Context/AuthProvider";
 import { useContext } from "react";
-
-export default function StudentSideBar() {
-  const context = useContext(AuthContext);
+interface Context{
+  logout: () => void;
+}
+const StudentSideBar: React.FC = () => {
+  const context = useContext<Context | null>(AuthContext);
   const router = useRouter();
 
   return (
@@ -154,7 +156,7 @@ export default function StudentSideBar() {
           </div>
           <div
             role="button"
-            onClick={() => context.logout()}
+            onClick={() => context?.logout()}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -179,3 +181,4 @@ export default function StudentSideBar() {
     </>
   );
 }
+export default StudentSideBar;
