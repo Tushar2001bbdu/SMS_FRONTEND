@@ -6,22 +6,28 @@ import { Auth } from "../utils/teacher_auth";
 import { useRouter } from "next/navigation";
 import { FacultyContext } from "../Context/FacultyProvider";
 import Alert from "./Alert";
-export default function FacultyLogin() {
+import router from "next/router";
 
-  const [userDetails, setUserDetails] = useState({
-    email: "",
+interface Context{
+  facultyLogin: (details: { email: string; password: string; rollno: string }) => void;  
+}
+const FacultyLogin: React.FC = () => {
 
-    password: "",
-    rollno:""
-  });
+  const [userDetails, setUserDetails] = useState(
+    {
+      email: "",
+      password: "",
+      rollno: ""
+    }
+  );
  
-  const context = useContext(FacultyContext);
+  const context = useContext<Context | null >(FacultyContext);
  
 
-  async function handleChange(e) {
+  async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setUserDetails({ ...userDetails, [e.target.name]: e.target.value });
   }
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     alert("You have entered invalid credentials. Please try again")
     e.preventDefault();
     try {
@@ -34,8 +40,7 @@ export default function FacultyLogin() {
         {
           const token = await userCredential.user.getIdToken();
           localStorage.setItem("teacherFirebaseToken", token);
-          localStorage.setItem("rollno", rollno);
-          await context.facultyLogin(userDetails);
+          await context?.facultyLogin(userDetails);
           try {
             router.push("/Details");
           } catch (error) {
@@ -45,7 +50,6 @@ export default function FacultyLogin() {
 
       }
     } catch (error) {
-      setError(true)
       console.log(error);
     }
   }
@@ -61,7 +65,7 @@ export default function FacultyLogin() {
             width={"64"}
             className="mx-auto h-20 w-auto"
           />
-          {error === true && <Alert message="invalid credentials entered" />}
+          
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Sign in to your account
           </h2>
@@ -167,3 +171,4 @@ export default function FacultyLogin() {
     </div>
   );
 }
+export default FacultyLogin
