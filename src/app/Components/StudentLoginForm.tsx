@@ -4,19 +4,25 @@ import Image from "next/image";
 import { AuthContext } from "../Context/AuthProvider";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "../utils/student_auth";
-import Cookies from "js-cookie";
-
-export default function StudentLoginForm() {
+interface Context{
+  StudentLogin: (details:{
+    rollno: string,
+    email: string,
+    password: string,
+  } ) => Promise<void>;
+}
+const StudentLoginForm: React.FC = () => 
+ {
   const [userDetails, setUserDetails] = useState({
-    rollno: "", // Added rollno to userDetails state
+    rollno: "",
     email: "",
     password: "",
   });
 
-  const User_Context = useContext(AuthContext);
+  const User_Context = useContext<Context | null>(AuthContext);
 
-  // Handles input changes for email, password, and rollno
-  function handleChange(e) {
+  
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setUserDetails((prevDetails) => ({
       ...prevDetails,
@@ -24,7 +30,7 @@ export default function StudentLoginForm() {
     }));
   }
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault();
     console.log("The roll number of student is", userDetails.rollno);
     try {
@@ -39,7 +45,7 @@ export default function StudentLoginForm() {
         localStorage.setItem("rollno", "hello");
 
         // Add rollno to the context call or send as part of userDetails
-        await User_Context.StudentLogin({ userDetails });
+        await User_Context?.StudentLogin(userDetails);
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -152,3 +158,4 @@ export default function StudentLoginForm() {
     </div>
   );
 }
+export default StudentLoginForm;
