@@ -167,7 +167,7 @@ const FacultySidebar: React.FC = () => {
             </div>
             <div role="button"
               onClick={() => {
-                context.logout();
+                context?.logout();
               }}
             >
               Log Out

@@ -2,26 +2,28 @@ import React, { useState, useRef, useContext } from "react";
 import Webcam from "react-webcam";
 import { AdminContext } from "../Context/AdminProvider";
 import { RoleContext } from "../Context/RoleProvider";
-
-export default function Navbar() {
+interface Role {
+  role: any;
+}
+const Navbar: React.FC = () => {
   const [visibility, setVisibility] = useState(false);
-  const webcamRef = useRef(null);
-  const [imageSrc, setImageSrc] = useState(null);
+  const webcamRef = useRef<Webcam | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const context = useContext(AdminContext);
-  const Role = useContext(RoleContext);
+  const Role = useContext<Role | null>(RoleContext);
 
-  // Function to open the webcam
   function openWebcam() {
     setVisibility(true);
   }
 
-
   const captureImage = async () => {
-    const image = webcamRef.current.getScreenshot();
-    if (image) {
-      context.sendPhoto(image); // Send the blob to the context
+    if (webcamRef.current) {
+      const image = webcamRef.current.getScreenshot();
+      if (image) {
+        context.sendPhoto(image);
+      }
+      setVisibility(false);
     }
-    setVisibility(false)
   };
 
   return (
@@ -30,7 +32,7 @@ export default function Navbar() {
         <Webcam
           audio={false}
           ref={webcamRef}
-          screenshotFormat="image/jpeg" // Changed to proper format
+          screenshotFormat="image/jpeg"
           width={400}
           height={300}
         />
@@ -79,33 +81,29 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Navbar content */}
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center text-white"></div>
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                 
-                  
                   <a
                     href="/Student_Services"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role.role!==null?true:false}
+                    hidden={Role?.role !== null ? true : false}
                   >
                     Student
                   </a>
-                  
-                 
+
                   <a
                     href="/Faculty_Services"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role.role!==null?true:false}
+                    hidden={Role?.role !== null ? true : false}
                   >
                     Faculty
                   </a>
                   <a
                     href="#"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role.role!==null?true:false}
+                    hidden={Role?.role !== null ? true : false}
                   >
                     Administrator
                   </a>
@@ -115,16 +113,18 @@ export default function Navbar() {
 
             {/* User menu */}
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              {Role.role!==null && <button
-                type="button"
-                className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                onClick={openWebcam}
-              >
-                <span className="absolute -inset-1.5"></span>
-                <span className="sr-only">Open user menu</span>
-                Open Webcam
-              </button> }
-              {Role.role !== null && (
+              {Role?.role !== null && (
+                <button
+                  type="button"
+                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  onClick={openWebcam}
+                >
+                  <span className="absolute -inset-1.5"></span>
+                  <span className="sr-only">Open user menu</span>
+                  Open Webcam
+                </button>
+              )}
+              {Role?.role !== null && (
                 <button
                   type="button"
                   className=" mx-3 relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -140,7 +140,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      {/* Display captured image if exists */}
       {imageSrc && (
         <div style={{ marginTop: "10px" }}>
           <img
@@ -152,4 +151,5 @@ export default function Navbar() {
       )}
     </div>
   );
-}
+};
+export default Navbar;
