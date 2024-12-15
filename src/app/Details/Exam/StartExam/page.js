@@ -1,7 +1,9 @@
 "use client"
 import OnlineExam from '@/app/Components/OnlineExam'
-import React from 'react'
+import { RoleContext } from '@/app/Context/RoleProvider'
+import React, { useContext } from 'react'
 export default function Page() {
+  
   return (
     <div>
       <OnlineExam/>

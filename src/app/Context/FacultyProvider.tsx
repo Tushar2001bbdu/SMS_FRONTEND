@@ -47,7 +47,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("user", "teacher");
 
     if (response.status === 200) {
-      Role?.changeRole("teacher");
+      Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
     }
   }
 
@@ -114,7 +114,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function logout(): Promise<void> {
     localStorage.removeItem("teacherFirebaseToken");
-    Role?.changeRole(null);
+    Role?.changeRole(null,"xxxxxxxxxxxxxxxx",'XXXXXX');
     router.push("/Faculty_Services");
   }
 

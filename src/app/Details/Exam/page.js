@@ -5,9 +5,11 @@ import { AuthContext } from "@/app/Context/AuthProvider"
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from '@/app/utils/student_auth';
 import { useRouter } from 'next/navigation'
+import { RoleContext } from '@/app/Context/RoleProvider'
 export default function Page() {
+  let role=useContext(RoleContext)
   const [userDetails, setUserDetails] = useState({
-    email: "",
+    email: role.email,
     password: "",
 
   });
@@ -64,7 +66,7 @@ export default function Page() {
                         <form onSubmit={(e) => { handleSubmit(e) }}>
                           <div className="relative w-full mb-3">
                             <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">University Email</label>
-                            <input type="email" name="email" value={userDetails.email} onChange={(e) => { handleChange(e) }} className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full" placeholder="Email" style={{ transition: "all 0.15s ease 0s" }} />
+                            <input type="email" name="email" value={userDetails.email}  className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full" placeholder="Email" style={{ transition: "all 0.15s ease 0s" }} />
                           </div>
                           <div className="relative w-full mb-3">
                             <label className="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">Password</label>

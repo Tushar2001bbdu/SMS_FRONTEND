@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
     });
 
     if (response.status === 200) {
-      Role.changeRole("student");
+      Role?.changeRole("student",userDetails.rollNo,userDetails.email);
       router.push("/Details");
     }
   }
