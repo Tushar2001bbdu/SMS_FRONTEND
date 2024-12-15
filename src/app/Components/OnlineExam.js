@@ -3,9 +3,11 @@ import questions from "../questions";
 import Webcam from "react-webcam";
 import { AdminContext } from "../Context/AdminProvider";
 import ExamAlert from "./ExamAlert";
+import { FacultyContext } from "../Context/FacultyProvider";
 
 export default function OnlineExam() {
   const context = useContext(AdminContext);
+  const faculty=useContext(FacultyContext);
   const [marks, updateMarks] = useState(0);
   let examTracker = new Map();
   const webcamRef = useRef(null);
@@ -46,6 +48,15 @@ export default function OnlineExam() {
     }
 
     console.log("The current marks is " + marks);
+  }
+  async function submitExam(e) {
+    e.preventDefault();
+    try {
+      await faculty.updateResult(marks);
+    } catch (error) {
+      console.error("Error submitting exam", error);
+    }
+
   }
 
   const videoConstraints = {
@@ -98,16 +109,16 @@ export default function OnlineExam() {
             </div>
           </div>
         ))}
-      <div role="button" className="submit text-center text-red-600 rounded-lg shadow-2xl group">
-        <a
-          href="#_"
-          className="relative inline-flex items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group"
-        >
-          <span className="relative text-white">Submit Answer</span>
-        </a>
+        <div role="button" className="submit text-center text-red-600 rounded-lg shadow-2xl group" onClick={(e) => { submitExam(e) }}>
+          <a
+            href="#_"
+            className="relative inline-flex items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group"
+          >
+            <span className="relative text-white">Submit Answer</span>
+          </a>
+        </div>
       </div>
-      </div>
-      
+
     </div>
   );
 }

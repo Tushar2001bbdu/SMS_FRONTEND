@@ -1,19 +1,30 @@
-"use client"
+"use client";
 import { useRouter } from "next/navigation";
-import { FacultyContext } from "../Context/FacultyProvider";
 import { useContext } from "react";
-import Link from "next/link"
+import Link from "next/link";
 import React from "react";
+import { FacultyContext } from "../Context/FacultyProvider";
 
-// Define the Context value type
+interface FacultyDetails {
+  rollNo: string;
+  [key: string]: any;
+}
 interface FacultyContextType {
+  facultyData: any;
+  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
+  getFacultyProfile: () => Promise<void>;
+  getListOfStudents: (section: string) => Promise<void>;
+  studentList: any;
+  studentProfile: any;
+  getStudentProfile: (rollno: string) => Promise<any>;
+  updateResult: (rollno: string, marks: string | number) => Promise<void>;
   logout: () => void;
-  
 }
 
 const FacultySidebar: React.FC = () => {
   const Router = useRouter();
   const context = useContext<FacultyContextType | null>(FacultyContext);
+
   return (
     <>
       <div className="relative flex h-full w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
@@ -63,7 +74,8 @@ const FacultySidebar: React.FC = () => {
                 ></path>
               </svg>
             </div>
-            <div role="button"
+            <div
+              role="button"
               onClick={() => {
                 Router.push("/Details/Personal_Details");
               }}
@@ -91,7 +103,8 @@ const FacultySidebar: React.FC = () => {
                 ></path>
               </svg>
             </div>
-            <div role="button"
+            <div
+              role="button"
               onClick={() => {
                 Router.push("/Details/Student_List");
               }}
@@ -165,7 +178,8 @@ const FacultySidebar: React.FC = () => {
                 ></path>
               </svg>
             </div>
-            <div role="button"
+            <div
+              role="button"
               onClick={() => {
                 context?.logout();
               }}
@@ -177,6 +191,6 @@ const FacultySidebar: React.FC = () => {
       </div>
     </>
   );
+};
 
-}
 export default FacultySidebar;

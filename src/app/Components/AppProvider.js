@@ -2,7 +2,7 @@
 
 import { RoleProvider } from "../Context/RoleProvider";
 import { AdminProvider } from "../Context/AdminProvider";
-import { FacultyProvider } from "../Context/FacultyProvider";
+import {FacultyProvider}  from "../Context/FacultyProvider";
 import { OnlineClassProvider } from "../Context/OnlineClassProvider";
 import { ApolloProvider } from "@apollo/client";
 import graphqlClient from "../graphql/client";

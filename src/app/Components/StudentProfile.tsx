@@ -3,20 +3,17 @@ import React, { useState } from "react";
 import UpdateStudentResult from "./UpdateStudentResult";
 import Chart from "./Chart";
 
-
 interface Profile {
   rollno: string;
   name: string;
   section: string;
 }
 
-
 interface StudentProfileProps {
   profile: Profile;
 }
 
 const StudentProfile: React.FC<StudentProfileProps> = ({ profile }) => {
- 
   const [visibility, setVisibility] = useState(false);
 
   return (
@@ -41,8 +38,8 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ profile }) => {
         </a>
         {visibility && (
           <UpdateStudentResult
-            visibility={visibility}
-            setVisibility={setVisibility}
+            setVisibility={visibility}
+            visibility={setVisibility}
             rollno={profile.rollno}
           />
         )}

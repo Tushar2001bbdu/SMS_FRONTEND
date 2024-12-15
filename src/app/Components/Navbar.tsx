@@ -2,15 +2,17 @@ import React, { useState, useRef, useContext } from "react";
 import Webcam from "react-webcam";
 import { AdminContext } from "../Context/AdminProvider";
 import { RoleContext } from "../Context/RoleProvider";
-interface Role {
+interface RoleContextType {
   role: any;
+  changeRole: (newRole: any) => void;
 }
+
 const Navbar: React.FC = () => {
   const [visibility, setVisibility] = useState(false);
   const webcamRef = useRef<Webcam | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const context = useContext(AdminContext);
-  const Role = useContext<Role | null>(RoleContext);
+  const Role = useContext<RoleContextType | null>(RoleContext);
 
   function openWebcam() {
     setVisibility(true);
