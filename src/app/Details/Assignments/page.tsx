@@ -1,8 +1,9 @@
 "use client";
 
-import StudentAssignment from "@app/Components/StudentAssignment"
+
 import React from "react"
 import { gql, useQuery } from "@apollo/client";
+import StudentAssignment from "@/app/Components/StudentAssignment";
 
 // GraphQL Query
 const GET_ASSIGNMENTS = gql`
@@ -21,7 +22,7 @@ const GET_ASSIGNMENTS = gql`
 `;
 
 // Define TypeScript types for the GraphQL query response
-type Assignment = {
+interface Assignment{
   rollno: string;
   title: string;
   AssignmentLink: string;
@@ -32,7 +33,7 @@ type Assignment = {
   submitted: boolean;
 };
 
-type QueryResult = {
+type QueryResult={
   getAssignmentsByRollno: Assignment[];
 };
 

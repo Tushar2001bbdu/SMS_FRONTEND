@@ -37,7 +37,7 @@
     "**/*.js", // Include JavaScript files
     "**/*.jsx",
     ".next/types/**/*.ts"
-  ],
+, "src/app/Details/Assignments/page.sx"  ],
   "exclude": [
     "node_modules"
   ]

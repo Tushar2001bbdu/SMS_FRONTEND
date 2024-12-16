@@ -1,4 +1,5 @@
 "use client";
+import AssignmentsBySection from "@/app/Components/AssignmentsBySection";
 import { FacultyContext } from "@/app/Context/FacultyProvider";
 import React, { FC, useContext, useEffect } from "react";
 interface FacultyDetails {
@@ -28,19 +29,21 @@ const StudentAssignments: FC = () => {
     WebkitBackgroundClip: "text",
   };
   let context = useContext<FacultyContextType | null>(FacultyContext);
-  useEffect(() => {
-    if (context) {
-      context.getFacultyProfile();
-    }
-  }, []);
+ if(context?.facultyData==null){
+    context?.getFacultyProfile()
+ }
+  
   return (
     <div>
       <header>
         <h1 style={headingStyle} className="flex w-full justify-center">STUDENT ASSIGNMENTS</h1>
       </header>
-      {context?.facultyData.allotedSections?.map(
+      {context?.facultyData?.allotedSections?.map(
         (element: string, index: number) => (
-          <div key={index} style={headingStyle}>{element}</div>
+          <div>
+          <div className="section-name" style={headingStyle}>{element}</div>  
+          <AssignmentsBySection key={index} section={element}/>
+            </div>
         )
       )}
     </div>
