@@ -7,7 +7,7 @@ import { FacultyContext } from "../Context/FacultyProvider";
 
 export default function OnlineExam() {
   const context = useContext(AdminContext);
-  const faculty=useContext(FacultyContext);
+  const faculty = useContext(FacultyContext);
   const [marks, updateMarks] = useState(0);
   let examTracker = new Map();
   const webcamRef = useRef(null);
@@ -25,26 +25,24 @@ export default function OnlineExam() {
     if (examTracker.get(index) === undefined) {
       if (optionSelected === correctAnswer) {
         examTracker.set(index, true);
-      }
-      else {
+      } else {
         examTracker.set(index, false);
       }
 
-      updateMarks((marks) => (optionSelected === correctAnswer ? marks + 1 : marks + 0));
-
-
-    }
-    else {
+      updateMarks((marks) =>
+        optionSelected === correctAnswer ? marks + 1 : marks + 0
+      );
+    } else {
       if (examTracker.get(index) !== true) {
         if (optionSelected === correctAnswer) {
           examTracker.set(index, true);
-        }
-        else {
+        } else {
           examTracker.set(index, false);
         }
-        updateMarks((marks) => (optionSelected === correctAnswer ? marks + 1 : marks + 0));
+        updateMarks((marks) =>
+          optionSelected === correctAnswer ? marks + 1 : marks + 0
+        );
       }
-
     }
 
     console.log("The current marks is " + marks);
@@ -56,7 +54,6 @@ export default function OnlineExam() {
     } catch (error) {
       console.error("Error submitting exam", error);
     }
-
   }
 
   const videoConstraints = {
@@ -71,7 +68,6 @@ export default function OnlineExam() {
       context.sendFrame(image);
     }
   };
-
 
   return (
     <div>
@@ -89,37 +85,49 @@ export default function OnlineExam() {
       </div>
       <div className="questions-container">
         {questions.map((element, index) => (
-          <div className="question-card my-7 mx-4 box bg-white px-7 py-7" key={index}>
-            <h3 className="question-text my-3 text-center">{element.question}</h3>
+          <div
+            className="question-card my-7 mx-4 box bg-white px-7 py-7"
+            key={index}
+          >
+            <h3 className="question-text my-3 text-center">
+              {element.question}
+            </h3>
             <div className="grid grid-rows-2 grid-cols-2 gap-4 question-options">
-
-              {
-                [element.option1, element.option2, element.option3, element.option4].map((option, i) => (
-                  <div key={i}>
-                    <button className="block items-center justify-center px-5 py-3 text-base font-medium text-center text-indigo-100 border border-indigo-500 rounded-lg shadow-sm cursor-pointer hover:text-white bg-gradient-to-br from-purple-500 via-indigo-500 to-indigo-500" onClick={() => { calculateMarks(i, option, element.answerkey) }} >
-                      <a
-                        href="#_"
-
-                      >
-                        <span className="relative">{option}</span>
-                      </a>
-                    </button>
-                  </div>
-                ))}
+              {[
+                element.option1,
+                element.option2,
+                element.option3,
+                element.option4,
+              ].map((option, i) => (
+                <div key={i}>
+                  <button
+                    className="block items-center justify-center px-5 py-3 text-base font-medium text-center text-indigo-100 border border-indigo-500 rounded-lg shadow-sm cursor-pointer hover:text-white bg-gradient-to-br from-purple-500 via-indigo-500 to-indigo-500"
+                    onClick={() => {
+                      calculateMarks(i, option, element.answerkey);
+                    }}
+                  >
+                    <a href="#_">
+                      <span className="relative">{option}</span>
+                    </a>
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         ))}
-        <div role="button" className="submit text-center text-red-600 rounded-lg shadow-2xl group" onClick={(e) => { submitExam(e) }}>
-          <a
-            href="#_"
-            className="relative inline-flex items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group"
+        <div className="flex w-full justify-center">
+          <button
+            class="relative flex h-[50px] w-40 items-center justify-center overflow-hidden bg-blue-600 font-medium text-white shadow-2xl transition-all duration-300 before:absolute before:inset-0 before:border-0 before:border-white before:duration-100 before:ease-linear hover:bg-white hover:text-blue-600 hover:shadow-blue-600 hover:before:border-[25px]"
+            onClick={(e) => {
+              submitExam(e);
+            }}
           >
-            <span className="relative text-white">Submit Answer</span>
-          </a>
+            <a href="#_" className="relative z-10">
+              <span>Submit Answer</span>
+            </a>
+          </button>
         </div>
       </div>
-
     </div>
   );
 }
-

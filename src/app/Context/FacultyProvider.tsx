@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { RoleContext } from "./RoleProvider";
 
 interface FacultyDetails {
-  rollNo: string;
+  rollno: string;
   [key: string]: any;
 }
 
@@ -30,25 +30,31 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
 
   async function facultyLogin(facultyDetails: FacultyDetails): Promise<void> {
-    let url = new URL("http://localhost:3001/app/teachers/login");
-    url.searchParams.set("rollno", facultyDetails.rollNo);
+    try{
+      let url = new URL("http://localhost:3001/app/teachers/login");
+      url.searchParams.set("rollno", facultyDetails.rollNo);
+  
+      await fetch(url.toString(), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("teacherFirebaseToken") || "",
+        },
+        body: JSON.stringify({
+          userDetails: facultyDetails,
+        }),
+      });
+  
+      localStorage.setItem("user", "teacher");
 
-    const response = await fetch(url.toString(), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("teacherFirebaseToken") || "",
-      },
-      body: JSON.stringify({
-        userDetails: facultyDetails,
-      }),
-    });
-
-    localStorage.setItem("user", "teacher");
-
-    if (response.status === 200) {
-      Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
+        Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
+        router.push("/Details")
+      
     }
+    catch(error){
+      console.log(error)
+    }
+   
   }
 
   async function getFacultyProfile(): Promise<void> {
@@ -101,15 +107,24 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   }
 
   async function updateResult(marks: string | number): Promise<void> {
-    let url = new URL(`http://localhost:3001/app/teachers/updateResult`);
+    try{
+      let url = new URL(`http://localhost:3001/app/teachers/updateResult`);
 
-    await fetch(url.toString(), {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ rollno: "121078899", marks: marks }),
-    });
+     let response= await fetch(url.toString(), {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ rollno: "121078899", marks: marks }),
+      });
+      if(response.status===200){
+        router.push("/Details")
+      }
+    }
+    catch(error){
+      console.log(error)
+    }
+    
   }
 
   async function logout(): Promise<void> {

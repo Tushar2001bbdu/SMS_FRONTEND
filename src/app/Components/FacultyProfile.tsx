@@ -2,21 +2,22 @@
 import React, { useEffect, useContext } from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
 
-// Define a TypeScript type for the student data
-interface facultyData {
-  attendance: any;
-  name: string;
-  email: string;
+
+interface FacultyDetails {
   rollno: string;
-  course: string;
-  age: number;
-  classteacher: string;
-  teacherrollno: string;
+  [key: string]: any;
 }
 // Define the Context value type
 interface FacultyContextType {
-  getFacultyProfile: () => void;
-  facultyData:  facultyData | null;
+  facultyData: any;
+  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
+  getFacultyProfile: () => Promise<void>;
+  getListOfStudents: (section: string) => Promise<void>;
+  studentList: any;
+  studentProfile: any;
+  getStudentProfile: (rollno: string) => Promise<any>;
+  updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  logout: () => void;
 }
 
 

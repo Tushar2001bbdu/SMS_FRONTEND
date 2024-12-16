@@ -8,8 +8,21 @@ import { FacultyContext } from "../Context/FacultyProvider";
 import Alert from "./Alert";
 import router from "next/router";
 
-interface Context{
-  facultyLogin: (details: { email: string; password: string; rollno: string }) => void;  
+interface FacultyDetails {
+  rollno: string;
+  [key: string]: any;
+}
+
+interface FacultyContextType {
+  facultyData: any;
+  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
+  getFacultyProfile: () => Promise<void>;
+  getListOfStudents: (section: string) => Promise<void>;
+  studentList: any;
+  studentProfile: any;
+  getStudentProfile: (rollno: string) => Promise<any>;
+  updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  logout: () => void;
 }
 const FacultyLogin: React.FC = () => {
 
@@ -21,7 +34,7 @@ const FacultyLogin: React.FC = () => {
     }
   );
  
-  const context = useContext<Context | null >(FacultyContext);
+  const context = useContext<FacultyContextType | null >(FacultyContext);
  
 
   async function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
