@@ -34,7 +34,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       let url = new URL("http://localhost:3001/app/teachers/login");
       url.searchParams.set("rollno", facultyDetails.rollNo);
   
-      await fetch(url.toString(), {
+      let response  = await fetch(url.toString(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -44,11 +44,14 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
           userDetails: facultyDetails,
         }),
       });
-  
-      localStorage.setItem("user", "teacher");
+      response=await response.json()
+      if(response.status===200){
+        localStorage.setItem("user", "teacher");
 
         Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
         router.push("/Details")
+      }
+      
       
     }
     catch(error){

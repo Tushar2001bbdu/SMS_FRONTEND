@@ -54,11 +54,7 @@ const FacultyLogin: React.FC = () => {
           const token = await userCredential.user.getIdToken();
           localStorage.setItem("teacherFirebaseToken", token);
           await context?.facultyLogin(userDetails);
-          try {
-            router.push("/Details");
-          } catch (error) {
-            console.log(error);
-          }
+         
         }
 
       }

@@ -6,13 +6,14 @@ interface Props {
         rollno: string;
         title: string;
         AssignmentLink: string;
+        SolutionLink: string;
         subject: string;
         section: string;
         assignmentDate: string;
         dueDate: string;
         marks: string;
         postedBy: string;
-        submittedBy: boolean;
+        submitted: boolean;
       }
 }
 
@@ -32,13 +33,13 @@ const FacultyAssignmentCard: React.FC<Props> = ({ section,Assignment }) => {
                 </a>
                 <a href="#!">
                     <div  className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-white hover:text-indigo-600 transition duration-500 ease-in-out">
-                    {Assignment.submittedBy?"Submiited":"Not Submiited"}
+                    {Assignment.submitted?"Submiited":"Not Submiited"}
                     </div>
                 </a>
             </div>
             <div className="px-6 py-4 mb-auto">
                 <a
-                    href={Assignment.AssignmentLink}
+                    href={Assignment.AssignmentLink} target="_blank"
                     className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                 >
                     {Assignment.title}
@@ -68,7 +69,7 @@ const FacultyAssignmentCard: React.FC<Props> = ({ section,Assignment }) => {
                             </g>
                         </g>
                     </svg>
-                    <a href="#"className="ml-1">Solution Link</a>
+                    <a href= {Assignment.SolutionLink} target="_blank" className="ml-1">Solution Link</a>
                 </span>
 
                 <span className="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">

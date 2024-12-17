@@ -47,7 +47,7 @@ export function AuthProvider({ children }) {
         userDetails: userDetails
       }),
     });
-
+    response=await response.json()
     if (response.status === 200) {
       Role?.changeRole("student",userDetails.rollNo,userDetails.email);
       router.push("/Details");

@@ -5,6 +5,7 @@ export let getAssignmentsBySection=gql`
       rollno
       title
       AssignmentLink
+      SolutionLink
       subject
       assignmentDate
       dueDate

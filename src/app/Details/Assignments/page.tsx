@@ -1,10 +1,17 @@
 "use client";
 
 
-import React from "react"
+import React, { useContext } from "react"
 import { gql, useQuery } from "@apollo/client";
 import StudentAssignment from "@/app/Components/StudentAssignment";
+import { RoleContext } from "@/app/Context/RoleProvider";
+interface RoleContextType {
+  role: any;
+  changeRole: (newRole: any,rollno:any,email:any) => void;
+  email:any;
+  rollNumber:any;
 
+}
 // GraphQL Query
 const GET_ASSIGNMENTS = gql`
   query getAssignmentsByRollno($rollno: ID!) {
@@ -38,8 +45,8 @@ type QueryResult={
 };
 
 export default function Page() {
-  const rollno = "1210437010"; // Replace with actual logic to get rollno if needed
-
+  let role=useContext<RoleContextType | null>(RoleContext)
+  const rollno = role?.rollNumber;
   const { loading, error, data } = useQuery<QueryResult>(GET_ASSIGNMENTS, {
     variables: { rollno },
     skip: !rollno,

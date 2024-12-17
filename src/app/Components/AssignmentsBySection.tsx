@@ -10,13 +10,14 @@ interface Assignment {
   rollno: string;
   title: string;
   AssignmentLink: string;
+  SolutionLink: string;
   subject: string;
   section: string;
   assignmentDate: string;
   dueDate: string;
   marks: string;
   postedBy: string;
-  submittedBy: boolean;
+  submitted: boolean;
 }
 interface assignmentList {
   getAssignmentsBySection: Assignment[];

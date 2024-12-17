@@ -32,7 +32,7 @@ const StudentLoginForm: React.FC = () =>
 
   async function handleSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault();
-    console.log("The roll number of student is", userDetails.rollno);
+    
     try {
       const userCredential = await signInWithEmailAndPassword(
         Auth,
@@ -42,9 +42,7 @@ const StudentLoginForm: React.FC = () =>
       if (userCredential.user !== undefined) {
         const token = await userCredential.user.getIdToken();
         localStorage.setItem("firebaseToken", token);
-        localStorage.setItem("rollno", "hello");
-
-        // Add rollno to the context call or send as part of userDetails
+        
         await User_Context?.StudentLogin(userDetails);
       }
     } catch (error) {
@@ -82,10 +80,10 @@ const StudentLoginForm: React.FC = () =>
                   id="rollno"
                   name="rollno"
                   type="text"
-                  value={userDetails.rollno} // Use userDetails.rollno
+                  value={userDetails.rollno}
                   onChange={(e) => {
                     handleChange(e);
-                  }} // Use handleChange for rollno as well
+                  }}
                   required
                   autoComplete="rollno"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
