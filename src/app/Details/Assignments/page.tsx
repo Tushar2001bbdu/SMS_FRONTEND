@@ -1,16 +1,14 @@
 "use client";
 
-
-import React, { useContext } from "react"
+import React, { useContext } from "react";
 import { gql, useQuery } from "@apollo/client";
 import StudentAssignment from "@/app/Components/StudentAssignment";
 import { RoleContext } from "@/app/Context/RoleProvider";
 interface RoleContextType {
   role: any;
-  changeRole: (newRole: any,rollno:any,email:any) => void;
-  email:any;
-  rollNumber:any;
-
+  changeRole: (newRole: any, rollno: any, email: any) => void;
+  email: any;
+  rollNumber: any;
 }
 // GraphQL Query
 const GET_ASSIGNMENTS = gql`
@@ -29,7 +27,7 @@ const GET_ASSIGNMENTS = gql`
 `;
 
 // Define TypeScript types for the GraphQL query response
-interface Assignment{
+interface Assignment {
   rollno: string;
   title: string;
   AssignmentLink: string;
@@ -38,14 +36,14 @@ interface Assignment{
   dueDate: string;
   postedBy: string;
   submitted: boolean;
-};
+}
 
-type QueryResult={
+type QueryResult = {
   getAssignmentsByRollno: Assignment[];
 };
 
 export default function Page() {
-  let role=useContext<RoleContextType | null>(RoleContext)
+  let role = useContext<RoleContextType | null>(RoleContext);
   const rollno = role?.rollNumber;
   const { loading, error, data } = useQuery<QueryResult>(GET_ASSIGNMENTS, {
     variables: { rollno },
@@ -62,7 +60,7 @@ export default function Page() {
 
   return (
     <div>
-      <div className="my-3 grid grid-cols-3 gap-4">
+      <div className="my-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {data?.getAssignmentsByRollno.map((element, index) => (
           <StudentAssignment key={index} assignment={element} />
         ))}
