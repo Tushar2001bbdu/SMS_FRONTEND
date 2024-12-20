@@ -64,7 +64,6 @@ export default function StudentAssignment(props) {
         context.getAssignmentUrl(file.name)
       }
     } catch (error) {
-      console.error("Error uploading file:", error);
       setIsUploading(false);
     }
   };

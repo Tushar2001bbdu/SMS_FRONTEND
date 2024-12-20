@@ -1,5 +1,7 @@
 import React from "react";
 
+
+
 interface Props {
     section: string; 
     Assignment: {
@@ -19,6 +21,7 @@ interface Props {
 
 
 const FacultyAssignmentCard: React.FC<Props> = ({ section,Assignment }) => {
+    let rollno="1210438058"
     return (
         <div className="rounded overflow-hidden shadow-lg flex flex-col">
             <a href="#"></a>
@@ -42,7 +45,7 @@ const FacultyAssignmentCard: React.FC<Props> = ({ section,Assignment }) => {
                     href={Assignment.AssignmentLink} target="_blank"
                     className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
                 >
-                    {Assignment.title}
+                    {Assignment.title} - {Assignment.rollno}
                 </a>
                 <p className="text-gray-500 text-sm">
                     {Assignment.subject}
@@ -50,25 +53,6 @@ const FacultyAssignmentCard: React.FC<Props> = ({ section,Assignment }) => {
             </div>
             <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
                 <span className="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-                    <svg
-                        height="13px"
-                        width="13px"
-                        version="1.1"
-                        id="Layer_1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        xmlnsXlink="http://www.w3.org/1999/xlink"
-                        x="0px"
-                        y="0px"
-                        viewBox="0 0 512 512"
-                       
-                        xmlSpace="preserve"
-                    >
-                        <g>
-                            <g>
-                                <path d="M256,0C114.837,0,0,114.837,0,256s114.837,256,256,256s256-114.837,256-256S397.163,0,256,0z M277.333,256 c0,11.797-9.536,21.333-21.333,21.333h-85.333c-11.797,0-21.333-9.536-21.333-21.333s9.536-21.333,21.333-21.333h64v-128 c0-11.797,9.536-21.333,21.333-21.333s21.333,9.536,21.333,21.333V256z"></path>
-                            </g>
-                        </g>
-                    </svg>
                     <a href= {Assignment.SolutionLink} target="_blank" className="ml-1">Solution Link</a>
                 </span>
 
