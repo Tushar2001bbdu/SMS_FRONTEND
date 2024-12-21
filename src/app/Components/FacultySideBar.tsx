@@ -19,6 +19,7 @@ interface FacultyContextType {
   getStudentProfile: (rollno: string) => Promise<any>;
   updateResult: (rollno: string, marks: string | number) => Promise<void>;
   logout: () => void;
+  getAssignmentUrl:(filename: string)=>Promise<any>;
 }
 
 const FacultySidebar: React.FC = () => {

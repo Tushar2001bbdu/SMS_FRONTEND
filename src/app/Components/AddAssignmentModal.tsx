@@ -1,22 +1,87 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useContext } from "react";
+import { FacultyContext } from "../Context/FacultyProvider";
+import { addAssignment } from "../graphql/queries";
+import { useMutation } from "@apollo/client";
+import { RoleContext } from "../Context/RoleProvider";
 
 interface AddAssignmentModalProps {
   isOpen: boolean;
+  setIsOpen :(text:boolean)=>void
+}
+interface RoleContextType {
+  role: any;
+  changeRole: (newRole: any, rollno: any, email: any) => void;
+  email: any;
+  rollNumber: any;
 }
 
-const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ isOpen }) => {
-  const [file, setFile] = useState<File | null>(null);
+interface FacultyDetails {
+  rollno: string;
+  [key: string]: any;
+}
 
+interface FacultyContextType {
+  facultyData: any;
+  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
+  getFacultyProfile: () => Promise<void>;
+  getListOfStudents: (section: string) => Promise<void>;
+  studentList: any;
+  studentProfile: any;
+  getStudentProfile: (rollno: string) => Promise<any>;
+  updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  logout: () => void;
+  getAssignmentUrl: (filename: string) => Promise<any>;
+  uploadUrl?: string | null;
+}
+
+const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ isOpen,setIsOpen }) => {
+  const [file, setFile] = useState<File | null>(null);
+  const [subject, setSubject] = useState<string>("");
+  const context = useContext<FacultyContextType | null>(FacultyContext);
+  const [AddAssignment, { loading, error }] = useMutation(addAssignment);
+  const role = useContext<RoleContextType | null>(RoleContext);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setFile(event.target.files[0]);
+      let filename = `${subject}${event.target.files[0].name}`;
+      console.log("the file name is" + filename);
+      context?.getAssignmentUrl(filename);
     }
   };
-  const handleSubmit = (event: React.FormEvent) => {
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
+    const dateAssigned = formData.get("date-given") as string;
+    const dueDate = formData.get("date-due") as string;
+    const section = formData.get("section") as string;
+    if (context?.uploadUrl && context?.uploadUrl.length <= 0) {
+      await fetch(context?.uploadUrl, {
+        method: "PUT",
+        body: file,
+        headers: {
+          "Content-Type": file?.type || "application/octet-stream",
+        },
+      });
+    } else {
+      let inputData = {
+        classCode: section,
+        title: title,
+        AssignmentLink: `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file?.name}`,
+        subject: subject,
+        assignmentDate: dateAssigned,
+        dueDate: dueDate,
+        marks: 0,
+        postedBy: role?.rollNumber,
+      };
+      await AddAssignment({
+        variables: {
+          input: inputData,
+        },
+      });
+      setIsOpen(false);
+    }
   };
 
   return (
@@ -45,80 +110,101 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ isOpen }) => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   ></path>
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
-            <form action="#">
+            <form
+              onSubmit={(e) => {
+                handleSubmit(e);
+              }}
+            >
               <div className="grid gap-4 mb-4 sm:grid-cols-2">
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="title"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Title
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="title"
+                    id="title"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Enter Assignment Title"
                   />
                 </div>
                 <div>
                   <label
-                    htmlFor="brand"
+                    htmlFor="subject"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Subject
                   </label>
                   <input
                     type="text"
-                    name="brand"
-                    id="brand"
+                    name="subject"
+                    id="subject"
+                    value={subject}
+                    onChange={(e) => {
+                      setSubject(e.target.value);
+                    }}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                     placeholder="Enter Assignment Subject"
                   />
                 </div>
                 <div>
                   <label
-                    htmlFor="price"
+                    htmlFor="date-given"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Assignment Date
                   </label>
                   <input
-                    type="text"
-                    name="price"
-                    id="price"
+                    type="date"
+                    name="date-given"
+                    id="date-given"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Enter Assignment Date"
                   />
                 </div>
-
                 <div>
                   <label
-                    htmlFor="description"
+                    htmlFor="date-due"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    DueDate
+                    Due Date
                   </label>
                   <input
-                    id="Due-Date"
-                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                    placeholder="Enter Assignment Description"
+                    type="date"
+                    name="date-due"
+                    id="date-due"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="section"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Class-Code
+                  </label>
+                  <input
+                    type="text"
+                    name="section"
+                    id="section"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   />
                 </div>
               </div>
               <div>
                 <label
-                  htmlFor="description"
-                  className="block  mb-4 text-sm font-medium text-gray-900 dark:text-white"
+                  htmlFor="fileInput"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Upload Assignment
                 </label>
@@ -131,39 +217,22 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ isOpen }) => {
                 <div className="w-full flex">
                   <label
                     htmlFor="fileInput"
-                    className="w-1/3 cursor-pointer bg-blue-500 text-white  px-4 py-2  hover:bg-blue-600 transition"
+                    className="w-1/3 cursor-pointer bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition"
                   >
                     Choose File
                   </label>
-                  <span className="w-2/3 bg-white-500  border-black border-2 text-black px-4 py-2  ">
-                    {file == null ? "No File Choosen" : file.name}
+                  <span className="w-2/3 bg-white-500 border-black border-2 text-black px-4 py-2">
+                    {file == null ? "No File Chosen" : file.name}
                   </span>
                 </div>
               </div>
               <div className="mt-2 w-full flex items-center justify-center">
-                <div>
-                  <button
-                    type="submit"
-                    onClick={(e) => {
-                      handleSubmit(e);
-                    }}
-                    className="text-white inline-flex items-center bg-blue-500 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  >
-                    <svg
-                      className="mr-1 -ml-1 w-6 h-6"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
-                    Add Assignment
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  className="text-white inline-flex items-center bg-blue-500 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                >
+                  Add Assignment
+                </button>
               </div>
             </form>
           </div>

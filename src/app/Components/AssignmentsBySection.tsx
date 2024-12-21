@@ -53,7 +53,7 @@ const AssignmentsBySection: React.FC<Props> = ({ section }) => {
   }, [data]);
 
   if (addAssignment) {
-    return <AddAssignmentModal isOpen={addAssignment} />;
+    return <AddAssignmentModal isOpen={addAssignment} setIsOpen={setAddAssignment}/>;
   }
 
   if (error) {

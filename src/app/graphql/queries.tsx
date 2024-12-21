@@ -1,5 +1,5 @@
 import { gql} from "@apollo/client";
-export let getAssignmentsBySection=gql`
+export const getAssignmentsBySection=gql`
   query getAssignmentsBySection($section: String!,$postedBy:String!) {
     getAssignmentsBySection(section: $section,postedBy:$postedBy) {
       rollno
@@ -13,5 +13,12 @@ export let getAssignmentsBySection=gql`
       submitted
     }
   }
+`;
+export const addAssignment=gql`
+mutation addAssignment($input: Assignments!) {
+  addAssignment(input:$input) {
+    response
+  }
+}
 `;
  

@@ -18,6 +18,8 @@ interface FacultyContextType {
   studentProfile: any;
   getStudentProfile: (rollno: string) => Promise<any>;
   updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  uploadUrl?: string  | null;
+  getAssignmentUrl:(filename: string)=>Promise<any>;
   logout: () => void;
 }
 
@@ -25,6 +27,7 @@ export const FacultyContext = createContext<FacultyContextType | null>(null);
 export function FacultyProvider({ children }: { children: ReactNode }) {
   const [facultyData, setFacultyData] = useState<any>(null);
   const [studentList, setList] = useState<any>(null);
+  const[uploadUrl,setUploadUrl]=useState<string | null>(null)
   const [studentProfile] = useState<any>(null);
   const Role = useContext(RoleContext);
   const router = useRouter();
@@ -47,7 +50,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       response=await response.json()
       if(response.status===200){
         localStorage.setItem("user", "teacher");
-
+        console.log("Your role has been changed")
         Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
         router.push("/Details")
       }
@@ -123,12 +126,40 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       if(response.status===200){
         router.push("/Details")
       }
+
     }
     catch(error){
       console.log(error)
     }
     
   }
+  async function getAssignmentUrl(filename: string) {
+    try {
+        const bucketName = "studentassignmentsquestions";
+
+        const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
+        
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: localStorage.getItem("teacherFirebaseToken") || ""
+            }
+        });
+
+       
+
+        const data = await response.json();
+
+        if (data.status === "200") {
+            setUploadUrl(data.uploadUrl);
+        } else {
+            console.error("Error in response:", data);
+        }
+    } catch (error) {
+        console.error("Error fetching upload URL:", error);
+    }
+}
 
   async function logout(): Promise<void> {
     localStorage.removeItem("teacherFirebaseToken");
@@ -148,6 +179,8 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
         getStudentProfile,
         updateResult,
         logout,
+        getAssignmentUrl,
+        uploadUrl
       }}
     >
       {children}

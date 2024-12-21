@@ -2,12 +2,13 @@
 
 import { createContext, useState, useContext } from 'react';
 import Cookies from 'js-cookie'
-
+import { RoleContext } from './RoleProvider';
 export const AdminContext = createContext();
 
 
 export function AdminProvider({ children }) {
   const [examNotification, setExamNotification] = useState(null)
+  const role = useContext(RoleContext)
   async function sendPhoto(image) {
     let url = `http://localhost:3001/app/attendance/sendphoto`;
     await fetch(url, {
@@ -18,7 +19,7 @@ export function AdminProvider({ children }) {
       }
       , body: JSON.stringify({
         "url": image,
-        "rollno": Cookies.get("rollno")
+        "rollno": role?.rollNumber
       })
 
 
@@ -37,7 +38,7 @@ export function AdminProvider({ children }) {
       }
       , body: JSON.stringify({
         "url": image,
-        "rollno": "1210438058"
+        "rollno": role?.rollNumber
       })
 
 

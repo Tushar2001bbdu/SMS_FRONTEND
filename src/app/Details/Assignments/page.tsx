@@ -57,14 +57,24 @@ export default function Page() {
   if (error) {
     return <div>Error loading assignments: {error.message}</div>;
   }
+  const headingStyle = {
+    fontSize: "40px",
+    fontWeight: 600,
+    backgroundImage: "linear-gradient(to left, #553c9a, #b393d3)",
+    color: "transparent",
+    backgroundClip: "text",
+    WebkitBackgroundClip: "text",
+  };
 
   return (
     <div>
+      <div className="text-center" style={headingStyle}> Your Assignments</div>
       <div className="my-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {data?.getAssignmentsByRollno.map((element, index) => (
           <StudentAssignment key={index} assignment={element} />
         ))}
       </div>
     </div>
+  
   );
 }

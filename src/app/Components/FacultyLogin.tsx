@@ -14,6 +14,7 @@ interface FacultyDetails {
 }
 
 interface FacultyContextType {
+  getAssignmentUrl:(filename: string)=>Promise<any>;
   facultyData: any;
   facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
   getFacultyProfile: () => Promise<void>;

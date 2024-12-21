@@ -5,7 +5,6 @@ import React, { FC, useContext, useEffect } from "react";
 interface FacultyDetails {
   rollno: string;
   [key: string]: any;
-  allotedSections?: string[];
 }
 
 interface FacultyContextType {
@@ -17,6 +16,8 @@ interface FacultyContextType {
   studentProfile: any;
   getStudentProfile: (rollno: string) => Promise<any>;
   updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  uploadUrl?: string  | null;
+  getAssignmentUrl:(filename: string)=>Promise<any>;
   logout: () => void;
 }
 const StudentAssignments: FC = () => {
