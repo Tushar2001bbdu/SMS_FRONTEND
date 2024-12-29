@@ -1,12 +1,12 @@
 import React, { FC, useState, useContext } from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
-import { addAssignment } from "../graphql/queries";
+import { addStudyMaterial } from "../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { RoleContext } from "../Context/RoleProvider";
 
-interface AddAssignmentModalProps {
-  section : string;
-  setIsOpen :(text:boolean)=>void
+interface Props {
+  setIsOpen: (text: boolean) => void;
+  section: string;
 }
 interface RoleContextType {
   role: any;
@@ -34,11 +34,15 @@ interface FacultyContextType {
   uploadUrl?: string | null;
 }
 
-const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) => {
+const AddLearningMaterialModal: FC<Props> = ({
+  section,
+  setIsOpen,
+}) => {
   const [file, setFile] = useState<File | null>(null);
   const [subject, setSubject] = useState<string>("");
   const context = useContext<FacultyContextType | null>(FacultyContext);
-  const [AddAssignment, { loading, error }] = useMutation(addAssignment);
+  const [addLearningMaterial, { loading, error }] =
+    useMutation(addStudyMaterial);
   const role = useContext<RoleContextType | null>(RoleContext);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
@@ -53,8 +57,10 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const title = formData.get("title") as string;
-    const dateAssigned = formData.get("date-given") as string;
-    const dueDate = formData.get("date-due") as string;
+    const description = formData.get("description") as string;
+    const fileType = file?.type || ".pdf";
+    const videoLink = formData.get("video-link") as string;
+    const tags = new Array(formData.get("tags") as string);
     if (context?.uploadUrl && context?.uploadUrl.length <= 0) {
       await fetch(context?.uploadUrl, {
         method: "PUT",
@@ -65,16 +71,17 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
       });
     } else {
       let inputData = {
-        classCode: section,
         title: title,
-        AssignmentLink: `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file?.name}`,
+        description: description,
         subject: subject,
-        assignmentDate: dateAssigned,
-        dueDate: dueDate,
-        marks: 0,
-        postedBy: role?.rollNumber,
+        section: section,
+        fileUrl: `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file?.name}`,
+        fileType: fileType,
+        videoLink: videoLink,
+        tags: tags,
+        uploadedBy: role?.rollNumber || "XXXXX",
       };
-      await AddAssignment({
+      await addLearningMaterial({
         variables: {
           input: inputData,
         },
@@ -94,7 +101,7 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
           <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Add Assignment
+                Add Study/Learning Material
               </h3>
               <button
                 type="button"
@@ -159,29 +166,44 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
                 </div>
                 <div>
                   <label
-                    htmlFor="date-given"
+                    htmlFor="description"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Assignment Date
+                    Description
                   </label>
                   <input
-                    type="date"
-                    name="date-given"
-                    id="date-given"
+                    type="text"
+                    name="description"
+                    id="description"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   />
                 </div>
                 <div>
                   <label
-                    htmlFor="date-due"
+                    htmlFor="video-link"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Due Date
+                    Video Link
                   </label>
                   <input
-                    type="date"
-                    name="date-due"
-                    id="date-due"
+                    type="text"
+                    name="video-link"
+                    id="video-link"
+                    pattern="^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="d"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Tags
+                  </label>
+                  <input
+                    type="text"
+                    name="tags"
+                    id="tags"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   />
                 </div>
@@ -190,9 +212,11 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
                     htmlFor="section"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Class-Code
+                    Class Code
                   </label>
                   <input
+                    type="text"
+                    name="section"
                     value={section}
                     id="section"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -204,7 +228,7 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
                   htmlFor="fileInput"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Upload Assignment
+                  Upload Notes
                 </label>
                 <input
                   type="file"
@@ -229,7 +253,7 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
                   type="submit"
                   className="text-white inline-flex items-center bg-blue-500 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
-                  Add Assignment
+                  Add Study Material
                 </button>
               </div>
             </form>
@@ -240,4 +264,4 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
   );
 };
 
-export default AddAssignmentModal;
+export default AddLearningMaterialModal;
