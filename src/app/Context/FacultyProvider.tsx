@@ -49,16 +49,16 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       });
       response=await response.json()
       if(response.status===200){
-        localStorage.setItem("user", "teacher");
-        console.log("Your role has been changed")
         Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
         router.push("/Details")
       }
-      
+      else{
+        alert("You have entered invalid credentials")
+      }
       
     }
     catch(error){
-      console.log(error)
+      alert("You have entered invalid credentials")
     }
    
   }
@@ -77,7 +77,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
     });
 
     const data = await response.json();
-    setFacultyData(data.message);
+    setFacultyData(data.data);
   }
 
   async function getListOfStudents(section: string): Promise<void> {
@@ -93,7 +93,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
     });
 
     const data = await response.json();
-    setList(data.studentList);
+    setList(data.data);
   }
 
   async function getStudentProfile(rollno: string): Promise<any> {

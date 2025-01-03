@@ -51,12 +51,6 @@ const FacultyAssignmentCard: React.FC<Props> = ({ section, Assignment }) => {
             Solution Link
           </a>
         </span>
-
-        {Assignment.submitted && (
-          <span className="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-            <a className="ml-1">Mark Assignment</a>
-          </span>
-        )}
       </div>
     </section>
   );

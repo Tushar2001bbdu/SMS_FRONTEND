@@ -48,11 +48,25 @@ export function AdminProvider({ children }) {
     setExamNotification(response.message)
   }
 
-
+async function MarkAssignment(s3Link,fileType,subject){
+  let url = new URL(`http://localhost:3001/app/assignments/markAssignment/${role.rollNumber}`);
+  let response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: localStorage.getItem("firebaseToken"),
+    },
+    body:JSON.stringify({
+      s3Link:s3Link,
+      fileType:fileType,
+      subject:subject
+    })
+  });
+}
 
 
   return (
-    <AdminContext.Provider value={{ sendPhoto, sendFrame, examNotification }}>
+    <AdminContext.Provider value={{ sendPhoto, sendFrame, examNotification ,MarkAssignment}}>
       {children}
     </AdminContext.Provider>
   );

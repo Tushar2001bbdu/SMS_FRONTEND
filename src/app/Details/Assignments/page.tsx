@@ -26,7 +26,7 @@ const GET_ASSIGNMENTS = gql`
   }
 `;
 
-// Define TypeScript types for the GraphQL query response
+
 interface Assignment {
   rollno: string;
   title: string;

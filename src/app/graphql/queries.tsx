@@ -28,7 +28,7 @@ export const getLearningMaterialBySection=gql`
 export const addAssignment=gql`
 mutation addAssignment($input: Assignments!) {
   addAssignment(input:$input) {
-    result
+    response
   }
 }
 `;
@@ -36,8 +36,7 @@ mutation addAssignment($input: Assignments!) {
 export const addStudyMaterial=gql`
 mutation addLearningMaterial($input : LearningMaterial!){
   addLearningMaterial(input:$input) {
-    title 
-    subject
+    response
   }
 
 }`

@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 import { gql, useMutation } from "@apollo/client";
-
+import { AdminContext } from "../Context/AdminProvider";
 export default function StudentAssignment(props) {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const context = useContext(AuthContext);
-
+  const admin=useContext(AdminContext);
   const SUBMIT_ASSIGNMENT = gql`
     mutation submitAssignment($rollno: ID!, $title: String!, $solutionLink: String!) {
       submitAssignment(rollno: $rollno, title: $title, solutionLink: $solutionLink) {
@@ -28,7 +28,7 @@ export default function StudentAssignment(props) {
     if (!selectedFile) return;
 
     setFile(selectedFile);
-    await context.getAssignmentUrl(`${props.assignment.subject}/${selectedFile.name}`);
+    await context.getAssignmentUrl(`${selectedFile.name}`);
   };
 
   const handleUploadAssignment = async () => {
@@ -47,15 +47,15 @@ export default function StudentAssignment(props) {
             "Content-Type": file.type,
           },
         });
-
+        let s3Url=`https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file.name}`
         await updateSubmission({
           variables: {
             rollno: props.assignment.rollno,
             title: props.assignment.title,
-            solutionLink: `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file.name}`,
+            solutionLink: s3Url,
           },
         });
-
+        await admin.MarkAssignment(s3Url,file.type,props.assignment.subject);       
         context.setUploadUrl(null);
         setIsUploading(false);
         alert("Assignment submitted successfully!");
@@ -64,6 +64,7 @@ export default function StudentAssignment(props) {
         context.getAssignmentUrl(file.name)
       }
     } catch (error) {
+      console.log(error)
       setIsUploading(false);
     }
   };

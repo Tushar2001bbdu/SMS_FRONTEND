@@ -1,21 +1,18 @@
-import { createContext, useState, useContext} from "react";
+import { createContext, useState, useContext } from "react";
 import { RoleContext } from "./RoleProvider";
 import { useRouter } from "next/navigation";
-
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [studentData, setStudentData] = useState(null);
   const [studentResult, setStudentResult] = useState(null);
-  const [studentFeesPaymentDetails, setStudentFeesPaymentDetails] = useState(null);
+  const [studentFeesPaymentDetails, setStudentFeesPaymentDetails] =
+    useState(null);
   const [rollNumber, setRollNumbr] = useState(0);
   const [uploadUrl, setUploadUrl] = useState(null);
   const Role = useContext(RoleContext);
   const router = useRouter();
-
-
-
 
   // Async functions for various other operations
   async function StudentDetails() {
@@ -28,11 +25,7 @@ export function AuthProvider({ children }) {
       },
     });
     response = await response.json();
-    setStudentData(response.message);
-  }
-
-  function setRollNumber(rollno) {
-    setRollNumbr(rollno); // Set the roll number state
+    setStudentData(response.data);
   }
 
   async function StudentLogin(userDetails) {
@@ -44,13 +37,15 @@ export function AuthProvider({ children }) {
         authorization: localStorage.getItem("firebaseToken"),
       },
       body: JSON.stringify({
-        userDetails: userDetails
+        userDetails: userDetails,
       }),
     });
-    response=await response.json()
+    response = await response.json();
     if (response.status === 200) {
-      Role?.changeRole("student",userDetails.rollNo,userDetails.email);
+      Role?.changeRole("student", userDetails.rollNo, userDetails.email);
       router.push("/Details");
+    } else {
+      alert("You have entered invalid credentials");
     }
   }
 
@@ -64,7 +59,7 @@ export function AuthProvider({ children }) {
       },
     });
     response = await response.json();
-    setStudentResult(response.message);
+    setStudentResult(response.data);
   }
 
   async function getStudentDetails() {
@@ -77,20 +72,32 @@ export function AuthProvider({ children }) {
       },
     });
     response = await response.json();
-    setStudentFeesPaymentDetails(response.message);
+    setStudentFeesPaymentDetails(response.data);
   }
   async function getAssignmentUrl(filename) {
-    
-    let url = new URL(`http://localhost:3001/app/assignments/get-upload-url?filename=${filename}`);
-    let response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("firebaseToken"),
-      },
-    });
-    response = await response.json();
-    setUploadUrl(response.uploadUrl)
+    try {
+      const bucketName = "assignment-solutions";
+
+      const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("teacherFirebaseToken"),
+        },
+      });
+
+      const data = await response.json();
+
+      if (data.status === 200) {
+        setUploadUrl(data.uploadUrl);
+      } else {
+        console.error("Error in response:", data);
+      }
+    } catch (error) {
+      console.error("Error fetching upload URL:", error);
+    }
   }
 
   async function logout() {
@@ -110,11 +117,10 @@ export function AuthProvider({ children }) {
         studentFeesPaymentDetails,
         getStudentResult,
         logout,
-        setRollNumber,
         getAssignmentUrl,
         uploadUrl,
-        setUploadUrl
-    }}
+        setUploadUrl,
+      }}
     >
       {children}
     </AuthContext.Provider>

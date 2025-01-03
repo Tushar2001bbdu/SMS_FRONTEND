@@ -60,7 +60,7 @@ const FacultyLogin: React.FC = () => {
 
       }
     } catch (error) {
-      console.log(error);
+      alert("You have entered invalid credentials")
     }
   }
   return (

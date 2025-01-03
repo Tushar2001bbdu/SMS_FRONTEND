@@ -1,7 +1,7 @@
 "use client";
 import LearningMaterialBySection from "@/app/Components/LearningMaterialBySection";
 import { FacultyContext } from "@/app/Context/FacultyProvider";
-import React, { FC, useContext, useEffect } from "react";
+import React, { FC, useContext} from "react";
 interface FacultyDetails {
   rollno: string;
   [key: string]: any;
