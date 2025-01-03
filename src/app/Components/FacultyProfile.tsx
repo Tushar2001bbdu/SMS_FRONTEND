@@ -3,15 +3,11 @@ import React, { useEffect, useContext } from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
 
 
-interface FacultyDetails {
-  rollno: string;
-  [key: string]: any;
-}
+
 // Define the Context value type
 interface FacultyContextType {
   getAssignmentUrl:(filename: string)=>Promise<any>;
   facultyData: any;
-  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
   getFacultyProfile: () => Promise<void>;
   getListOfStudents: (section: string) => Promise<void>;
   studentList: any;

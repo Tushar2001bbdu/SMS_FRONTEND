@@ -7,11 +7,14 @@ export default function page() {
 
     const context = useContext(AuthContext)
     useEffect(() => {
-        if(context!==null){
+        if(context.studentData===null){
+            context.StudentDetails();
+        }
+        if(context?.studentResult===null){
             context.getStudentResult();
         }
         
-    }, [])
+    }, [context])
 
     if (context.studentResult)
         return (<div className="h-full w-full">

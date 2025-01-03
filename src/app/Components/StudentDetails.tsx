@@ -21,8 +21,8 @@ const StudentDetails: React.FC = () => {
   const con = useContext<AuthContextType | null>(AuthContext);
 
   useEffect(() => {
-    if (con !== null) {
-      con.StudentDetails(); 
+    if (con?.studentData === null) {
+      con?.StudentDetails(); 
     }
   }, [con]);
 

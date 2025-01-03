@@ -16,7 +16,7 @@ interface FacultyDetails {
 interface FacultyContextType {
   getAssignmentUrl:(filename: string)=>Promise<any>;
   facultyData: any;
-  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
+  facultyLogin?: (facultyDetails: FacultyDetails) => Promise<void>;
   getFacultyProfile: () => Promise<void>;
   getListOfStudents: (section: string) => Promise<void>;
   studentList: any;
@@ -54,8 +54,9 @@ const FacultyLogin: React.FC = () => {
         {
           const token = await userCredential.user.getIdToken();
           localStorage.setItem("teacherFirebaseToken", token);
+          if(context?.facultyLogin!==undefined){
           await context?.facultyLogin(userDetails);
-         
+          }
         }
 
       }

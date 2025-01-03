@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
                   <a
-                    href="/Student_Services"
+                    href="/student"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                     hidden={Role?.role !== null ? true : false}
                   >
@@ -96,7 +96,7 @@ const Navbar: React.FC = () => {
                   </a>
 
                   <a
-                    href="/Faculty_Services"
+                    href="/faculty"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
                     hidden={Role?.role !== null ? true : false}
                   >

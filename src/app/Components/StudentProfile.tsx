@@ -14,7 +14,7 @@ interface StudentProfileProps {
 }
 
 const StudentProfile: React.FC<StudentProfileProps> = ({ profile }) => {
-  const [visibility, setVisibility] = useState(false);
+  const [visibility, setVisibility] = useState("hidden");
 
   return (
     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
@@ -31,15 +31,15 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ profile }) => {
           href="#"
           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
           onClick={() => {
-            setVisibility(true);
+            setVisibility("visible");
           }}
         >
           Edit
         </a>
         {visibility && (
           <UpdateStudentResult
-            setVisibility={visibility}
-            visibility={setVisibility}
+            visibility={visibility}
+            setVisibility={setVisibility}
             rollno={profile.rollno}
           />
         )}

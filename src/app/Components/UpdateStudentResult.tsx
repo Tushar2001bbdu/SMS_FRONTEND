@@ -1,19 +1,28 @@
 import React, { useState, useContext } from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
-interface context{
-  updateResult: (rollno: string, marks: number) => void;
+interface FacultyContextType {
+  facultyData: any;
+  getFacultyProfile: () => Promise<void>;
+  getListOfStudents: (section: string) => Promise<void>;
+  studentList: any;
+  studentProfile: any;
+  getStudentProfile: (rollno: string) => Promise<any>;
+  updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  uploadUrl?: string  | null;
+  getAssignmentUrl:(filename: string)=>Promise<any>;
+  logout: () => void;
 }
 
 
 interface StudentProfileProps {
   rollno: string;
   visibility: string;
-  setVisibility:(value:string) => void;
+  setVisibility:(visibility:string) => void;
 }
 
 const StudentProfile: React.FC<StudentProfileProps> = ({ rollno,visibility,setVisibility }) => {
   const [marks, setMarks] = useState<any>(0);
-  const context = useContext<context | null>(FacultyContext);
+  const context = useContext<FacultyContextType | null>(FacultyContext);
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setMarks(e.target.value);
   }
@@ -110,8 +119,8 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ rollno,visibility,setVi
                   Update Marks
                 </button>
                 <button
-                  type="exit"
-                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  type="button"
+                  className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   onClick={() => {
                     setVisibility("hidden");
                   }}

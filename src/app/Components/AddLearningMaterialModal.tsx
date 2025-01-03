@@ -22,7 +22,6 @@ interface FacultyDetails {
 
 interface FacultyContextType {
   facultyData: any;
-  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
   getFacultyProfile: () => Promise<void>;
   getListOfStudents: (section: string) => Promise<void>;
   studentList: any;

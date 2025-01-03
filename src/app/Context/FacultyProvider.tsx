@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState, useContext, ReactNode } from "react";
+import React,{ createContext, useState, useContext, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { RoleContext } from "./RoleProvider";
 
@@ -11,7 +11,7 @@ interface FacultyDetails {
 
 interface FacultyContextType {
   facultyData: any;
-  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
+  facultyLogin?: (facultyDetails: FacultyDetails) => Promise<void>;
   getFacultyProfile: () => Promise<void>;
   getListOfStudents: (section: string) => Promise<void>;
   studentList: any;
@@ -77,7 +77,13 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
     });
 
     const data = await response.json();
+    if(data.status!==200){
+      alert("Error in fetching the faculty profile")
+    }
+    else{
     setFacultyData(data.data);
+    }
+    
   }
 
   async function getListOfStudents(section: string): Promise<void> {
@@ -109,7 +115,12 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
     });
 
     const data = await response.json();
+    if(data.status!==200){
+      alert("Error in fetching the student profile")
+    }
+    else{
     return data.profile;
+    }
   }
 
   async function updateResult(marks: string | number): Promise<void> {
@@ -124,7 +135,10 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify({ rollno: "121078899", marks: marks }),
       });
       if(response.status===200){
-        router.push("/Details")
+        router.push("/details")
+      }
+      else{
+        alert("Error in updating the result")
       }
 
     }
@@ -154,7 +168,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
         if (data.status === "200") {
             setUploadUrl(data.uploadUrl);
         } else {
-            console.error("Error in response:", data);
+            alert("you want to upload file in invalid format try again");
         }
     } catch (error) {
         console.error("Error fetching upload URL:", error);

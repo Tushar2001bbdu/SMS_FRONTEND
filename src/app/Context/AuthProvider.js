@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
   const [studentFeesPaymentDetails, setStudentFeesPaymentDetails] =
     useState(null);
   const [rollNumber, setRollNumbr] = useState(0);
+  const[classDetails,setClassDetails]=useState(null);
   const [uploadUrl, setUploadUrl] = useState(null);
   const Role = useContext(RoleContext);
   const router = useRouter();
@@ -25,7 +26,13 @@ export function AuthProvider({ children }) {
       },
     });
     response = await response.json();
+    if(response.status!==200){
+      alert("You are not authorized to view this page");
+      router.push("/");
+    }
+    else{
     setStudentData(response.data);
+    }
   }
 
   async function StudentLogin(userDetails) {
@@ -43,7 +50,7 @@ export function AuthProvider({ children }) {
     response = await response.json();
     if (response.status === 200) {
       Role?.changeRole("student", userDetails.rollNo, userDetails.email);
-      router.push("/Details");
+      router.push("/details");
     } else {
       alert("You have entered invalid credentials");
     }
@@ -59,7 +66,13 @@ export function AuthProvider({ children }) {
       },
     });
     response = await response.json();
+    if(response.status!==200){
+      alert("You are not authorized to view this page");
+      router.push("/");
+    }
+    else{
     setStudentResult(response.data);
+    }
   }
 
   async function getStudentDetails() {
@@ -97,6 +110,24 @@ export function AuthProvider({ children }) {
       }
     } catch (error) {
       console.error("Error fetching upload URL:", error);
+    }
+  }
+  async function getClassSchedule(classSection){
+   let url = new URL(`http://localhost:3001/app/users/getClassSchedule/${classSection}`);
+    let response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("firebaseToken"),
+      },
+    });
+    response = await response.json();
+    if(response.status!==200){
+      alert("You are not authorized to view this page");
+      router.push("/");
+    }
+    else{
+    setClassDetails(response.data);
     }
   }
 

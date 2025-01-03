@@ -4,14 +4,8 @@ import { useContext } from "react";
 import Link from "next/link";
 import React from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
-
-interface FacultyDetails {
-  rollno: string;
-  [key: string]: any;
-}
 interface FacultyContextType {
   facultyData: any;
-  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
   getFacultyProfile: () => Promise<void>;
   getListOfStudents: (section: string) => Promise<void>;
   studentList: any;
@@ -78,7 +72,7 @@ const FacultySidebar: React.FC = () => {
             <div
               role="button"
               onClick={() => {
-                Router.push("/Details/Personal_Details");
+                Router.push("/details/PersonalDetails");
               }}
             >
               Personal Details
@@ -108,7 +102,7 @@ const FacultySidebar: React.FC = () => {
             <div
               role="button"
               onClick={() => {
-                Router.push("/Details/Student_List");
+                Router.push("/details/Student_List");
               }}
             >
               Student List
@@ -121,6 +115,9 @@ const FacultySidebar: React.FC = () => {
           </div>
           <div
             role="button"
+            onClick={() => {
+              Router.push("/details/onlineClasses");
+            }}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -138,12 +135,12 @@ const FacultySidebar: React.FC = () => {
                 ></path>
               </svg>
             </div>
-            <Link href="/OnlineclassNamees">Start Online Class</Link>
+            Start Online Class
           </div>
           <div
             role="button"
             onClick={() => {
-              Router.push("/Details/StudentAssignments");
+              Router.push("/details/studentAssignments");
             }}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
@@ -166,7 +163,7 @@ const FacultySidebar: React.FC = () => {
           </div>
           <div
             role="button"
-            onClick={() => Router.push("/Details/StudentLearningMaterial")}
+            onClick={() => Router.push("/details/studentLearningMaterial")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">

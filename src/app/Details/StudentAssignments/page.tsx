@@ -9,7 +9,6 @@ interface FacultyDetails {
 
 interface FacultyContextType {
   facultyData: any;
-  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
   getFacultyProfile: () => Promise<void>;
   getListOfStudents: (section: string) => Promise<void>;
   studentList: any;
@@ -42,7 +41,7 @@ const StudentAssignments: FC = () => {
       {context?.facultyData?.allotedSections?.map(
         (element: string, index: number) => (
           <div>
-          <div className="section-name" style={headingStyle}>{element}</div>  
+          <div className="text-2xl font-bold mb-6 text-center text-gray-800">{element}</div>  
           <AssignmentsBySection key={index} section={element}/>
             </div>
         )
