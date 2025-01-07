@@ -151,6 +151,8 @@ export function AuthProvider({ children }) {
         getAssignmentUrl,
         uploadUrl,
         setUploadUrl,
+        getClassSchedule,
+        classDetails
       }}
     >
       {children}
