@@ -50,9 +50,13 @@ const LearningMaterialBySection: React.FC<Props> = ({ section }) => {
   if (addStudyMaterial) {
     return <AddLearningMaterialModal section={section} setIsOpen={setFunction}/>;
   }
+ 
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return <div className="text-red-500 text-center mt-4">Error: {error.message}</div>;
   }
 
   return (

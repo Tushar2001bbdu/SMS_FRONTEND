@@ -1,5 +1,4 @@
 import React from "react";
-
 interface Props {
   section: string;
   Assignment: {
@@ -19,7 +18,7 @@ interface Props {
 
 const FacultyAssignmentCard: React.FC<Props> = ({ section, Assignment }) => {
   return (
-    <section className="rounded overflow-hidden shadow-lg flex flex-col w-full sm:w-full md:w-full lg:w-full">
+    <div className="rounded overflow-hidden shadow-lg flex flex-col w-full sm:w-full md:w-full lg:w-full">
       <div className="relative p-2">
         <a href="#">
           <img
@@ -27,6 +26,7 @@ const FacultyAssignmentCard: React.FC<Props> = ({ section, Assignment }) => {
             src="https://cdn-icons-png.freepik.com/256/11265/11265088.png?semt=ais_hybrid"
             alt="Icon representing assignments"
           />
+          
           <div className="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0"></div>
         </a>
         <div className="text-xs absolute top-0 right-0 bg-indigo-600 px-4 py-2 text-white mt-3 mr-3 hover:bg-indigo-700">
@@ -52,7 +52,7 @@ const FacultyAssignmentCard: React.FC<Props> = ({ section, Assignment }) => {
           </a>
         </span>
       </div>
-    </section>
+    </div>
   );
 };
 

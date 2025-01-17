@@ -55,14 +55,18 @@ const AssignmentsBySection: React.FC<Props> = ({ section }) => {
   if (addAssignment) {
     return <AddAssignmentModal section={section} setIsOpen={setAddAssignment}/>;
   }
+  if (loading) {
+    return <div className="flex items-center justify-center h-screen">Loading...</div>;
+  }
 
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return <div className="text-red-500 text-center mt-4">Error: {error.message}</div>;
   }
+ 
 
   return (
     <div className="flex h-full w-full items-center justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {assignments?.map((element: Assignment,index:number) => (
           <FacultyAssignmentCard key={index} Assignment={element} section={section} />
         ))}
@@ -75,7 +79,7 @@ const AssignmentsBySection: React.FC<Props> = ({ section }) => {
             Add Assignment
           </button>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

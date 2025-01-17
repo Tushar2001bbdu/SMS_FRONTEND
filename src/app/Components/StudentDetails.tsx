@@ -29,10 +29,10 @@ const StudentDetails: React.FC = () => {
   if (con !== null && con.studentData !== null) {
     return (
       <div>
-        <div className="px-4 sm:px-0 text-center">
+        <section className="px-4 sm:px-0 text-center">
           <h1>Personal Details</h1>
-        </div>
-        <div className="mt-6 border-t border-gray-100">
+        </section>
+        <section className="mt-6 border-t border-gray-100">
           <dl className="divide-y divide-gray-100">
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Email Address</dt>
@@ -69,7 +69,7 @@ const StudentDetails: React.FC = () => {
               </dd>
             </div>
           </dl>
-        </div>
+        </section>
       </div>
     );
   }

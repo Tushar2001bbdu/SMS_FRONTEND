@@ -1,12 +1,7 @@
 "use client";
 import AssignmentsBySection from "@/app/Components/AssignmentsBySection";
 import { FacultyContext } from "@/app/Context/FacultyProvider";
-import React, { FC, useContext, useEffect } from "react";
-interface FacultyDetails {
-  rollno: string;
-  [key: string]: any;
-}
-
+import React, { FC, useContext} from "react";
 interface FacultyContextType {
   facultyData: any;
   getFacultyProfile: () => Promise<void>;
@@ -41,7 +36,7 @@ const StudentAssignments: FC = () => {
       {context?.facultyData?.allotedSections?.map(
         (element: string, index: number) => (
           <div>
-          <div className="text-2xl font-bold mb-6 text-center text-gray-800">{element}</div>  
+          <section className="text-2xl font-bold mb-6 text-center text-gray-800">{element}</section>  
           <AssignmentsBySection key={index} section={element}/>
             </div>
         )

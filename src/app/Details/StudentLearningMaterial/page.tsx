@@ -40,10 +40,10 @@ const StudentAssignments: FC = () => {
       </header>
       {context?.facultyData?.allotedSections?.map(
         (element: string, index: number) => (
-          <div>
-          <div className="text-2xl font-bold mb-6 text-center text-gray-800">{element}</div>  
+          <section>
+          <section className="text-2xl font-bold mb-6 text-center text-gray-800">{element}</section>  
           <LearningMaterialBySection key={index} section={element}/>
-          </div>
+          </section>
         )
       )}
     </div>

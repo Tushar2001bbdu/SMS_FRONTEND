@@ -44,7 +44,7 @@ const ClassesToday: React.FC = () => {
           });
 
           return (
-            <div key={index} className="bg-gray-100 p-4 rounded shadow-md max-w-2xl mx-auto mt-6">
+            <section key={index} className="bg-gray-100 p-4 rounded shadow-md max-w-2xl mx-auto mt-6">
               <h2 className="text-lg font-semibold mb-3">📅 Classes On: {day}</h2>
               <table className="w-full border-collapse border border-gray-300">
                 <thead className="bg-gray-200">
@@ -66,7 +66,7 @@ const ClassesToday: React.FC = () => {
                   ))}
                 </tbody>
               </table>
-            </div>
+            </section>
           );
         })}
       </div>

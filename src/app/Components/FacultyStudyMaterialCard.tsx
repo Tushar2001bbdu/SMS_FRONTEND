@@ -11,8 +11,7 @@ interface Props {
   };
 }
 
-const FacultyStudyMaterialCard: React.FC<Props> = ({ section, StudyMaterial }) => {
-  // Extract YouTube Video ID
+const FacultyStudyMaterialCard: React.FC<Props> = ({ StudyMaterial }) => {
   const getThumbnailUrl = (videoLink: string) => {
     const videoIdMatch = videoLink.match(
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/
@@ -25,8 +24,8 @@ const FacultyStudyMaterialCard: React.FC<Props> = ({ section, StudyMaterial }) =
   const thumbnailUrl = getThumbnailUrl(StudyMaterial.videoLink);
 
   return (
-    <section className="rounded overflow-hidden shadow-lg flex flex-col w-full sm:w-full md:w-full lg:w-full">
-      <div
+    <div className="rounded overflow-hidden shadow-lg flex flex-col w-full sm:w-full md:w-full lg:w-full">
+      <section
         className="relative p-2 h-48 bg-cover bg-center"
         style={{
           backgroundImage: `url(${thumbnailUrl})`,
@@ -35,7 +34,7 @@ const FacultyStudyMaterialCard: React.FC<Props> = ({ section, StudyMaterial }) =
         <a href={StudyMaterial.videoLink} target="_blank" rel="noopener noreferrer">
           <div className="hover:bg-black hover:opacity-50 transition duration-300 absolute bottom-0 top-0 right-0 left-0"></div>
         </a>
-      </div>
+      </section>
 
       <div className="px-6 py-4 mb-auto">
         <a
@@ -61,7 +60,7 @@ const FacultyStudyMaterialCard: React.FC<Props> = ({ section, StudyMaterial }) =
           </a>
         </span>
       </div>
-    </section>
+    </div>
   );
 };
 

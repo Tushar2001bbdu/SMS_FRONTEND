@@ -6,10 +6,10 @@ function Alert(props) {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsVisible(false);
-    }, 5000); // Adjust the timeout as needed
+    }, 60000);
 
     return () => clearTimeout(timeoutId);
-  }, [message]);
+  }, [props.message]);
 
   const handleClose = () => {
     setIsVisible(false);
@@ -19,10 +19,13 @@ function Alert(props) {
   };
 
   return (
-    <div className={`alert alert-warning ${isVisible ? 'visible' : 'hidden'} fixed top-0 left-0 right-0 p-4`} role="alert">
-      <p className="text-white font-bold">{props.message}</p>
+    <div 
+      className={`alert alert-warning ${isVisible ? 'visible border-4 border-red-500 animate-border' : 'hidden'} fixed top-20% left-1/2  p-4`} 
+      role="alert"
+    >
+      <p className="text-black font-bold">{props.message}</p>
       <button type="button" className="close-button" onClick={handleClose}>
-        &times;
+        Close Modal
       </button>
     </div>
   );

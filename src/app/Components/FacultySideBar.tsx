@@ -21,13 +21,12 @@ const FacultySidebar: React.FC = () => {
   const context = useContext<FacultyContextType | null>(FacultyContext);
 
   return (
-    <>
       <div className="relative flex h-full w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
-        <div className="p-4 mb-2">
+        <section className="p-4 mb-2">
           <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
             Faculty Corner
           </h5>
-        </div>
+        </section>
         <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
           <div
             role="button"
@@ -218,7 +217,6 @@ const FacultySidebar: React.FC = () => {
           </div>
         </nav>
       </div>
-    </>
   );
 };
 

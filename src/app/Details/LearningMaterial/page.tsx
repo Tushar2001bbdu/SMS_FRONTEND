@@ -63,10 +63,10 @@ export default function LearningMaterial() {
 
   return (
     <div className="flex flex-col items-center justify-center mt-6 px-4">
-      <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
+      <section className="text-2xl font-bold mb-6 text-center text-gray-800">
         Learning Materials
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
+      </section>
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl">
         {studyMaterial?.map((element, index) => {
           return (
             <FacultyStudyMaterialCard
@@ -76,7 +76,7 @@ export default function LearningMaterial() {
             />
           );
         })}
-      </div>
+      </section>
     </div>
   );
 }
