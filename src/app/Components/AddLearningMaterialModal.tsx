@@ -15,11 +15,6 @@ interface RoleContextType {
   rollNumber: any;
 }
 
-interface FacultyDetails {
-  rollno: string;
-  [key: string]: any;
-}
-
 interface FacultyContextType {
   facultyData: any;
   getFacultyProfile: () => Promise<void>;
@@ -60,7 +55,7 @@ const AddLearningMaterialModal: FC<Props> = ({
     const fileType = file?.type || ".pdf";
     const videoLink = formData.get("video-link") as string;
     const tags = new Array(formData.get("tags") as string);
-    if (context?.uploadUrl && context?.uploadUrl.length <= 0) {
+    if (context?.uploadUrl && context?.uploadUrl.length> 0) {
       await fetch(context?.uploadUrl, {
         method: "PUT",
         body: file,
@@ -68,13 +63,12 @@ const AddLearningMaterialModal: FC<Props> = ({
           "Content-Type": file?.type || "application/octet-stream",
         },
       });
-    } else {
       let inputData = {
         title: title,
         description: description,
         subject: subject,
         section: section,
-        fileUrl: `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file?.name}`,
+        fileUrl: `https://assignmentsolutions.s3.ap-south-1.amazonaws.com/${file?.name}`,
         fileType: fileType,
         videoLink: videoLink,
         tags: tags,

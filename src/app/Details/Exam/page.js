@@ -30,17 +30,12 @@ export default function Page() {
       if (userCredential.user !== undefined) {
         const token = await userCredential.user.getIdToken();
         localStorage.setItem("firebaseToken", token);
-
-        // Store rollno in localStorage after successful login (backup in case)
-        localStorage.setItem("rollno", "1210437010");
-
-        // Call StudentLogin from AuthContext
+        localStorage.setItem("rollno", role?.rollNumber);
         await context.StudentLogin({ ...userDetails });
-        let id = "1210437010";
-        router.push(`/Details/Exam/StartExam`);
+        router.push(`/details/exam/startExam`);
       }
     } catch (error) {
-      console.error("Login error:", error);
+      alert("You have entered invalid credentials");
     }
   }
 

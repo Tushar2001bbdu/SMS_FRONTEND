@@ -44,7 +44,6 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
     if (event.target.files) {
       setFile(event.target.files[0]);
       let filename = `${subject}${event.target.files[0].name}`;
-      console.log("the file name is" + filename);
       context?.getAssignmentUrl(filename);
     }
   };
@@ -73,7 +72,7 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
       let inputData = {
         classCode: section,
         title: title,
-        AssignmentLink: `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file?.name}`,
+        AssignmentLink: `https://student-assignment-questions.s3.ap-south-1.amazonaws.com/${file?.name}`,
         subject: subject,
         assignmentDate: dateAssigned,
         dueDate: dueDate,

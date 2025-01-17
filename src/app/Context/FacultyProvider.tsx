@@ -149,7 +149,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   }
   async function getAssignmentUrl(filename: string) {
     try {
-        const bucketName = "student-assignment--questions";
+        const bucketName = "student-assignment-questions";
 
         const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
         
@@ -165,7 +165,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
         const data = await response.json();
 
-        if (data.status === "200") {
+        if (data.status === 200) {
             setUploadUrl(data.uploadUrl);
         } else {
             alert("you want to upload file in invalid format try again");
@@ -178,7 +178,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   async function logout(): Promise<void> {
     localStorage.removeItem("teacherFirebaseToken");
     Role?.changeRole(null,"xxxxxxxxxxxxxxxx",'XXXXXX');
-    router.push("/Faculty_Services");
+    router.push("/faculty");
   }
 
   return (
