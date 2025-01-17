@@ -50,7 +50,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       response=await response.json()
       if(response.status===200){
         Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
-        router.push("/Details")
+        router.push("/details")
       }
       else{
         alert("You have entered invalid credentials")
@@ -149,7 +149,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   }
   async function getAssignmentUrl(filename: string) {
     try {
-        const bucketName = "studentassignmentsquestions";
+        const bucketName = "student-assignment--questions";
 
         const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
         

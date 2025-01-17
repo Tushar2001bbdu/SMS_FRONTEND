@@ -89,7 +89,7 @@ export function AuthProvider({ children }) {
   }
   async function getAssignmentUrl(filename) {
     try {
-      const bucketName = "assignment-solutions";
+      const bucketName = "assignmentsolutions";
 
       const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
 

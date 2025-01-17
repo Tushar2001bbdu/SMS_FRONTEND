@@ -56,13 +56,19 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
     const dateAssigned = formData.get("date-given") as string;
     const dueDate = formData.get("date-due") as string;
     if (context?.uploadUrl && context?.uploadUrl.length <= 0) {
-      await fetch(context?.uploadUrl, {
-        method: "PUT",
-        body: file,
-        headers: {
-          "Content-Type": file?.type || "application/octet-stream",
-        },
-      });
+      try{
+        await fetch(context?.uploadUrl, {
+          method: "PUT",
+          body: file,
+          headers: {
+            "Content-Type": file?.type || "application/octet-stream",
+          },
+        });
+      }
+      catch(error){
+        console.error(error);
+      }
+     
     } else {
       let inputData = {
         classCode: section,
