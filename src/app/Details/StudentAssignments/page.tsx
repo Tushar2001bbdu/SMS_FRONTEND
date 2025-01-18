@@ -4,15 +4,7 @@ import { FacultyContext } from "@/app/Context/FacultyProvider";
 import React, { FC, useContext} from "react";
 interface FacultyContextType {
   facultyData: any;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
-  uploadUrl?: string  | null;
-  getAssignmentUrl:(filename: string)=>Promise<any>;
-  logout: () => void;
+  getFacultyProfile?: () => Promise<void>;
 }
 const StudentAssignments: FC = () => {
   const headingStyle = {
@@ -24,7 +16,7 @@ const StudentAssignments: FC = () => {
     WebkitBackgroundClip: "text",
   };
   let context = useContext<FacultyContextType | null>(FacultyContext);
- if(context?.facultyData==null){
+ if(context?.facultyData==null && context?.getFacultyProfile){
     context?.getFacultyProfile()
  }
   

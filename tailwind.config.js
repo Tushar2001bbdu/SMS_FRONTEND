@@ -8,6 +8,9 @@ module.exports = {
 	],
 	theme: {
 	  extend: {
+		backgroundImage:{
+			'cover': ['url("https://media.gettyimages.com/id/1148057061/vector/entrepreneurship-in-science-outline-style-infographic-design.jpg?s=612x612&w=gi&k=20&c=S5ebo0UsBsZgLeH0YgO8ptMHOu4MYyHMnUsguiBXmEY=")', 'no-repeat',  'cover'],
+		},
 		animation: {
         'border': 'border-pulse 1.5s infinite',
       },

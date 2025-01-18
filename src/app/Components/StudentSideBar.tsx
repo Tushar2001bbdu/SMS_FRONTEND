@@ -2,11 +2,11 @@
 import { useRouter } from "next/navigation";
 import { AuthContext } from "../Context/AuthProvider";
 import React,{ useContext } from "react";
-interface Context{
+interface StudentContextType{
   logout: () => void;
 }
 const StudentSideBar: React.FC = () => {
-  const context = useContext<Context | null>(AuthContext);
+  const context = useContext<StudentContextType | null>(AuthContext);
   const router = useRouter();
 
   return (
@@ -174,9 +174,10 @@ const StudentSideBar: React.FC = () => {
             </div>
             Learning Material
           </div>
+          
           <div
           role="button"
-          onClick={() => router.push("/details/classSchedule")}
+          onClick={() => router.push("/details/contact/student")}
           className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
         >
           <div className="grid mr-4 place-items-center">
@@ -194,7 +195,7 @@ const StudentSideBar: React.FC = () => {
               />
             </svg>
           </div>
-          Class Schedule
+          Contact Teachers
         </div>
           <div
             role="button"

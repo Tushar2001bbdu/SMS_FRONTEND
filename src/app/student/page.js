@@ -25,9 +25,6 @@ export default function page() {
         userDetails.password
       );
       const token = await userCredential.user.getIdToken(); // Get Firebase ID token
-
-      // You can now send the token to your API or store it in cookies for authentication
-      // Example: save token to localStorage (or better, use cookies)
       localStorage.setItem("firebaseToken", token);
       await User_Context.StudentLogin(userDetails);
     } catch (error) {
@@ -41,8 +38,8 @@ export default function page() {
           <Image
             alt="Your Company"
             src="/graduated.png"
-            height={"64"}
-            width={"64"}
+            height={64}
+            width={64}
             className="mx-auto h-20 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

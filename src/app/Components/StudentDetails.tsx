@@ -1,15 +1,19 @@
 "use client";
 import React, { useEffect, useContext } from 'react';
 import { AuthContext } from '../Context/AuthProvider';
-
+interface teacherData {
+  name: string;
+  rollno: string;
+}
 interface StudentData {
   email: string;
   rollno: string;
   course: string;
   section: string;
   classteacher: string;
-  teacherrollno: string;
+  teacherrollno: teacherData[];
 }
+
 
 interface AuthContextType {
   studentData: StudentData | null;
@@ -65,7 +69,7 @@ const StudentDetails: React.FC = () => {
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Class Teacher Roll Number</dt>
               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                {con.studentData.teacherrollno}
+                {con.studentData.teacherrollno[0].name}
               </dd>
             </div>
           </dl>

@@ -12,15 +12,14 @@ interface FacultyDetails {
 interface FacultyContextType {
   facultyData: any;
   facultyLogin?: (facultyDetails: FacultyDetails) => Promise<void>;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  getFacultyProfile?: () => Promise<void>;
+  studentProfile?: any;
+  getStudentProfile?: (rollno: string) => Promise<any>;
+  updateResult?: (rollno: string, marks: string | number) => Promise<void>;
   uploadUrl?: string  | null;
-  getAssignmentUrl:(filename: string)=>Promise<any>;
-  logout: () => void;
+  getAssignmentUrl?:(filename: string)=>Promise<any>;
+ 
+  logout?: () => void;
 }
 
 export const FacultyContext = createContext<FacultyContextType | null>(null);
@@ -64,10 +63,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   }
 
   async function getFacultyProfile(): Promise<void> {
-    const rollno = "221078897";
-    let url = new URL(`http://localhost:3001/app/teachers/seeDetails`);
-    url.searchParams.set("rollno", rollno);
-
+    let url = new URL(`http://localhost:3001/app/teachers/seeDetails`)
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
@@ -86,23 +82,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
     
   }
 
-  async function getListOfStudents(section: string): Promise<void> {
-    let url = new URL(`http://localhost:3001/app/teachers/listOfStudents`);
-    url.searchParams.set("section", section);
-
-    const response = await fetch(url.toString(), {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("teacherFirebaseToken") || "",
-      },
-    });
-
-    const data = await response.json();
-    setList(data.data);
-  }
-
-  async function getStudentProfile(rollno: string): Promise<any> {
+async function getStudentProfile(rollno: string): Promise<any> {
     let url = new URL(`http://localhost:3001/app/teachers/getStudentProfile`);
     url.searchParams.set("rollno", rollno);
 
@@ -134,6 +114,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({ rollno: "121078899", marks: marks }),
       });
+      response=await response.json()
       if(response.status===200){
         router.push("/details")
       }
@@ -187,8 +168,6 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
         facultyData,
         facultyLogin,
         getFacultyProfile,
-        getListOfStudents,
-        studentList,
         studentProfile,
         getStudentProfile,
         updateResult,

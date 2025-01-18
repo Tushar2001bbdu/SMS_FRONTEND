@@ -42,8 +42,8 @@ export default function page() {
           <Image
             alt="Your Company"
             src="/professor.png"
-            height={"64"}
-            width={"64"}
+            height={64}
+            width={64}
             className="mx-auto h-20 w-auto"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">

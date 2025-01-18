@@ -2,15 +2,9 @@ import React, { useState, useContext } from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
 interface FacultyContextType {
   facultyData: any;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
-  uploadUrl?: string  | null;
-  getAssignmentUrl:(filename: string)=>Promise<any>;
-  logout: () => void;
+  studentProfile?: any;
+  getStudentProfile?: (rollno: string) => Promise<any>;
+  updateResult?: (rollno: string, marks: string | number) => Promise<void>;
 }
 
 
@@ -28,7 +22,10 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ rollno,visibility,setVi
   }
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    context?.updateResult(rollno, marks);
+    if(context?.updateResult){
+      context?.updateResult(rollno, marks);
+    }
+    
   }
   return (
     <div>

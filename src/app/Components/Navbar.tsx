@@ -4,7 +4,10 @@ import { AdminContext } from "../Context/AdminProvider";
 import { RoleContext } from "../Context/RoleProvider";
 interface RoleContextType {
   role: any;
-  changeRole: (newRole: any) => void;
+  changeRole: (newRole: any,rollno:any,email:any) => void;
+  email:any;
+  rollNumber:any;
+
 }
 
 const Navbar: React.FC = () => {

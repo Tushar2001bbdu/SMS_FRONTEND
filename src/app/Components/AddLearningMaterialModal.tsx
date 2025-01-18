@@ -17,14 +17,7 @@ interface RoleContextType {
 
 interface FacultyContextType {
   facultyData: any;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
-  logout: () => void;
-  getAssignmentUrl: (filename: string) => Promise<any>;
+  getAssignmentUrl?: (filename: string) => Promise<any>;
   uploadUrl?: string | null;
 }
 
@@ -39,7 +32,7 @@ const AddLearningMaterialModal: FC<Props> = ({
     useMutation(addStudyMaterial);
   const role = useContext<RoleContextType | null>(RoleContext);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
+    if (event.target.files && context?.getAssignmentUrl) {
       setFile(event.target.files[0]);
       let filename = `${subject}${event.target.files[0].name}`;
       console.log("the file name is" + filename);

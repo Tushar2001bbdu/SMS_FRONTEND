@@ -18,7 +18,7 @@ interface StudentContext {
   classDetails: any;
 }
 
-const ClassesToday: React.FC = () => {
+const Page: React.FC = () => {
   const context = useContext<StudentContext | null>(AuthContext);
   const days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   let daySchedule: any;
@@ -76,4 +76,4 @@ const ClassesToday: React.FC = () => {
   return null;
 };
 
-export default ClassesToday;
+export default Page;
