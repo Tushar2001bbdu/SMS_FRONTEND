@@ -41,10 +41,10 @@ const Page: React.FC = () => {
               key={index}
               role="button"
               onClick={()=>{setReceiverId(teacher.rollno);setReceiverName(teacher.name)}}
-              className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700 transition-colors"
+              className="flex w-full items-center space-x-2 p-2 rounded-lg hover:bg-gray-700 transition-colors"
             >
-              <div className="text-lg">{teacher.name}</div>
-              <div className="text-sm text-gray-400">{teacher.rollno}</div>
+              <h2>{teacher.name}</h2>
+              <h2 className="text-gray-400">{teacher.rollno}</h2>
             </div>
           ))}
         </div>

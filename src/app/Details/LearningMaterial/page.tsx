@@ -11,7 +11,7 @@ interface StudentData {
   course: string;
   section: string;
   classteacher: string;
-  teacherrollno: string;
+  teacherrollno: any;
 }
 interface StudentContext {
   studentData: StudentData | null;
@@ -36,7 +36,7 @@ export default function LearningMaterial() {
     {
       variables: {
         section: context?.studentData?.section,
-        uploadedBy: context?.studentData?.teacherrollno,
+        uploadedBy: context?.studentData?.teacherrollno[0].rollno,
       },
     }
   );

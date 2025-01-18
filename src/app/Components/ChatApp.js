@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
@@ -9,6 +8,7 @@ const ChatApp = (props) => {
   const receiverId = props.receiverId;
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     socket.emit("register", senderId);
@@ -39,7 +39,7 @@ const ChatApp = (props) => {
 
   return (
     <div>
-      <h2 style={{font:"bold",textAlign:"center"}}>{props.receiverName}-{receiverId}</h2>
+      <h2 style={{ font: "bold", textAlign: "center" }}>{props.receiverName}-{receiverId}</h2>
       <div style={{ border: '1px solid #ccc', padding: '10px', height: '400px', overflowY: 'scroll' }}>
         {messages.map((msg, index) => (
           <div
@@ -47,7 +47,7 @@ const ChatApp = (props) => {
               msg.sender === senderId ? 'bg-gray-800 text-white' : 'bg-white text-black'
             }`}
             key={index}
-            style={{ marginBottom: '10px', textAlign: msg.sender === senderId ? 'right' : 'left' }}
+            style={{ marginBottom: '10px', textAlign: msg.sender === senderId ? 'right' : 'left',width:'auto' , padding: '10px', borderRadius: '10px'}}
           >
             <p><strong>{msg.sender}:</strong> {msg.content}</p>
             <p style={{ fontSize: '12px', color: '#888' }}>
@@ -56,16 +56,30 @@ const ChatApp = (props) => {
           </div>
         ))}
       </div>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type a message..."
-        style={{ width: '80%', padding: '10px',border: '1px solid #ccc' }}
-      />
-      <button onClick={handleSendMessage} style={{ padding: '10px', marginLeft: '10px' }}>
-        Send
-      </button>
+      <div className='mt-2'>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Type a message..."
+          style={{ width: '80%', padding: '10px', borderRadius: "10%", border: "1px solid black" }}
+        />
+        <button
+          onClick={handleSendMessage}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          style={{
+            padding: '10px',
+            marginLeft: '10px',
+            backgroundColor: hovered ? '#2d2d2d' : 'transparent',
+            color: hovered ? 'white' : 'black',
+            borderRadius: '10%',
+            border: '1px solid black'
+          }}
+        >
+          Send
+        </button>
+      </div>
     </div>
   );
 };
