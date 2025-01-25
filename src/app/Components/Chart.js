@@ -9,24 +9,19 @@ import {
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const Chart = () => {
-  
-  
+const Chart = (props) => {
   const data = {
-    labels: ['present', 'absent'],
+    labels: [props.label1, props.label2],
     datasets: [
       {
-    
-        data: [40,60],
+        data: [props.data1, props.data2],
         backgroundColor: [
-          'rgba(255, 99, 132, 0.6)',
-          'rgba(54, 162, 235, 0.6)',
-         
+          'rgba(243, 231, 233, 0.9)',
+          'rgba(27, 11, 243, 0.6)',
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-         
+          'rgb(238, 229, 231)',
+          'rgb(11, 15, 235)',
         ],
         borderWidth: 1,
       },
@@ -37,17 +32,25 @@ const Chart = () => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top',
-        display:true
-      },
+        position: 'bottom',
+        display: true,
+        labels: {
+          usePointStyle: true,
+          boxWidth: 10,
+          padding: 20, 
+      }},
       title: {
         display: true,
-        text: 'Doughnut Chart Example',
+        text: 'Chart',
       },
     },
   };
 
-  return <Chart data={data} options={options} style={{"height":"140px","width":"140px"}} />;
+  return (
+    <div>
+      <Doughnut data={data} options={options} />
+    </div>
+  );
 };
 
 export default Chart;
