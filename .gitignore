@@ -43,6 +43,7 @@ teacher-account-key.json
 secrets
 student_auth.js
 teacher_auth.js
+admin_auth.js
 backend
 # Sentry Config File
 .env.sentry-build-plugin
