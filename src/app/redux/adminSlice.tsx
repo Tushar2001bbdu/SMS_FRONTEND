@@ -9,6 +9,7 @@ const initialState = {
     email: null,
     rollNumber: null,
   },
+  teacherList:[]
 };
 
 // Async Thunks for API Calls
@@ -75,6 +76,21 @@ export const getClassList = createAsyncThunk("admin/getClassList", async () => {
   
   return data.data;
 });
+export const getTeacherList = createAsyncThunk("admin/getTeacherList", async () => {
+  let url = `http://localhost:3001/app/details/getTeacherList`;
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "authorization": localStorage.getItem("adminFirebaseToken") || "",
+    },
+  });
+
+  const data = await res.json();
+  
+  return data.data;
+});
 
 // Slice Definition
 const adminSlice = createSlice({
@@ -98,6 +114,9 @@ const adminSlice = createSlice({
       });
       builder.addCase(getClassList.fulfilled, (state, action) => {
         state.classList = action.payload;
+      }),
+      builder.addCase(getTeacherList.fulfilled, (state, action) => {
+        state.teacherList = action.payload;
       })
   },
  

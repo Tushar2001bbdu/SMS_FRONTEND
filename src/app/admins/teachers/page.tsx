@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Outfit } from 'next/font/google';
 import '@/app/globals.css'
 import { useDispatch, useSelector } from "react-redux";
-import { getClassList } from "@/app/redux/adminSlice";
+import { getTeacherList } from "@/app/redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
 import AddTeacher from "@/app/Components/AddTeacher";
 const outfit = Outfit({ subsets: ['latin'], weight: ['500', '700'] });
@@ -23,7 +23,7 @@ const Page: React.FC = () => {
       
       {addTeacher===true && <div className="fixed inset-0 bg-gray-500 bg-opacity-75">{<AddTeacher/>}</div>}
         
-            
+      <div className={`text-center w-full ${outfit.className} text-lg md:text-2xl lg:text-4xl`}>Teacher List</div>
         <div>
           <table className="flex justify-center mt-4 divide-y divide-gray-200 dark:divide-gray-700">
             <tbody>
@@ -54,7 +54,7 @@ const Page: React.FC = () => {
                       <td className="px-6 py-4">{element.name}</td>
                       <td className="px-6 py-4">{element.section}</td>
                       <td className="px-6 py-4">
-                        {element.teacherrollno[0].name}
+                        {element.name}
                       </td>
                       <td className="px-6 py-4">
                         <a
@@ -77,7 +77,7 @@ const Page: React.FC = () => {
                 })}
             </tbody>
           </table>
-          <div className="mx-auto mt-4 h-19 text-center py-6 text-white bg-green-700 w-44 hover:bg-green-800 focus:ring-4 focus:outline-none ..." onClick={()=>{setAddTeacher(true)}}>Add Student</div>
+          <div className="mx-auto mt-4 h-19 text-center py-6 text-white bg-green-700 w-44 hover:bg-green-800 focus:ring-4 focus:outline-none ..." onClick={()=>{setAddTeacher(true)}}>Add Teacher</div>
         </div>
       </>
     );
