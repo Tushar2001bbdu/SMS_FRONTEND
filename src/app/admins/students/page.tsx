@@ -136,7 +136,7 @@ const Page: React.FC = () => {
                 })}
             </tbody>
           </table>
-          <div className="mx-auto mt-4 h-19 text-center py-6 text-white bg-green-700 w-44 hover:bg-green-800 focus:ring-4 focus:outline-none ..." onClick={()=>{setAddStudent(true)}}>Add Student</div>
+          {studentList?.length>0 && <div className="mx-auto mt-4 h-19 text-center py-6 text-white bg-green-700 w-44 hover:bg-green-800 focus:ring-4 focus:outline-none ..." onClick={()=>{setAddStudent(true)}}>Add Student</div>}
         </div>
       </>
     );

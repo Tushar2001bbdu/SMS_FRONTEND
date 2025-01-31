@@ -1,9 +1,11 @@
 "use client";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { AnyARecord } from "node:dns";
 
 // Initial state
 const initialState = {
   examNotification: null,
+  photoUploadUrl:null,
   classList: [],
   role: {
     email: null,
@@ -91,7 +93,32 @@ export const getTeacherList = createAsyncThunk("admin/getTeacherList", async () 
   
   return data.data;
 });
+export const getPhotoUploadUrl = createAsyncThunk("admin/getPhotoUploadUrl", async(filename: any)=> {
+  try {
 
+      const url = `http://localhost:3001/app/details/get-upload-url/${filename}`;
+      
+      const response = await fetch(url, {
+          method: "GET",
+          headers: {
+              "Content-Type": "application/json",
+              authorization: localStorage.getItem("adminFirebaseToken") || ""
+          }
+      });
+
+     
+
+      const data = await response.json();
+
+      if (data.status === 200) {
+          return data.uploadUrl;
+      } else {
+          throw Error("you want to upload file in invalid format try again");
+      }
+  } catch (error:any) {
+      throw Error("Error fetching upload URL:", error);
+  }
+})
 // Slice Definition
 const adminSlice = createSlice({
   name: "admin",
@@ -112,6 +139,15 @@ const adminSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         console.error(action.error.message);
       });
+      builder
+      .addCase(getPhotoUploadUrl.fulfilled, (state, action) => {
+        if (action.payload && action.payload.status === "success") {
+          state.photoUploadUrl = action.payload;
+
+        } else {
+          console.error(action.payload.message);
+        }
+      })
       builder.addCase(getClassList.fulfilled, (state, action) => {
         state.classList = action.payload;
       }),

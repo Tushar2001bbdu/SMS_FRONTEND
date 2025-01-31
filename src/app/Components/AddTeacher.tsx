@@ -1,19 +1,20 @@
 "use client";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPhotoUploadUrl } from "../redux/adminSlice";
+import { AppDispatch } from "@/app/redux/adminStore";
 
-
-
-const AddTeacher: React.FC= () => {
+const AddTeacher: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     age: 0,
     password: "",
     course: "",
-    gender:""
+    gender: "",
   });
   const [file, setFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+  const dispatch = useDispatch<AppDispatch>();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -21,12 +22,12 @@ const AddTeacher: React.FC= () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
-    
+
     Object.entries(formData).forEach(([key, value]) => {
-     if(typeof(value) === 'number' && value===0){
+      if (typeof value === "number" && value === 0) {
         newErrors[key] = "This field is required";
-     }
-      else if ( typeof(value)!='number' && !value.trim()) newErrors[key] = "This field is required";
+      } else if (typeof value != "number" && !value.trim())
+        newErrors[key] = "This field is required";
     });
 
     if (!file) newErrors["file"] = "Photograph is required";
@@ -73,37 +74,45 @@ const AddTeacher: React.FC= () => {
                       className="bg-gray-50 border text-gray-900 rounded-lg block w-full p-2.5 dark:bg-gray-600 dark:text-white"
                       placeholder={`Enter ${key}`}
                     />
-                    {errors[key] && <p className="text-red-500 text-sm">{errors[key]}</p>}
+                    {errors[key] && (
+                      <p className="text-red-500 text-sm">{errors[key]}</p>
+                    )}
                   </div>
                 ))}
-                </div>
-                <div className="my-3">
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Add Photograph
-                  </label>
-                  <div>
+              </div>
+              <div className="my-3">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Add Photograph
+                </label>
+                <div>
                   <input
                     type="file"
                     id="fileInput"
                     className="hidden"
-                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    onChange={(e) => {
+                      const selectedFile = e.target.files?.[0] || null;
+                      setFile(selectedFile);
+                      if (selectedFile) {
+                        dispatch(getPhotoUploadUrl(selectedFile.name));
+                      }
+                    }}
                   />
                   <div className="w-full flex">
                     <label
                       htmlFor="fileInput"
                       className="w-1/2 cursor-pointer bg-blue-500 text-white px-4 py-2 hover:bg-blue-600 transition"
                     >
-                    Add Photograph
+                      Add Photograph
                     </label>
                     <span className="w-1/2 border-black border-2 text-black px-4 py-2">
                       {file ? file.name : "No File Chosen"}
                     </span>
-                    {errors.file && <p className="text-red-500 text-sm">{errors.file}</p>}
+                    {errors.file && (
+                      <p className="text-red-500 text-sm">{errors.file}</p>
+                    )}
                   </div>
-                  </div>
-                  
-                  
                 </div>
+              </div>
               <div className="flex justify-center">
                 <button
                   type="submit"

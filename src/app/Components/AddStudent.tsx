@@ -4,6 +4,10 @@ import React, { useState } from "react";
 interface Props {
   section: string;
 }
+import { useDispatch,useSelector } from "react-redux";
+import { getPhotoUploadUrl } from "../redux/adminSlice";
+import { AppDispatch } from "@/app/redux/adminStore";
+
 
 const AddStudent: React.FC<Props> = ({ section }) => {
   const [formData, setFormData] = useState({
@@ -17,6 +21,7 @@ const AddStudent: React.FC<Props> = ({ section }) => {
     trollno: "",
   });
   const [file, setFile] = useState<File | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,7 +93,13 @@ const AddStudent: React.FC<Props> = ({ section }) => {
                     type="file"
                     id="fileInput"
                     className="hidden"
-                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    onChange={(e) => {
+                      const selectedFile = e.target.files?.[0] || null;
+                      setFile(selectedFile);
+                      if (selectedFile) {
+                        dispatch(getPhotoUploadUrl(selectedFile.name));
+                      }
+                    }}
                   />
                   <div className="w-full flex">
                     <label
