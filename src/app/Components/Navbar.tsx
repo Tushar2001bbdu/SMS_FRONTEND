@@ -1,21 +1,24 @@
 import React, { useState, useRef, useContext } from "react";
 import Webcam from "react-webcam";
-import { AdminContext } from "../Context/AdminProvider";
+import { useDispatch } from "react-redux";
+import { sendPhoto } from "@/app/redux/adminSlice";
+import { AppDispatch } from "@/app/redux/adminStore"; // Ensure correct import
 import { RoleContext } from "../Context/RoleProvider";
+
 interface RoleContextType {
   role: any;
-  changeRole: (newRole: any,rollno:any,email:any) => void;
-  email:any;
-  rollNumber:any;
-
+  changeRole: (newRole: any, rollno: any, email: any) => void;
+  email: any;
+  rollNumber: any;
 }
 
 const Navbar: React.FC = () => {
-  const [visibility, setVisibility] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   const webcamRef = useRef<Webcam | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const context = useContext(AdminContext);
-  const Role = useContext<RoleContextType | null>(RoleContext);
+  const [visibility, setVisibility] = useState<boolean>(false);
+
+  const Role = useContext(RoleContext) as RoleContextType | null;
 
   function openWebcam() {
     setVisibility(true);
@@ -25,7 +28,8 @@ const Navbar: React.FC = () => {
     if (webcamRef.current) {
       const image = webcamRef.current.getScreenshot();
       if (image) {
-        context.sendPhoto(image);
+        setImageSrc(image); // Fixed missing imageSrc update
+        dispatch(sendPhoto(image));
       }
       setVisibility(false);
     }
@@ -63,11 +67,7 @@ const Navbar: React.FC = () => {
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
                 <svg
                   className="hidden h-6 w-6"
@@ -77,11 +77,7 @@ const Navbar: React.FC = () => {
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
@@ -93,7 +89,7 @@ const Navbar: React.FC = () => {
                   <a
                     href="/student"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role?.role !== null ? true : false}
+                    hidden={Role?.role !== null}
                   >
                     Student
                   </a>
@@ -101,14 +97,14 @@ const Navbar: React.FC = () => {
                   <a
                     href="/faculty"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role?.role !== null ? true : false}
+                    hidden={Role?.role !== null}
                   >
                     Faculty
                   </a>
                   <a
-                    href="#"
+                    href="/administrator"
                     className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role?.role !== null ? true : false}
+                    hidden={Role?.role !== null}
                   >
                     Administrator
                   </a>
@@ -132,10 +128,9 @@ const Navbar: React.FC = () => {
               {Role?.role !== null && (
                 <button
                   type="button"
-                  className=" mx-3 relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  className="mx-3 relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
                   onClick={captureImage}
                 >
-                  {}
                   <span className="absolute -inset-1.5"></span>
                   <span className="sr-only">Capture Image</span>
                   Capture Attendance
@@ -147,14 +142,11 @@ const Navbar: React.FC = () => {
       </nav>
       {imageSrc && (
         <div style={{ marginTop: "10px" }}>
-          <img
-            src={imageSrc}
-            alt="Captured"
-            style={{ maxWidth: "100%", height: "auto" }}
-          />
+          <img src={imageSrc} alt="Captured" style={{ maxWidth: "100%", height: "auto" }} />
         </div>
       )}
     </div>
   );
 };
+
 export default Navbar;

@@ -4,3 +4,9 @@
 @import 'tailwindcss/utilities';
 
 /* Custom Global Styles */
+@layer base {
+  body {
+    background-image: linear-gradient(to bottom right, #ebf8ff, #e2e8f0);
+    color: #2d3748;
+  }
+}

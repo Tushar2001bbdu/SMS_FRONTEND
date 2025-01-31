@@ -17,9 +17,11 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.0.2",
+    "@next/swc-win32-x64-msvc": "^15.1.6",
     "@popperjs/core": "^2.11.8",
     "@preline/dropdown": "^2.4.1",
-    "@sentry/nextjs": "^8.42.0",
+    "@reduxjs/toolkit": "^2.5.1",
+    "@sentry/nextjs": "^8.51.0",
     "@zoomus/websdk": "^2.18.3",
     "chart.js": "^4.4.4",
     "dotenv": "^16.4.5",
@@ -34,13 +36,13 @@
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
-    "react-redux": "^9.1.2",
+    "react-redux": "^9.2.0",
     "react-webcam": "^7.2.0",
     "socket.io-client": "^4.8.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "@types/react": "^19.0.1",
+    "@types/react": "^18.3.18",
     "eslint": "^8",
     "eslint-config-next": "14.2.7",
     "postcss": "^8",
@@ -48,11 +50,11 @@
     "typescript": "^5.7.2"
   },
   "overrides": {
-  "@mui/material": {
-    "@types/react": "^18.0.0"
-  },
-  "react-redux": {
-    "@types/react": "^18.0.0"
+    "@mui/material": {
+      "@types/react": "^18.0.0"
+    },
+    "react-redux": {
+      "@types/react": "^18.0.0"
+    }
   }
-}
 }

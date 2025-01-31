@@ -1,7 +1,8 @@
 "use client";
 
 import { RoleProvider } from "../Context/RoleProvider";
-import { AdminProvider } from "../Context/AdminProvider";
+import { Provider } from "react-redux";
+import store from "@/app/redux/adminStore";
 import {FacultyProvider}  from "../Context/FacultyProvider";
 import { OnlineClassProvider } from "../Context/OnlineClassProvider";
 import { ApolloProvider } from "@apollo/client";
@@ -13,13 +14,13 @@ export const AppProviders = ({ children }) => {
     <RoleProvider>
     <ApolloProvider client={graphqlClient}>
       <OnlineClassProvider>
-        <AdminProvider>
+        <Provider store={store}>
           <FacultyProvider>
             
               <AuthProvider>{children}</AuthProvider>
            
           </FacultyProvider>
-        </AdminProvider>
+        </Provider>
       </OnlineClassProvider>
     </ApolloProvider>
     </RoleProvider>

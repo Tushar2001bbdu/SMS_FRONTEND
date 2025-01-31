@@ -22,15 +22,9 @@ interface FacultyDetails {
 
 interface FacultyContextType {
   facultyData: any;
-  facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
-  logout: () => void;
-  getAssignmentUrl: (filename: string) => Promise<any>;
+  facultyLogin?: (facultyDetails: FacultyDetails) => Promise<void>;
+  getFacultyProfile?: () => Promise<void>;
+  getAssignmentUrl?: (filename: string) => Promise<any>;
   uploadUrl?: string | null;
 }
 
@@ -44,7 +38,10 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
     if (event.target.files) {
       setFile(event.target.files[0]);
       let filename = `${subject}${event.target.files[0].name}`;
-      context?.getAssignmentUrl(filename);
+      if(context?.getAssignmentUrl){
+        context?.getAssignmentUrl(filename);
+      }
+     
     }
   };
 

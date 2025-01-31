@@ -57,6 +57,7 @@ export default function Page() {
   if (error) {
     return <div className="text-red-500 text-center mt-4">Error: {error.message}</div>;
   }
+  /*
   const headingStyle = {
     fontSize: "40px",
     fontWeight: 600,
@@ -64,11 +65,13 @@ export default function Page() {
     color: "transparent",
     backgroundClip: "text",
     WebkitBackgroundClip: "text",
-  };
+  };*/
 
   return (
     <div>
-      <section className="text-center" style={headingStyle}> Your Assignments</section>
+      <section className="text-2xl font-bold mb-6 text-center text-gray-800">
+      Your Assignments
+      </section>
       <section className="my-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {data?.getAssignmentsByRollno.map((element, index) => (
           <StudentAssignment key={index} assignment={element} />

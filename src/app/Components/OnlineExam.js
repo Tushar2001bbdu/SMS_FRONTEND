@@ -1,12 +1,13 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import questions from "../questions";
 import Webcam from "react-webcam";
-import { AdminContext } from "../Context/AdminProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { sendFrame } from "./adminSlice";
 import Alert from "./Alert";
 import { FacultyContext } from "../Context/FacultyProvider";
-
 export default function OnlineExam() {
-  const admin = useContext(AdminContext);
+  const dispatch = useDispatch();
+  const examNotification = useSelector((state) => state.admin.examNotification);
   const faculty = useContext(FacultyContext);
   const [marks, setMarks] = useState(0);
   const examTracker = useRef(new Map());
@@ -40,7 +41,7 @@ export default function OnlineExam() {
     if (webcamRef.current) {
       const image = webcamRef.current.getScreenshot();
       if (image) {
-        admin.sendFrame(image);
+        dispatch(sendFrame(image))
       }
     }
   };
@@ -61,7 +62,7 @@ export default function OnlineExam() {
         style={{ visibility: 'hidden' }}
         videoConstraints={videoConstraints}
       />
-      {(admin.examNotification!==null && admin.examNotification !== "No suspicious activity detected" )? 
+      {(examNotification!==null && examNotification !== "No suspicious activity detected" )? 
         <Alert message="Some Suspicious Activity Detected During Exam" /> : 
         <div>
           <heading className="heading text-center">

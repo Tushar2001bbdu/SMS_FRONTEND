@@ -44,3 +44,5 @@ secrets
 student_auth.js
 teacher_auth.js
 backend
+# Sentry Config File
+.env.sentry-build-plugin
