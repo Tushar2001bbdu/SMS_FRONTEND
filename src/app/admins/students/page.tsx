@@ -98,7 +98,7 @@ const Page: React.FC = () => {
                         className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
                         <img
-                          src={element.photograph}
+                          src={element.profilepictureLink}
                           alt="student"
                           width={50}
                           height={50}

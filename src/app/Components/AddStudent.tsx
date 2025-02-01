@@ -5,12 +5,15 @@ interface Props {
   section: string;
 }
 import { useDispatch,useSelector } from "react-redux";
-import { getPhotoUploadUrl } from "../redux/adminSlice";
+import { createStudentRecord, getPhotoUploadUrl } from "../redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
 
 
 const AddStudent: React.FC<Props> = ({ section }) => {
+  let photoUrl= useSelector((state: any) => state.admin.photoUploadUrl);
+  let message=useSelector((state:any)=> state.admin.message)
   const [formData, setFormData] = useState({
+    email:"tusharkumargupta8dec2001@bbdu.ac.in",
     name: "",
     rollno: "",
     password: "",
@@ -20,7 +23,7 @@ const AddStudent: React.FC<Props> = ({ section }) => {
     classteacher: "",
     trollno: "",
   });
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<any>(null);
   const dispatch = useDispatch<AppDispatch>();
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -28,7 +31,7 @@ const AddStudent: React.FC<Props> = ({ section }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
     
@@ -42,9 +45,38 @@ const AddStudent: React.FC<Props> = ({ section }) => {
       setErrors(newErrors);
       return;
     }
+    if(photoUrl){
+      
+        await fetch(photoUrl, {
+          method: "PUT",
+          body: file,
+          headers: {
+            "Content-Type": file?.type || "application/octet-stream",
+          },
+        });
+    }
+    if(file){
+      dispatch(createStudentRecord({
+        email: formData.email,
+        rollno: formData.rollno,
+        name: formData.name,
+        password: formData.password,
+        course: formData.course,
+        section: formData.section,
+        branch: formData.branch,
+        classteacher:formData.classteacher,
+        teacherrollno: formData.trollno,
+        profilepictureLink: `https://school-managemengt-system-training.s3.ap-south-1.amazonaws.com/${file?.name}`
+      }))
+    }
 
-    alert("Form submitted successfully!");
+   if(message.length>0){
+    alert(message);
+   }
+ 
+
   };
+
 
   return (
     <div>
@@ -94,7 +126,7 @@ const AddStudent: React.FC<Props> = ({ section }) => {
                     id="fileInput"
                     className="hidden"
                     onChange={(e) => {
-                      const selectedFile = e.target.files?.[0] || null;
+                      const selectedFile = e.target.files?.[0];
                       setFile(selectedFile);
                       if (selectedFile) {
                         dispatch(getPhotoUploadUrl(selectedFile.name));
