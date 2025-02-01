@@ -3,13 +3,15 @@ import React, { useState } from "react";
 
 interface Props {
   section: string;
+  setAddStudent:any;
 }
+
 import { useDispatch,useSelector } from "react-redux";
 import { createStudentRecord, getPhotoUploadUrl } from "../redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
 
 
-const AddStudent: React.FC<Props> = ({ section }) => {
+const AddStudent: React.FC<Props> = ({ section,setAddStudent }) => {
   let photoUrl= useSelector((state: any) => state.admin.photoUploadUrl);
   let message=useSelector((state:any)=> state.admin.message)
   const [formData, setFormData] = useState({
@@ -72,6 +74,7 @@ const AddStudent: React.FC<Props> = ({ section }) => {
 
    if(message.length>0){
     alert(message);
+    setAddStudent(false);
    }
  
 

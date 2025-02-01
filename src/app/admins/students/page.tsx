@@ -36,7 +36,7 @@ const Page: React.FC = () => {
     return (
       <>
       
-      {addStudent===true && <div className="fixed inset-0 bg-gray-500 bg-opacity-75">{<AddStudent section={section} />}</div>}
+      {addStudent===true && <div className="fixed inset-0 bg-gray-500 bg-opacity-75">{<AddStudent section={section} setAddStudent={setAddStudent} />}</div>}
         <div className={`text-center w-full ${outfit.className} text-lg md:text-2xl lg:text-4xl`}>Student List</div>
         <div className="flex justify-end mt-4">
           <button

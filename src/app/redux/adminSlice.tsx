@@ -31,10 +31,10 @@ export const login = createAsyncThunk(
     const data = await res.json();
 
     if (data.status !== 200) {
-      throw new Error(data.message || "Login failed"); // Use actual error message
+      throw new Error(data.message || "Login failed");
     }
 
-    return data; // Return parsed JSON response
+    return data;
   }
 );
 
@@ -144,13 +144,10 @@ export const createStudentRecord = createAsyncThunk(
     });
   
   response=await response.json();
-  if(response.status!==200){
-   throw new Error(response.message)
-  }
   return response.message;
 }
 );
-// Slice Definition
+
 const adminSlice = createSlice({
   name: "admin",
   initialState,
