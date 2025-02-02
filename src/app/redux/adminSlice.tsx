@@ -132,9 +132,19 @@ export const getPhotoUploadUrl = createAsyncThunk(
 );
 export const createStudentRecord = createAsyncThunk(
   "admin/createStudentRecord",
-  async (userDetails: { email: string; rollno: string; name: string; password: string; course: string; section: string; branch: string; classteacherrollno: string; profilepictureLink: string }) => {
+  async (userDetails: {
+    email: string;
+    rollno: string;
+    name: string;
+    password: string;
+    course: string;
+    section: string;
+    branch: string;
+    classteacherrollno: string;
+    profilepictureLink: string;
+  }) => {
     let url = `http://localhost:3001/app/details/createStudentRecord`;
-    let response:any=await fetch(url, {
+    let response: any = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -142,16 +152,25 @@ export const createStudentRecord = createAsyncThunk(
       },
       body: JSON.stringify({ userDetails }),
     });
-  
-  response=await response.json();
-  return response.message;
-}
+
+    response = await response.json();
+    return response.message;
+  }
 );
 export const createTeacherRecord = createAsyncThunk(
   "admin/createTeacherRecord",
-  async (userDetails: { email: string; rollno: string; name: string; password: string; course: string; age:number; gender:string; profilepictureLink: string }) => {
+  async (userDetails: {
+    email: string;
+    rollno: string;
+    name: string;
+    password: string;
+    course: string;
+    age: number;
+    gender: string;
+    profilepictureLink: string;
+  }) => {
     let url = `http://localhost:3001/app/details/createTeacherRecord`;
-    let response:any=await fetch(url, {
+    let response: any = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -159,12 +178,46 @@ export const createTeacherRecord = createAsyncThunk(
       },
       body: JSON.stringify({ userDetails }),
     });
-  
-  response=await response.json();
-  return response.message;
-}
+
+    response = await response.json();
+    return response.message;
+  }
+);
+export const deleteStudentRecord = createAsyncThunk(
+  "admin/deleteStudentRecord",
+  async (userDetails: { rollno: string; section: string }) => {
+    let url = `http://localhost:3001/app/details/deleteStudentRecord/${userDetails.rollno}/${userDetails.section}`;
+    let response: any = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("adminFirebaseToken") || "",
+      },
+      body: JSON.stringify({ userDetails }),
+    });
+
+    response = await response.json();
+    return response.message;
+  }
 );
 
+export const deleteTeacherRecord = createAsyncThunk(
+  "admin/deleteTeacherRecord",
+  async (userDetails: { rollno: string }) => {
+    let url = `http://localhost:3001/app/details/deleteTeacherRecord/${userDetails.rollno}`;
+    let response: any = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("adminFirebaseToken") || "",
+      },
+      body: JSON.stringify({ userDetails }),
+    });
+
+    response = await response.json();
+    return response.message;
+  }
+);
 const adminSlice = createSlice({
   name: "admin",
   initialState,
@@ -188,17 +241,40 @@ const adminSlice = createSlice({
       state.message = action.payload;
     });
     builder.addCase(createStudentRecord.rejected, (state, action) => {
-      state.message = typeof action.payload === 'string' ? action.payload : "creating student record failed";
+      state.message =
+        typeof action.payload === "string"
+          ? action.payload
+          : "creating student record failed";
+    });
+    builder.addCase(deleteStudentRecord.fulfilled, (state, action) => {
+      state.message = action.payload;
+    });
+    builder.addCase(deleteStudentRecord.rejected, (state, action) => {
+      state.message =
+        typeof action.payload === "string"
+          ? action.payload
+          : "deleting student record failed";
+    });
+    builder.addCase(deleteTeacherRecord.fulfilled, (state, action) => {
+      state.message = action.payload;
+    });
+    builder.addCase(deleteTeacherRecord.rejected, (state, action) => {
+      state.message =
+        typeof action.payload === "string"
+          ? action.payload
+          : "deleting teacher record failed";
     });
     builder.addCase(createTeacherRecord.fulfilled, (state, action) => {
       state.message = action.payload;
     });
     builder.addCase(createTeacherRecord.rejected, (state, action) => {
-      state.message = typeof action.payload === 'string' ? action.payload : "creating teacher record failed";
+      state.message =
+        typeof action.payload === "string"
+          ? action.payload
+          : "creating teacher record failed";
     });
     builder.addCase(getPhotoUploadUrl.fulfilled, (state, action) => {
-        state.photoUploadUrl = action.payload;
-      
+      state.photoUploadUrl = action.payload;
     });
     builder.addCase(getClassList.fulfilled, (state, action) => {
       state.classList = action.payload;

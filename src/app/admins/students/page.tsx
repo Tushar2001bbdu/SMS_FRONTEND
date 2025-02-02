@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import { Outfit } from 'next/font/google';
 import '@/app/globals.css'
 import { useDispatch, useSelector } from "react-redux";
-import { getClassList } from "@/app/redux/adminSlice";
+import { getClassList,deleteStudentRecord } from "@/app/redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
 import AddStudent from "@/app/Components/AddStudent";
 const outfit = Outfit({ subsets: ['latin'], weight: ['500', '700'] });
 const Page: React.FC = () => {
-  
   const [visibility, setVisibility] = useState("hidden");
   const [studentList, setStudentList] = useState([]);
   const [addStudent, setAddStudent] = useState<boolean>(false);
@@ -27,7 +26,8 @@ const Page: React.FC = () => {
       });
   }
   const dispatch = useDispatch<AppDispatch>();
-  const classList = useSelector((state: any) => state.admin.classList);
+  let classList = useSelector((state: any) => state.admin.classList);
+  let message = useSelector((state: any) => state.admin.message);
   useEffect(() => {
     dispatch(getClassList());
   }, [dispatch]);
@@ -126,6 +126,7 @@ const Page: React.FC = () => {
                         <a
                           href="#"
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          onClick={()=>{dispatch(deleteStudentRecord({rollno:element.rollno,section:section}))}}
                         >
                           Suspend
                         </a>

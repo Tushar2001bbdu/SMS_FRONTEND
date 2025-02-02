@@ -3,12 +3,11 @@ import React, { useState, useEffect } from "react";
 import { Outfit } from "next/font/google";
 import "@/app/globals.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getTeacherList } from "@/app/redux/adminSlice";
+import { getTeacherList ,deleteTeacherRecord} from "@/app/redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
 import AddTeacher from "@/app/Components/AddTeacher";
 const outfit = Outfit({ subsets: ["latin"], weight: ["500", "700"] });
 const Page: React.FC = () => {
-  const [visibility, setVisibility] = useState("hidden");
   const [addTeacher, setAddTeacher] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const teacherList = useSelector((state: any) => state.admin.teacherList);
@@ -71,6 +70,7 @@ const Page: React.FC = () => {
                         <a
                           href="#"
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          onClick={()=>{dispatch(deleteTeacherRecord({rollno:element.rollno}))}}
                         >
                           Suspend
                         </a>
