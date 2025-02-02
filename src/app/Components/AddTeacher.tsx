@@ -1,11 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPhotoUploadUrl } from "../redux/adminSlice";
+import { getPhotoUploadUrl ,createTeacherRecord} from "../redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
-
-const AddTeacher: React.FC = () => {
+interface Props{
+  setAddTeacher:(value:boolean)=> void;
+}
+const AddTeacher: React.FC<Props> = ({setAddTeacher}) => {
   const [formData, setFormData] = useState({
+    email:"",
+    rollno:"",
     name: "",
     age: 0,
     password: "",
@@ -15,11 +19,13 @@ const AddTeacher: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const dispatch = useDispatch<AppDispatch>();
+  let photoUrl=useSelector((state:any)=>state.admin.photoUrl)
+  let message=useSelector((state:any)=>state.admin.message)
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
 
@@ -37,7 +43,36 @@ const AddTeacher: React.FC = () => {
       return;
     }
 
-    alert("Form submitted successfully!");
+    if (photoUrl) {
+          await fetch(photoUrl, {
+            method: "PUT",
+            body: file,
+            headers: {
+              "Content-Type": file?.type || "application/octet-stream",
+            },
+          });
+        }
+        if (file) {
+          dispatch(
+            createTeacherRecord({
+              email: formData.email,
+              rollno: formData.rollno,
+              name: formData.name,
+             
+              password: formData.password,
+              course: formData.course,
+              age: formData.age,
+              gender: formData.gender,
+              
+              profilepictureLink: `https://school-managemengt-system-training.s3.ap-south-1.amazonaws.com/${file?.name}`,
+            })
+          );
+        }
+    
+        if (message.length > 0) {
+          alert(message);
+          setAddTeacher(false);
+        }
   };
 
   return (
@@ -113,12 +148,18 @@ const AddTeacher: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-between">
                 <button
                   type="submit"
                   className="text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5"
                 >
                   Add Teacher Record
+                </button>
+                <button
+                  className="text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5"
+                  onClick={()=>{setAddTeacher(false)}}
+                >
+                  Close Form
                 </button>
               </div>
             </form>

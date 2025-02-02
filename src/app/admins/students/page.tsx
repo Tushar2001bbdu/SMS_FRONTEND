@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import { Outfit } from 'next/font/google';
 import '@/app/globals.css'
 import { useDispatch, useSelector } from "react-redux";
@@ -74,7 +73,7 @@ const Page: React.FC = () => {
                 <li key={index}>
                   <button
                     className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                    onClick={() => getStudentList(element.code)}
+                    onClick={() => {getStudentList(element.code);setSection(element.code)}}
                   >
                     {element.code}
                   </button>
