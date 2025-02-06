@@ -54,7 +54,22 @@ export const sendPhoto = createAsyncThunk(
     return data.message;
   }
 );
-
+export const markAssignment=createAsyncThunk("admin/markAssignment",async(fileDetails:{fileUrl:string,type:string,subject:string,rollno:string})=> {
+  let url = new URL(
+    `http://localhost:3001/app/assignments/markAssignment/${fileDetails.rollno}`
+  );
+  await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      s3Link: fileDetails.fileUrl,
+      fileType: fileDetails.type,
+      subject: fileDetails.subject,
+    }),
+  });
+});
 export const sendFrame = createAsyncThunk(
   "admin/sendFrame",
   async (image: any, { getState }: any) => {
@@ -172,6 +187,32 @@ export const createTeacherRecord = createAsyncThunk(
     let url = `http://localhost:3001/app/details/createTeacherRecord`;
     let response: any = await fetch(url, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("adminFirebaseToken") || "",
+      },
+      body: JSON.stringify({ userDetails }),
+    });
+
+    response = await response.json();
+    return response.message;
+  }
+);
+export const editStudentRecord = createAsyncThunk(
+  "admin/createStudentRecord",
+  async (userDetails: {
+    email: string;
+    rollno: string;
+    name: string;
+    course: string;
+    section: string;
+    branch: string;
+    classteacherrollno: string;
+    profilepictureLink: string;
+  }) => {
+    let url = `http://localhost:3001/app/details/editStudentRecord`;
+    let response: any = await fetch(url, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         authorization: localStorage.getItem("adminFirebaseToken") || "",

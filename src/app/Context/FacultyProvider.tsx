@@ -34,7 +34,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   async function facultyLogin(facultyDetails: FacultyDetails): Promise<void> {
     try{
       let url = new URL("http://localhost:3001/app/teachers/login");
-      url.searchParams.set("rollno", facultyDetails.rollNo);
+      url.searchParams.set("rollno", facultyDetails.rollno);
   
       let response  = await fetch(url.toString(), {
         method: "POST",
@@ -48,7 +48,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       });
       response=await response.json()
       if(response.status===200){
-        Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
+        Role?.changeRole("teacher",facultyDetails.rollno,facultyDetails.email);
         router.push("/details")
       }
       else{

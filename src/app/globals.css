@@ -10,3 +10,7 @@
     color: #2d3748;
   }
 }
+.scrollable-container::-webkit-scrollbar {
+  width: 10px; /* Adjust as needed */
+  background-color: transparent; /* Make the scrollbar area transparent */
+}

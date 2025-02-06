@@ -14,8 +14,12 @@ export default function RootLayout({ children }) {
       </head>
       <body className={inter.className}>
         <AppProviders>
+          <div>
           <Navbar />
-          {children}
+          </div>
+         
+          <div className="mt-16">  {children} </div>
+        
         </AppProviders>
       </body>
     </html>

@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="fixed h-16 top-0 left-0 right-0 bg-gray-800">
       {visibility && (
         <Webcam
           audio={false}
@@ -46,7 +46,7 @@ const Navbar: React.FC = () => {
           height={300}
         />
       )}
-      <nav className="bg-gray-800 relative">
+      <nav className="bg-gray-800">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             {/* Mobile menu button */}

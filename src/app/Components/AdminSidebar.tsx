@@ -6,7 +6,7 @@ const AdminSideBar: React.FC = () => {
   const router = useRouter();
 
   return (
-    <div className="relative flex h-full w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
+    <div className="fixed top-16 flex h-full w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
       <div className="p-4 mb-2">
         <h5 className="block font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
           Admin Corner

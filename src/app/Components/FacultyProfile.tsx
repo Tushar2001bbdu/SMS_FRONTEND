@@ -1,28 +1,16 @@
 "use client";
 import React, { useEffect, useContext } from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
-
-
-
-// Define the Context value type
-interface FacultyContextType {
-  getAssignmentUrl:(filename: string)=>Promise<any>;
+interface FacultyContextType { 
   facultyData: any;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
-  logout: () => void;
+  getFacultyProfile?: () => Promise<void>;
+ 
 }
-
-
 const FacultyProfile: React.FC = () => {
   const con = useContext<FacultyContextType | null>(FacultyContext);
   useEffect(() => {
-    if(con!==null){
-      con.getFacultyProfile();
+    if(con?.getFacultyProfile){
+      con?.getFacultyProfile();
     }
    
   }, []);
@@ -35,7 +23,7 @@ const FacultyProfile: React.FC = () => {
             Faculty Information
           </h3>
           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
-            Personal details.
+            Personal Details
           </p>
         </section>
         <section className="mt-6 border-t border-gray-100">

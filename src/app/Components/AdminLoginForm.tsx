@@ -38,8 +38,8 @@ const AdminLoginForm: React.FC = () =>
       localStorage.setItem("adminFirebaseToken", token);
       let resultAction=await dispatch(login(userDetails)); 
       if (login.fulfilled.match(resultAction)) {
-        role?.changeRole("admin", "admin", "admin"); // Update role
-        router.push("/admins"); // Redirect after login
+        role?.changeRole("admin", "admin", "admin");
+        router.push("/admins");
         console.log("User role:", role?.role);
       }
     } catch (error) {
@@ -71,8 +71,8 @@ const AdminLoginForm: React.FC = () =>
         
         let resultAction=await dispatch(login(userDetails)); 
         if (login.fulfilled.match(resultAction)) {
-          role?.changeRole("admin", userDetails.rollno, userDetails.email); // Update role
-          router.push("/admins"); // Redirect after login
+          role?.changeRole("admin", userDetails.rollno, userDetails.email); 
+          router.push("/admins"); 
         }
       }
     } catch (error) {

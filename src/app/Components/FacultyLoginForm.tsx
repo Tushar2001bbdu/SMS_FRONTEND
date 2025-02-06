@@ -3,10 +3,8 @@ import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "../utils/teacher_auth";
-import { useRouter } from "next/navigation";
 import { FacultyContext } from "../Context/FacultyProvider";
-import Alert from "./Alert";
-import router from "next/router";
+
 
 interface FacultyDetails {
   rollno: string;
@@ -14,16 +12,9 @@ interface FacultyDetails {
 }
 
 interface FacultyContextType {
-  getAssignmentUrl:(filename: string)=>Promise<any>;
   facultyData: any;
   facultyLogin?: (facultyDetails: FacultyDetails) => Promise<void>;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
-  logout: () => void;
+
 }
 const FacultyLogin: React.FC = () => {
 
@@ -54,7 +45,7 @@ const FacultyLogin: React.FC = () => {
         {
           const token = await userCredential.user.getIdToken();
           localStorage.setItem("teacherFirebaseToken", token);
-          if(context?.facultyLogin!==undefined){
+          if(context?.facultyLogin){
           await context?.facultyLogin(userDetails);
           }
         }

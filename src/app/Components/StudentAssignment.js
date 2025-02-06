@@ -1,15 +1,29 @@
+"use client"
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 import { gql, useMutation } from "@apollo/client";
-import { AdminContext } from "../Context/AdminProvider";
+import { RoleContext } from "../Context/RoleProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { markAssignment } from "../redux/adminSlice";
+import "@/app/globals.css"
 export default function StudentAssignment(props) {
+  const dispatch = useDispatch();
   const [file, setFile] = useState(null);
+
   const [isUploading, setIsUploading] = useState(false);
   const context = useContext(AuthContext);
-  const admin=useContext(AdminContext);
+  const role = useContext(RoleContext);
   const SUBMIT_ASSIGNMENT = gql`
-    mutation submitAssignment($rollno: ID!, $title: String!, $solutionLink: String!) {
-      submitAssignment(rollno: $rollno, title: $title, solutionLink: $solutionLink) {
+    mutation submitAssignment(
+      $rollno: ID!
+      $title: String!
+      $solutionLink: String!
+    ) {
+      submitAssignment(
+        rollno: $rollno
+        title: $title
+        solutionLink: $solutionLink
+      ) {
         rollno
         title
         AssignmentLink
@@ -47,7 +61,7 @@ export default function StudentAssignment(props) {
             "Content-Type": file.type,
           },
         });
-        let s3Url=`https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file.name}`
+        let s3Url = `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file.name}`;
         await updateSubmission({
           variables: {
             rollno: props.assignment.rollno,
@@ -55,22 +69,28 @@ export default function StudentAssignment(props) {
             solutionLink: s3Url,
           },
         });
-        await admin.MarkAssignment(s3Url,file.type,props.assignment.subject);       
+        dispatch(
+          markAssignment({
+            fileUrl: s3Url,
+            type: file.type,
+            subject: props.assignment.subject,
+            rollno: role?.rollNumber,
+          })
+        );
         context.setUploadUrl(null);
         setIsUploading(false);
         alert("Assignment submitted successfully!");
-      }
-      else{
-        context.getAssignmentUrl(file.name)
+      } else {
+        context.getAssignmentUrl(file.name);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setIsUploading(false);
     }
   };
 
   return (
-    <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="scrollable-container w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="flex justify-end px-4 pt-4">
         <div className="flex flex-col items-center pb-10">
           <img

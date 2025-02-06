@@ -6,11 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getClassList,deleteStudentRecord } from "@/app/redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
 import AddStudent from "@/app/Components/AddStudent";
+
 const outfit = Outfit({ subsets: ['latin'], weight: ['500', '700'] });
 const Page: React.FC = () => {
   const [visibility, setVisibility] = useState("hidden");
   const [studentList, setStudentList] = useState([]);
   const [addStudent, setAddStudent] = useState<boolean>(false);
+  const [editStudent, setEditStudent] = useState<boolean>(false);
   const [section,setSection]=useState<string>("");
   async function getStudentList(section: string) {
     await fetch(`http://localhost:3001/app/details/getStudentList/${section}`, {
@@ -118,6 +120,7 @@ const Page: React.FC = () => {
                         <a
                           href="#"
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                          onClick={()=>{setEditStudent(true);}}
                         >
                           Edit
                         </a>
@@ -126,7 +129,7 @@ const Page: React.FC = () => {
                         <a
                           href="#"
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          onClick={()=>{dispatch(deleteStudentRecord({rollno:element.rollno,section:section}))}}
+                          onClick={()=>{dispatch(deleteStudentRecord({rollno:element.rollno,section:section}));if(message.length>0){alert(message)}}}
                         >
                           Suspend
                         </a>

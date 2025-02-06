@@ -17,6 +17,7 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.0.2",
+    "@next/font": "^14.2.15",
     "@next/swc-win32-x64-msvc": "^15.1.6",
     "@popperjs/core": "^2.11.8",
     "@preline/dropdown": "^2.4.1",

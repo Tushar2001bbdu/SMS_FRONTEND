@@ -9,8 +9,10 @@ import AddTeacher from "@/app/Components/AddTeacher";
 const outfit = Outfit({ subsets: ["latin"], weight: ["500", "700"] });
 const Page: React.FC = () => {
   const [addTeacher, setAddTeacher] = useState<boolean>(false);
+  const [editTeacher, setEditTeacher] = useState<boolean>(false);
   const dispatch = useDispatch<AppDispatch>();
   const teacherList = useSelector((state: any) => state.admin.teacherList);
+  let message= useSelector((state: any) => state.admin.message);
   useEffect(() => {
     dispatch(getTeacherList());
   }, [dispatch]);
@@ -70,7 +72,7 @@ const Page: React.FC = () => {
                         <a
                           href="#"
                           className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                          onClick={()=>{dispatch(deleteTeacherRecord({rollno:element.rollno}))}}
+                          onClick={()=>{dispatch(deleteTeacherRecord({rollno:element.rollno}));if(message.length>0){alert(message)}}}
                         >
                           Suspend
                         </a>

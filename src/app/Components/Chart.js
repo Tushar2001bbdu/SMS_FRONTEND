@@ -5,9 +5,10 @@ import {
   ArcElement,
   Tooltip,
   Legend,
+  Title
 } from 'chart.js';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(ArcElement, Tooltip, Legend,Title);
 
 const Chart = (props) => {
   const data = {
@@ -40,14 +41,16 @@ const Chart = (props) => {
           padding: 20, 
       }},
       title: {
+        position: 'top',
         display: true,
-        text: 'Chart',
+        text: props.title,
+       
       },
     },
   };
 
   return (
-    <div>
+    <div className="mx-auto">
       <Doughnut data={data} options={options} />
     </div>
   );
