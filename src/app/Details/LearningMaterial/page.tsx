@@ -3,7 +3,7 @@ import { AuthContext } from "@/app/Context/AuthProvider";
 import React, { useState, useContext, useEffect } from "react";
 import { getLearningMaterialBySection } from "@/app/graphql/queries";
 import { useQuery } from "@apollo/client";
-import FacultyStudyMaterialCard from "@/app/Components/FacultyStudyMaterialCard";
+import FacultyStudyMaterialCard from "@/app/Components/StudyMaterialCard";
 
 interface StudentData {
   email: string;

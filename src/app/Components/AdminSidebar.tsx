@@ -100,6 +100,27 @@ const AdminSideBar: React.FC = () => {
           </div>
           Teachers
         </div>
+        <div
+          role="button"
+          onClick={() => router.push("/admins/teachers")}
+          className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:text-blue-gray-900 active:bg-blue-gray-50 active:text-blue-gray-900"
+        >
+          <div className="grid mr-4 place-items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                fillRule="evenodd"
+                d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          Class Groups
+        </div>
       </nav>
     </div>
   );

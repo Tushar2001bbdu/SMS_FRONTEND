@@ -2,9 +2,9 @@
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { AuthContext } from "../Context/AuthProvider";
+import { AuthContext } from "../../Context/AuthProvider";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Auth } from "../utils/student_auth";
+import { Auth } from "../../utils/student_auth";
 export default function page() {
   const [userDetails, setUserDetails] = useState({
     email: "",

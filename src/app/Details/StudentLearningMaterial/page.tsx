@@ -1,5 +1,5 @@
 "use client";
-import LearningMaterialBySection from "@/app/Components/LearningMaterialBySection";
+import LearningMaterialBySection from "@/app/Components/StudyMaterialBySection";
 import { FacultyContext } from "@/app/Context/FacultyProvider";
 import React, { FC, useContext} from "react";
 interface FacultyDetails {

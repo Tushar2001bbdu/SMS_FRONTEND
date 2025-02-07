@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import { RoleContext } from "../Context/RoleProvider";
 import Image from "next/image";
 import AddLearningMaterialModal from "./AddLearningMaterialModal";
-import FacultyStudyMaterialCard from "./FacultyStudyMaterialCard";
+import FacultyStudyMaterialCard from "./StudyMaterialCard";
 
 interface RoleContextType {
   role: any;

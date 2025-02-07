@@ -1,6 +1,6 @@
 "use client"
 import React ,{useContext,useEffect} from 'react';
-import { Roboto } from 'next/font/google'
+import { Roboto ,Josefin_Sans} from 'next/font/google'
 import { RoleContext } from '@/app/Context/RoleProvider';
 import Chart from "../Components/Chart";
 import { AuthContext } from "../Context/AuthProvider";
@@ -18,10 +18,7 @@ interface StudentContextType{
     getStudentResult: () => Promise<any>;
     studentResult:any;
 }
-const roboto = Roboto({
-    subsets: ['latin'],
-    weight: ['400', '700'],
-  });
+const josefinSans = Josefin_Sans({ subsets: ['latin'], weight: [ '700']});
 const StudentsHomePage: React.FC = () => {
     
     useEffect(()=>{
@@ -34,7 +31,7 @@ const StudentsHomePage: React.FC = () => {
     if(student?.studentData && student?.studentResult)
     return(
 
-    <div className="my-4 w-full text-grey-500">
+    <div className={` ${josefinSans.className} my-4 w-full text-grey-500` }>
     <div className="grid text-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
         <section className="bg-blue-200 p-4 rounded-lg">
             <Image src="/students.png" alt="student" className="mx-auto"  width={100} height={100} />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Josefin_Sans } from 'next/font/google'; 
 import { Doughnut } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -8,7 +9,9 @@ import {
   Title
 } from 'chart.js';
 
-ChartJS.register(ArcElement, Tooltip, Legend,Title);
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
+
+const josefinSans = Josefin_Sans({ subsets: ['latin'], weight: ['500'] });
 
 const Chart = (props) => {
   const data = {
@@ -39,18 +42,22 @@ const Chart = (props) => {
           usePointStyle: true,
           boxWidth: 10,
           padding: 20, 
-      }},
+        }
+      },
       title: {
         position: 'top',
+        size: 21,
         display: true,
         text: props.title,
-       
+        font: { 
+          family: 'Josefin Sans'
+        },
       },
     },
   };
 
   return (
-    <div className="mx-auto">
+    <div className={`${josefinSans.className} mx-auto`}>
       <Doughnut data={data} options={options} />
     </div>
   );

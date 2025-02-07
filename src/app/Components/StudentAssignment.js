@@ -61,7 +61,7 @@ export default function StudentAssignment(props) {
             "Content-Type": file.type,
           },
         });
-        let s3Url = `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file.name}`;
+        let s3Url = `https://assignmentsolutions.s3.ap-south-1.amazonaws.com/${file.name}`;
         await updateSubmission({
           variables: {
             rollno: props.assignment.rollno,

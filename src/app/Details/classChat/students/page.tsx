@@ -39,7 +39,7 @@ const Page: React.FC = () => {
         </div>
       </aside>
       { receiverId.length>0 && <section className="sm:w-1 sd:w-2/3 lg:w-2/3 p-6">
-        <GroupChatApp senderId={context?.studentData?.rollno} groupName={context?.studentData?.section} />
+        <GroupChatApp senderName={context?.studentData?.rollno || ""} groupName={context?.studentData?.section || ""} />
       </section> }
       
     </div>
