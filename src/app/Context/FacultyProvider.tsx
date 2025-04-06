@@ -49,7 +49,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       response=await response.json()
       if(response.status===200){
         Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
-        router.push("/details")
+        router.push("/Details")
       }
       else{
         alert("You have entered invalid credentials")

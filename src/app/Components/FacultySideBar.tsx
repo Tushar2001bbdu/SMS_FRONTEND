@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
-import Link from "next/link";
 import React from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
 interface FacultyContextType {
@@ -65,7 +64,7 @@ const FacultySidebar: React.FC = () => {
             <div
               role="button"
               onClick={() => {
-                Router.push("/details/PersonalDetails");
+                Router.push("/Details/PersonalDetails");
               }}
             >
               Personal Details
@@ -95,7 +94,7 @@ const FacultySidebar: React.FC = () => {
             <div
               role="button"
               onClick={() => {
-                Router.push("/details/Student_List");
+                Router.push("/Details/StudentList");
               }}
             >
               Student List
@@ -109,7 +108,7 @@ const FacultySidebar: React.FC = () => {
           <div
             role="button"
             onClick={() => {
-              Router.push("/details/onlineClasses");
+              Router.push("/Details/OnlineClasses");
             }}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
@@ -133,7 +132,7 @@ const FacultySidebar: React.FC = () => {
           <div
             role="button"
             onClick={() => {
-              Router.push("/details/studentAssignments");
+              Router.push("/Details/StudentAssignments");
             }}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
@@ -156,7 +155,7 @@ const FacultySidebar: React.FC = () => {
           </div>
           <div
             role="button"
-            onClick={() => Router.push("/details/studentLearningMaterial")}
+            onClick={() => Router.push("/Details/StudentLearningMaterial")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -183,7 +182,7 @@ const FacultySidebar: React.FC = () => {
           </div>
           <div
             role="button"
-            onClick={() => Router.push("/details/contact/teacher")}
+            onClick={() => Router.push("/Details/Contact/Teacher")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">

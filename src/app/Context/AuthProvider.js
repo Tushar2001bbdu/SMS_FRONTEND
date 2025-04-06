@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
     response = await response.json();
     if (response.status === 200) {
       Role?.changeRole("student", userDetails.rollNo, userDetails.email);
-      router.push("/details");
+      router.push("/Details");
     } else {
       alert("You have entered invalid credentials");
     }

@@ -20,7 +20,7 @@ const StudentSideBar: React.FC = () => {
         <nav className="flex min-w-[240px] flex-col gap-1 p-2 font-sans text-base font-normal text-blue-gray-700">
           <div
             role="button"
-            onClick={() => router.push("/details")}
+            onClick={() => router.push("/Details")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -43,7 +43,7 @@ const StudentSideBar: React.FC = () => {
 
           <div
             role="button"
-            onClick={() => router.push("/details/PersonalDetails")}
+            onClick={() => router.push("/Details/PersonalDetails")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -66,7 +66,7 @@ const StudentSideBar: React.FC = () => {
 
           <div
             role="button"
-            onClick={() => router.push("/details/studentResult")}
+            onClick={() => router.push("/Details/StudentResult")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -89,7 +89,7 @@ const StudentSideBar: React.FC = () => {
 
           <div
             role="button"
-            onClick={() => router.push("/details/feesPaymentDetails")}
+            onClick={() => router.push("/Details/FeesPaymentDetails")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -111,7 +111,7 @@ const StudentSideBar: React.FC = () => {
           </div>
           <div
             role="button"
-            onClick={() => router.push("/details/assignments")}
+            onClick={() => router.push("/Details/Assignments")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -133,7 +133,7 @@ const StudentSideBar: React.FC = () => {
           </div>
           <div
             role="button"
-            onClick={() => router.push("/details/exam")}
+            onClick={() => router.push("/Details/Exam")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -155,7 +155,7 @@ const StudentSideBar: React.FC = () => {
           </div>
           <div
             role="button"
-            onClick={() => router.push("/details/learningMaterial")}
+            onClick={() => router.push("/Details/LearningMaterial")}
             className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
           >
             <div className="grid mr-4 place-items-center">
@@ -178,7 +178,7 @@ const StudentSideBar: React.FC = () => {
           
           <div
           role="button"
-          onClick={() => router.push("/details/contact/student")}
+          onClick={() => router.push("/Details/Contact/Student")}
           className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
         >
           <div className="grid mr-4 place-items-center">
