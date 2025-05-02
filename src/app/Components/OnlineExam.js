@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useContext } from "react";
 import questions from "../questions";
 import Webcam from "react-webcam";
 import { useDispatch, useSelector } from "react-redux";
-import { sendFrame } from "./adminSlice";
+import { sendFrame } from "@/app/redux/adminSlice";
 import Alert from "./Alert";
 import { FacultyContext } from "../Context/FacultyProvider";
 export default function OnlineExam() {

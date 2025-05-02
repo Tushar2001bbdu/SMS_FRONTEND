@@ -17,7 +17,6 @@ export default function Page() {
     const [studentList, setStudentList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // Fetch student list function
     const getListOfStudent = useCallback(async (selectedSection) => {
         setLoading(true);
         try {
@@ -37,7 +36,7 @@ export default function Page() {
             }
 
             const result = await response.json();
-            setStudentList(result.studentList || []);
+            setStudentList(result.data || []);
         } catch (error) {
             console.error("Error fetching student list:", error);
             setStudentList([]);
@@ -55,7 +54,7 @@ export default function Page() {
     return (
         <div className="text-center mt-4 mr-4">
             <div className="flex flex-row w-full justify-between">
-                <div className="text-center w-full">Student List</div>
+                <div className="text-center w-full text-black">Student List</div>
                 <div>
                     <button
                         id="dropdownDefaultButton"
@@ -81,9 +80,8 @@ export default function Page() {
 
                     <div
                         id="dropdown"
-                        className={`${
-                            visibility ? "block" : "hidden"
-                        } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
+                        className={`${visibility ? "block" : "hidden"
+                            } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
                     >
                         <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                             {["CCML-4", "CCML-3", "CCML-2", "CCML-1"].map(
@@ -110,9 +108,8 @@ export default function Page() {
                 <div className="mt-4">Loading...</div>
             ) : (
                 <div
-                    className={`relative ${
-                        section ? "block" : "hidden"
-                    } overflow-x-auto shadow-md sm:rounded-lg`}
+                    className={`relative ${section ? "block" : "hidden"
+                        } overflow-x-auto shadow-md sm:rounded-lg`}
                 >
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -127,11 +124,9 @@ export default function Page() {
                                     Section
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Result
+                                   Profile Picture
                                 </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Attendance
-                                </th>
+                                
                             </tr>
                         </thead>
                         <tbody>

@@ -13,7 +13,7 @@ export default function page() {
 
             <div className='my-7  align-items-center justify-content-center'>
             <div className="heading text-center my-3">
-            <heading class="text-4xl font-extrabold dark:text-white my-auto">Your Fees Payment Details</heading>
+            <h2 className="text-4xl font-extrabold dark:text-white my-auto">Your Fees Payment Details</h2>
             </div>
              
         

@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-800 relative sticky top-0 z-50">
       {visibility && (
         <Webcam
           audio={false}

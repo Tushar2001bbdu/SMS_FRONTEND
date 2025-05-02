@@ -1,20 +1,21 @@
 "use client";
 import React, { useState } from "react";
+import Image from "next/image";
 import UpdateStudentResult from "./UpdateStudentResult";
-import Chart from "./Chart";
 
 interface Profile {
   rollno: string;
   name: string;
   section: string;
+  profilepictureLink:string;
 }
 
 interface StudentProfileProps {
   profile: Profile;
 }
 
-const StudentProfile: React.FC<StudentProfileProps> = ({ profile }) => {
-  const [visibility, setVisibility] = useState("hidden");
+const Page: React.FC<StudentProfileProps> = ({ profile }) => {
+  
 
   return (
     <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
@@ -27,28 +28,14 @@ const StudentProfile: React.FC<StudentProfileProps> = ({ profile }) => {
       <td className="px-6 py-4">{profile.name}</td>
       <td className="px-6 py-4">{profile.section}</td>
       <td className="px-6 py-4">
-        <a
-          href="#"
-          className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-          onClick={() => {
-            setVisibility("visible");
-          }}
-        >
-          Edit
-        </a>
-        {visibility && (
-          <UpdateStudentResult
-            visibility={visibility}
-            setVisibility={setVisibility}
-            rollno={profile.rollno}
-          />
-        )}
+        
+       
+        <img src={profile.profilepictureLink} alt={`${profile.name}'s profile picture`} width={50} height={50} />
       </td>
-      <td className="px-6 py-4">
-        <Chart />
-      </td>
+        
+      
     </tr>
   );
 };
 
-export default StudentProfile;
+export default Page;

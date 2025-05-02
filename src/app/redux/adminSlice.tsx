@@ -86,6 +86,22 @@ export const getClassList = createAsyncThunk("admin/getClassList", async () => {
 
   return data.data;
 });
+export const MarkAssignent = createAsyncThunk("admin/markAssignment", async (file:{rollno:string,s3Link:string,fileType:string,subject:string}) => {
+  let url = `http://localhost:3001/app/assignments/markAssignment/${file.rollno}`;
+
+  const res = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: localStorage.getItem("adminFirebaseToken") || "",
+    },
+    body:JSON.stringify({s3Link:file.s3Link, fileType:file.fileType,subject:file.subject})
+  });
+
+  const data = await res.json();
+
+  return data.data;
+});
 export const getTeacherList = createAsyncThunk(
   "admin/getTeacherList",
   async () => {
@@ -229,10 +245,7 @@ const adminSlice = createSlice({
 
     builder
       .addCase(login.fulfilled, (state, action) => {
-        if (action.payload && action.payload.status === "success") {
-        } else {
-          console.error(action.payload.message);
-        }
+       console.log("logged in successfully")
       })
       .addCase(login.rejected, (state, action) => {
         console.error(action.error.message);
@@ -278,6 +291,9 @@ const adminSlice = createSlice({
     });
     builder.addCase(getClassList.fulfilled, (state, action) => {
       state.classList = action.payload;
+    }),
+    builder.addCase(getClassList.rejected, (state, action) => {
+      console.log(action.payload)
     }),
       builder.addCase(getTeacherList.fulfilled, (state, action) => {
         state.teacherList = action.payload;

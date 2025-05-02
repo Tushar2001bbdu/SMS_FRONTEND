@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 import { gql, useMutation } from "@apollo/client";
-import { AdminContext } from "../Context/AdminProvider";
+import { useDispatch } from "react-redux";
+import { MarkAssignent } from "../redux/adminSlice";
+
 export default function StudentAssignment(props) {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const context = useContext(AuthContext);
-  const admin=useContext(AdminContext);
+  const dispatch = useDispatch();
+
   const SUBMIT_ASSIGNMENT = gql`
     mutation submitAssignment($rollno: ID!, $title: String!, $solutionLink: String!) {
       submitAssignment(rollno: $rollno, title: $title, solutionLink: $solutionLink) {
@@ -47,7 +50,9 @@ export default function StudentAssignment(props) {
             "Content-Type": file.type,
           },
         });
-        let s3Url=`https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file.name}`
+
+        const s3Url = `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file.name}`;
+
         await updateSubmission({
           variables: {
             rollno: props.assignment.rollno,
@@ -55,16 +60,24 @@ export default function StudentAssignment(props) {
             solutionLink: s3Url,
           },
         });
-        await admin.MarkAssignment(s3Url,file.type,props.assignment.subject);       
+
+        await dispatch(
+          MarkAssignent({
+            rollno: props.assignment.rollno,
+            s3Link: s3Url,
+            fileType: file.type,
+            subject: props.assignment.subject,
+          })
+        );
+
         context.setUploadUrl(null);
         setIsUploading(false);
         alert("Assignment submitted successfully!");
+      } else {
+        await context.getAssignmentUrl(file.name);
       }
-      else{
-        context.getAssignmentUrl(file.name)
-      }
-    } catch (error) {
-      console.log(error)
+    } catch (err) {
+      console.error("Upload error:", err);
       setIsUploading(false);
     }
   };
@@ -76,7 +89,7 @@ export default function StudentAssignment(props) {
           <img
             className="w-24 h-24 mb-3 rounded-full shadow-lg"
             src="https://cdn-icons-png.flaticon.com/512/5842/5842026.png"
-            alt="Icon Of An Assignment"
+            alt="Assignment Icon"
           />
           <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
             {props.assignment.title}
@@ -114,9 +127,6 @@ export default function StudentAssignment(props) {
               </button>
             )}
           </div>
-          {error && (
-            <p className="mt-2 text-sm text-red-600">Error: {error.message}</p>
-          )}
         </div>
       </div>
     </div>

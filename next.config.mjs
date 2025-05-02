@@ -1,7 +1,10 @@
 /*import {withSentryConfig} from '@sentry/nextjs';
 /** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-
+  images: {
+    domains: ['photograph-sms.s3.ap-south-1.amazonaws.com'],
+  },
     reactStrictMode: true,
     swcMinify: true,
   };
