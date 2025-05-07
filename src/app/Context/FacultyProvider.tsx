@@ -33,7 +33,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function facultyLogin(facultyDetails: FacultyDetails): Promise<void> {
     try{
-      let url = new URL("http://localhost:3001/app/teachers/login");
+      let url = new URL("http://43.204.234.139:3001/app/teachers/login");
       url.searchParams.set("rollno", facultyDetails.rollNo);
   
       let response  = await fetch(url.toString(), {
@@ -63,7 +63,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   }
 
   async function getFacultyProfile(): Promise<void> {
-    let url = new URL(`http://localhost:3001/app/teachers/seeDetails`)
+    let url = new URL(`http://43.204.234.139:3001/app/teachers/seeDetails`)
     const response = await fetch(url.toString(), {
       method: "GET",
       headers: {
@@ -83,7 +83,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   }
 
 async function getStudentProfile(rollno: string): Promise<any> {
-    let url = new URL(`http://localhost:3001/app/teachers/getStudentProfile`);
+    let url = new URL(`http://43.204.234.139:3001/app/teachers/getStudentProfile`);
     url.searchParams.set("rollno", rollno);
 
     const response = await fetch(url.toString(), {
@@ -105,7 +105,7 @@ async function getStudentProfile(rollno: string): Promise<any> {
 
   async function updateResult(marks: string | number): Promise<void> {
     try{
-      let url = new URL(`http://localhost:3001/app/teachers/updateResult`);
+      let url = new URL(`http://43.204.234.139:3001/app/teachers/updateResult`);
 
      let response= await fetch(url.toString(), {
         method: "PATCH",
@@ -132,7 +132,7 @@ async function getStudentProfile(rollno: string): Promise<any> {
     try {
         const bucketName = "student-assignment-questions";
 
-        const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
+        const url = `http://43.204.234.139:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
         
         const response = await fetch(url, {
             method: "GET",

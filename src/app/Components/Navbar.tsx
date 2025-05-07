@@ -2,151 +2,163 @@ import React, { useState, useRef, useContext } from "react";
 import Webcam from "react-webcam";
 import { useDispatch } from "react-redux";
 import { sendPhoto } from "@/app/redux/adminSlice";
-import { AppDispatch } from "@/app/redux/adminStore"; // Ensure correct import
+import { AppDispatch } from "@/app/redux/adminStore";
 import { RoleContext } from "../Context/RoleProvider";
 
 interface RoleContextType {
-  role: any;
+  role: string | null;
   changeRole: (newRole: any, rollno: any, email: any) => void;
   email: any;
   rollNumber: any;
 }
 
-const Navbar: React.FC = () => {
+const Page: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const webcamRef = useRef<Webcam | null>(null);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [visibility, setVisibility] = useState<boolean>(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const Role = useContext(RoleContext) as RoleContextType | null;
 
-  function openWebcam() {
-    setVisibility(true);
-  }
+  const openWebcam = () => setVisibility(true);
 
-  const captureImage = async () => {
+  const captureImage = async() => {
     if (webcamRef.current) {
       const image = webcamRef.current.getScreenshot();
       if (image) {
-        setImageSrc(image); // Fixed missing imageSrc update
-        dispatch(sendPhoto(image));
+        setImageSrc(image);
+        await dispatch(sendPhoto(image));
       }
       setVisibility(false);
+      setImageSrc(null);
     }
   };
 
+  const isLoggedIn = Role?.role !== null;
+
   return (
-    <div className="bg-gray-800 relative sticky top-0 z-50">
+    <div className="bg-gray-800 sticky top-0 z-50 shadow-md">
       {visibility && (
-        <Webcam
-          audio={false}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          width={400}
-          height={300}
-        />
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-black rounded-lg p-2 shadow-lg z-50">
+          <Webcam
+            audio={false}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            width={400}
+            height={300}
+            className="rounded"
+          />
+        </div>
       )}
-      <nav className="bg-gray-800 relative">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-          <div className="relative flex h-16 items-center justify-between">
+
+      <nav className="bg-gray-800">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
             {/* Mobile menu button */}
-            <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            <div className="flex sm:hidden">
               <button
-                type="button"
-                className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
-                aria-controls="mobile-menu"
-                aria-expanded="false"
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="text-gray-400 hover:text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+                aria-expanded={menuOpen}
+                aria-label="Toggle navigation menu"
               >
-                <span className="absolute -inset-0.5"></span>
-                <span className="sr-only">Open main menu</span>
                 <svg
-                  className="block h-6 w-6"
+                  className={`h-6 w-6 ${menuOpen ? "hidden" : "block"}`}
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth="1.5"
                   stroke="currentColor"
-                  aria-hidden="true"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
                 <svg
-                  className="hidden h-6 w-6"
+                  className={`h-6 w-6 ${menuOpen ? "block" : "hidden"}`}
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth="1.5"
                   stroke="currentColor"
-                  aria-hidden="true"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
-
-            <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-              <div className="flex flex-shrink-0 items-center text-white"></div>
-              <div className="hidden sm:ml-6 sm:block">
-                <div className="flex space-x-4">
-                  <a
-                    href="/student"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role?.role !== null}
-                  >
-                    Student
-                  </a>
-
-                  <a
-                    href="/faculty"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role?.role !== null}
-                  >
-                    Faculty
-                  </a>
-                  <a
-                    href="/administrator"
-                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-                    hidden={Role?.role !== null}
-                  >
-                    Administrator
-                  </a>
-                </div>
-              </div>
+            <div className="hidden sm:flex sm:space-x-4 ml-6">
+              {!isLoggedIn && (
+                <>
+                  <NavLink href="/student">Student</NavLink>
+                  <NavLink href="/faculty">Faculty</NavLink>
+                  <NavLink href="/administrator">Administrator</NavLink>
+                </>
+              )}
             </div>
 
-            {/* User menu */}
-            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-              {Role?.role !== null && (
-                <button
-                  type="button"
-                  className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  onClick={openWebcam}
-                >
-                  <span className="absolute -inset-1.5"></span>
-                  <span className="sr-only">Open user menu</span>
-                  Open Webcam
-                </button>
-              )}
-              {Role?.role !== null && (
-                <button
-                  type="button"
-                  className="mx-3 relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                  onClick={captureImage}
-                >
-                  <span className="absolute -inset-1.5"></span>
-                  <span className="sr-only">Capture Image</span>
-                  Capture Attendance
-                </button>
+            <div className="flex items-center space-x-3">
+              {isLoggedIn && (
+                <>
+                  <ActionButton onClick={openWebcam} label="Open Webcam" />
+                  <ActionButton onClick={captureImage} label="Capture Attendance" />
+                </>
               )}
             </div>
           </div>
         </div>
+        {menuOpen && !isLoggedIn && (
+          <div className="sm:hidden px-2 pb-3 pt-2 space-y-1">
+            <NavLink href="/student" mobile>
+              Student
+            </NavLink>
+            <NavLink href="/faculty" mobile>
+              Faculty
+            </NavLink>
+            <NavLink href="/administrator" mobile>
+              Administrator
+            </NavLink>
+          </div>
+        )}
       </nav>
+
+      {/* Captured Image Preview */}
       {imageSrc && (
-        <div style={{ marginTop: "10px" }}>
-          <img src={imageSrc} alt="Captured" style={{ maxWidth: "100%", height: "auto" }} />
+        <div className="p-4 bg-gray-900 text-white text-center">
+          <p className="mb-2">Captured Image:</p>
+          <img src={imageSrc} alt="Captured" className="mx-auto rounded max-w-xs" />
         </div>
       )}
     </div>
   );
 };
 
-export default Navbar;
+const NavLink = ({
+  href,
+  children,
+  mobile = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  mobile?: boolean;
+}) => (
+  <a
+    href={href}
+    className={`${
+      mobile ? "block px-3 py-2 rounded-md" : "px-3 py-2"
+    } text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white`}
+  >
+    {children}
+  </a>
+);
+
+const ActionButton = ({
+  onClick,
+  label,
+}: {
+  onClick: () => void;
+  label: string;
+}) => (
+  <button
+    onClick={onClick}
+    className="rounded bg-gray-700 px-3 py-1 text-sm text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-white"
+  >
+    {label}
+  </button>
+);
+
+export default Page;

@@ -15,10 +15,12 @@ export function RoleProvider({ children }: { children: ReactNode }) {
   const [email, setEmail] = useState<string | null>(null);
   const [rollNumber, setrollNumber] = useState<string | null>(null);
 
-  const changeRole = (newRole: any,rollno:any,email:any) => {
+  const changeRole =(newRole: any,rollno:any,email:any) =>{
+    
     setRole(newRole);
     setEmail(email);
     setrollNumber(rollno)
+
   };
 
   return (

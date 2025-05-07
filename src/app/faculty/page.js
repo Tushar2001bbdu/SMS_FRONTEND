@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "../utils/teacher_auth";
 import { FacultyContext } from "../Context/FacultyProvider";
 import {useRouter} from "next/navigation"
-export default function page() {
+export default function Page() {
   const [userDetails, setUserDetails] = useState({
     email: "",
     rollNo: "",

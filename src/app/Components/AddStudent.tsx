@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createStudentRecord, getPhotoUploadUrl } from "../redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
 
-const AddStudent: React.FC<Props> = ({ section, setAddStudent }) => {
+const Page: React.FC<Props> = ({ section, setAddStudent }) => {
   let photoUrl = useSelector((state: any) => state.admin.photoUploadUrl);
   let message = useSelector((state: any) => state.admin.message);
   const [formData, setFormData] = useState({
@@ -177,4 +177,4 @@ const AddStudent: React.FC<Props> = ({ section, setAddStudent }) => {
   );
 };
 
-export default AddStudent;
+export default Page;

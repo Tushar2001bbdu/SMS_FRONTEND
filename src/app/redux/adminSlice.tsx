@@ -1,6 +1,14 @@
 "use client";
+import  {useContext} from "react";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { RoleContext } from "../Context/RoleProvider";
+interface RoleContextType {
+  role: any;
+  changeRole: (newRole: any,rollno:any,email:any) => void;
+  email:any;
+  rollNumber:any;
 
+}
 const initialState = {
   examNotification: null,
   photoUploadUrl: null,
@@ -13,11 +21,10 @@ const initialState = {
   teacherList: [],
 };
 
-// Async Thunks for API Calls
 export const login = createAsyncThunk(
   "admin/login",
   async (userDetails: any) => {
-    let url = `http://localhost:3001/app/details/login`;
+    let url = `http://43.204.234.139:3001/app/details/login`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -41,13 +48,33 @@ export const login = createAsyncThunk(
 export const sendPhoto = createAsyncThunk(
   "admin/sendPhoto",
   async (image: any, { getState }: any) => {
-    const role = getState().role;
+    const Role = useContext(RoleContext) as RoleContextType | null;
+    console.log("You are trying to update attendance")
     let url = `http://localhost:3001/app/attendance/sendphoto`;
-
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ url: image, rollno: role?.rollNumber }),
+
+      body: JSON.stringify({ url: image, rollno: Role?.rollNumber }),
+    });
+
+    const data = await res.json();
+    console.log(data)
+    return data.message;
+  }
+);
+export const createClass = createAsyncThunk(
+  "admin/createClass",
+  async (name: string) => {
+    console.log("the class name is"+name)
+    let url = `http://43.204.234.139:3001/app/details/createClass`;
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json",
+        authorization: localStorage.getItem("adminFirebaseToken") || "",
+       },
+      body: JSON.stringify({ className: name }),
     });
 
     const data = await res.json();
@@ -59,7 +86,7 @@ export const sendFrame = createAsyncThunk(
   "admin/sendFrame",
   async (image: any, { getState }: any) => {
     const role = getState().role;
-    let url = `http://localhost:3001/app/exam/sendphoto`;
+    let url = `http://43.204.234.139:3001/app/exam/sendphoto`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -72,7 +99,7 @@ export const sendFrame = createAsyncThunk(
   }
 );
 export const getClassList = createAsyncThunk("admin/getClassList", async () => {
-  let url = `http://localhost:3001/app/details/getClassList`;
+  let url = `http://43.204.234.139:3001/app/details/getClassList`;
 
   const res = await fetch(url, {
     method: "GET",
@@ -87,7 +114,7 @@ export const getClassList = createAsyncThunk("admin/getClassList", async () => {
   return data.data;
 });
 export const MarkAssignent = createAsyncThunk("admin/markAssignment", async (file:{rollno:string,s3Link:string,fileType:string,subject:string}) => {
-  let url = `http://localhost:3001/app/assignments/markAssignment/${file.rollno}`;
+  let url = `http://43.204.234.139:3001/app/assignments/markAssignment/${file.rollno}`;
 
   const res = await fetch(url, {
     method: "GET",
@@ -105,7 +132,7 @@ export const MarkAssignent = createAsyncThunk("admin/markAssignment", async (fil
 export const getTeacherList = createAsyncThunk(
   "admin/getTeacherList",
   async () => {
-    let url = `http://localhost:3001/app/details/getTeacherList`;
+    let url = `http://43.204.234.139:3001/app/details/getTeacherList`;
 
     const res = await fetch(url, {
       method: "GET",
@@ -124,7 +151,7 @@ export const getPhotoUploadUrl = createAsyncThunk(
   "admin/getPhotoUploadUrl",
   async (filename: any) => {
     try {
-      const url = `http://localhost:3001/app/details/get-upload-url/${filename}`;
+      const url = `http://43.204.234.139:3001/app/details/get-upload-url/${filename}`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -159,7 +186,7 @@ export const createStudentRecord = createAsyncThunk(
     classteacherrollno: string;
     profilepictureLink: string;
   }) => {
-    let url = `http://localhost:3001/app/details/createStudentRecord`;
+    let url = `http://43.204.234.139:3001/app/details/createStudentRecord`;
     let response: any = await fetch(url, {
       method: "POST",
       headers: {
@@ -185,7 +212,7 @@ export const createTeacherRecord = createAsyncThunk(
     gender: string;
     profilepictureLink: string;
   }) => {
-    let url = `http://localhost:3001/app/details/createTeacherRecord`;
+    let url = `http://43.204.234.139:3001/app/details/createTeacherRecord`;
     let response: any = await fetch(url, {
       method: "POST",
       headers: {
@@ -202,7 +229,7 @@ export const createTeacherRecord = createAsyncThunk(
 export const deleteStudentRecord = createAsyncThunk(
   "admin/deleteStudentRecord",
   async (userDetails: { rollno: string; section: string }) => {
-    let url = `http://localhost:3001/app/details/deleteStudentRecord/${userDetails.rollno}/${userDetails.section}`;
+    let url = `http://43.204.234.139:3001/app/details/deleteStudentRecord/${userDetails.rollno}/${userDetails.section}`;
     let response: any = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -220,7 +247,7 @@ export const deleteStudentRecord = createAsyncThunk(
 export const deleteTeacherRecord = createAsyncThunk(
   "admin/deleteTeacherRecord",
   async (userDetails: { rollno: string }) => {
-    let url = `http://localhost:3001/app/details/deleteTeacherRecord/${userDetails.rollno}`;
+    let url = `http://43.204.234.139:3001/app/details/deleteTeacherRecord/${userDetails.rollno}`;
     let response: any = await fetch(url, {
       method: "DELETE",
       headers: {

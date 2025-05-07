@@ -20,7 +20,7 @@ interface AuthContextType {
   StudentDetails: () => void;
 }
 
-const StudentDetails: React.FC = () => {
+const Page: React.FC = () => {
   
   const con = useContext<AuthContextType | null>(AuthContext);
 
@@ -81,4 +81,4 @@ const StudentDetails: React.FC = () => {
   return null; 
 };
 
-export default StudentDetails;
+export default Page;

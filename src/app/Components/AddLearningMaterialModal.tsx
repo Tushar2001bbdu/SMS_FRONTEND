@@ -21,7 +21,7 @@ interface FacultyContextType {
   uploadUrl?: string | null;
 }
 
-const AddLearningMaterialModal: FC<Props> = ({
+const Page: FC<Props> = ({
   section,
   setIsOpen,
 }) => {
@@ -250,4 +250,4 @@ const AddLearningMaterialModal: FC<Props> = ({
   );
 };
 
-export default AddLearningMaterialModal;
+export default Page;

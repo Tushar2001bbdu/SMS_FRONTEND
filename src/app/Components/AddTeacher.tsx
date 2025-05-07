@@ -6,7 +6,7 @@ import { AppDispatch } from "@/app/redux/adminStore";
 interface Props{
   setAddTeacher:(value:boolean)=> void;
 }
-const AddTeacher: React.FC<Props> = ({setAddTeacher}) => {
+const Page: React.FC<Props> = ({setAddTeacher}) => {
   const [formData, setFormData] = useState({
     email:"",
     rollno:"",
@@ -170,4 +170,4 @@ const AddTeacher: React.FC<Props> = ({setAddTeacher}) => {
   );
 };
 
-export default AddTeacher;
+export default Page;

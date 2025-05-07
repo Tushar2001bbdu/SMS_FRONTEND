@@ -4,7 +4,7 @@ import { gql, useMutation } from "@apollo/client";
 import { useDispatch } from "react-redux";
 import { MarkAssignent } from "../redux/adminSlice";
 
-export default function StudentAssignment(props) {
+export default function Page(props) {
   const [file, setFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const context = useContext(AuthContext);

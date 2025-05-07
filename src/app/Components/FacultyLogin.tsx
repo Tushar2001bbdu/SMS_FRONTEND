@@ -3,29 +3,21 @@ import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "../utils/teacher_auth";
-import { useRouter } from "next/navigation";
 import { FacultyContext } from "../Context/FacultyProvider";
-import Alert from "./Alert";
-import router from "next/router";
+
 
 interface FacultyDetails {
   rollno: string;
   [key: string]: any;
 }
 
-interface FacultyContextType {
-  getAssignmentUrl:(filename: string)=>Promise<any>;
+interface FacultyContextType{
   facultyData: any;
   facultyLogin?: (facultyDetails: FacultyDetails) => Promise<void>;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
-  logout: () => void;
+  getFacultyProfile?: () => Promise<void>;
+
 }
-const FacultyLogin: React.FC = () => {
+const Page: React.FC = () => {
 
   const [userDetails, setUserDetails] = useState(
     {
@@ -182,4 +174,4 @@ const FacultyLogin: React.FC = () => {
     </div>
   );
 }
-export default FacultyLogin
+export default Page

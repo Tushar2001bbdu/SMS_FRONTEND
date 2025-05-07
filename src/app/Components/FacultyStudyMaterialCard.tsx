@@ -11,7 +11,7 @@ interface Props {
   };
 }
 
-const FacultyStudyMaterialCard: React.FC<Props> = ({ StudyMaterial }) => {
+const Page: React.FC<Props> = ({ StudyMaterial }) => {
   const getThumbnailUrl = (videoLink: string) => {
     const videoIdMatch = videoLink.match(
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^\s&]+)/
@@ -64,4 +64,4 @@ const FacultyStudyMaterialCard: React.FC<Props> = ({ StudyMaterial }) => {
   );
 };
 
-export default FacultyStudyMaterialCard;
+export default Page;

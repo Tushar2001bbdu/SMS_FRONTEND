@@ -11,7 +11,7 @@ interface Context{
     password: string,
   } ) => Promise<void>;
 }
-const StudentLoginForm: React.FC = () => 
+const Page: React.FC = () => 
  {
   const [userDetails, setUserDetails] = useState({
     rollno: "",
@@ -156,4 +156,4 @@ const StudentLoginForm: React.FC = () =>
     </div>
   );
 }
-export default StudentLoginForm;
+export default Page;

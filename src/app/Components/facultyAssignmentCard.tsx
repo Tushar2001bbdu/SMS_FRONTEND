@@ -16,7 +16,7 @@ interface Props {
   };
 }
 
-const FacultyAssignmentCard: React.FC<Props> = ({ section, Assignment }) => {
+const Page: React.FC<Props> = ({ Assignment }) => {
   return (
     <div className="rounded overflow-hidden shadow-lg flex flex-col w-full sm:w-full md:w-full lg:w-full">
       <div className="relative p-2">
@@ -56,4 +56,4 @@ const FacultyAssignmentCard: React.FC<Props> = ({ section, Assignment }) => {
   );
 };
 
-export default FacultyAssignmentCard;
+export default Page;

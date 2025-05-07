@@ -1,14 +1,23 @@
 "use client";
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import Button from '@mui/material/Button';
-import { getClassList } from "@/app/redux/adminSlice";
+import { createClass, getClassList } from "@/app/redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
+import TextField from '@mui/material/TextField';
+
 
 const Page: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const classList = useSelector((state: any) => state.admin.classList);
+  const [inputValue, setInputValue] = useState('');
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInputValue(event.target.value);
+  };
+  const handleSubmit=()=>{
+    dispatch(createClass(inputValue))
+  }
   useEffect(() => {
     dispatch(getClassList());
   }, [dispatch]);
@@ -18,7 +27,8 @@ const Page: React.FC = () => {
       <div className="text-2xl font-bold text-center text-gray-800 mb-6">Class Groups</div>
 
       <div className="flex justify-center mb-6">
-        <Button variant="contained" color="primary">
+        <TextField variant="outlined" onChange={(e)=>{handleChange(e)}} />
+        <Button variant="contained" onClick={()=>{handleSubmit()}} color="primary">
           Add Class
         </Button>
       </div>

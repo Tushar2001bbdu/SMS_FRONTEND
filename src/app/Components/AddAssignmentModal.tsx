@@ -28,7 +28,7 @@ interface FacultyContextType {
   uploadUrl?: string | null;
 }
 
-const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) => {
+const Page: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) => {
   const [file, setFile] = useState<File | null>(null);
   const [subject, setSubject] = useState<string>("");
   const context = useContext<FacultyContextType | null>(FacultyContext);
@@ -242,4 +242,4 @@ const AddAssignmentModal: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) 
   );
 };
 
-export default AddAssignmentModal;
+export default Page;

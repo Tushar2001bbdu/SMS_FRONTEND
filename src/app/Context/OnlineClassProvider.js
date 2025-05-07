@@ -8,7 +8,7 @@ export const OnlineClassProvider = (props) => {
 
   const socket = useMemo(() => {
     try {
-      return io("http://localhost:3001", {
+      return io("http://43.204.234.139:3001", {
         transports: ["websocket"], // Ensure only WebSocket transport is used to avoid CORS issues
         withCredentials: true, // Send credentials (if needed, like cookies) with CORS requests
       });
@@ -19,7 +19,7 @@ export const OnlineClassProvider = (props) => {
   }, []);
   const generateSignature = async (meetingNumber, role) => {
     try {
-      let response = await fetch("http://localhost:3001/app/onlineClass/generateSignature", {
+      let response = await fetch("http://43.204.234.139:3001/app/onlineClass/generateSignature", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

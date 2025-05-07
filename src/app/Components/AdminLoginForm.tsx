@@ -18,7 +18,7 @@ interface RoleContextType{
   rollNumber:any;
  
 }
-const AdminLoginForm: React.FC = () => 
+const Page: React.FC = () => 
  {
   const role=useContext<RoleContextType | null>(RoleContext)
   const [userDetails, setUserDetails] = useState({
@@ -192,4 +192,4 @@ const AdminLoginForm: React.FC = () =>
     </div>
   );
 }
-export default AdminLoginForm;
+export default Page;

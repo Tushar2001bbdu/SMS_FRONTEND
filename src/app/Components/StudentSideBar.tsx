@@ -5,7 +5,7 @@ import React,{ useContext } from "react";
 interface StudentContextType{
   logout: () => void;
 }
-const StudentSideBar: React.FC = () => {
+const Page: React.FC = () => {
   const context = useContext<StudentContextType | null>(AuthContext);
   const router = useRouter();
 
@@ -249,4 +249,4 @@ const StudentSideBar: React.FC = () => {
 
   );
 }
-export default StudentSideBar;
+export default Page;

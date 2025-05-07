@@ -1,3 +1,4 @@
+"use client"
 import { createContext, useState, useContext } from "react";
 import { RoleContext } from "./RoleProvider";
 import { useRouter } from "next/navigation";
@@ -9,15 +10,14 @@ export function AuthProvider({ children }) {
   const [studentResult, setStudentResult] = useState(null);
   const [studentFeesPaymentDetails, setStudentFeesPaymentDetails] =
     useState(null);
-  const [rollNumber, setRollNumbr] = useState(0);
-  const[classDetails,setClassDetails]=useState(null);
+  const [classDetails, setClassDetails] = useState(null);
   const [uploadUrl, setUploadUrl] = useState(null);
-  const Role = useContext(RoleContext);
+  var Role = useContext(RoleContext);
   const router = useRouter();
 
   // Async functions for various other operations
   async function StudentDetails() {
-    let url = new URL(`http://localhost:3001/app/users/seeDetails`);
+    let url = new URL(`http://43.204.234.139:3001/app/users/seeDetails`);
     let response = await fetch(url, {
       method: "GET",
       headers: {
@@ -26,17 +26,19 @@ export function AuthProvider({ children }) {
       },
     });
     response = await response.json();
-    if(response.status!==200){
+    console.log(response)
+    if (response.status !== 200) {
+
       alert("You are not authorized to view this page");
       router.push("/");
     }
-    else{
-    setStudentData(response.data);
+    else {
+      setStudentData(response.data);
     }
   }
 
   async function StudentLogin(userDetails) {
-    let url = new URL("http://localhost:3001/app/users/login");
+    let url = new URL("http://43.204.234.139:3001/app/users/login");
     let response = await fetch(url, {
       method: "POST",
       headers: {
@@ -48,16 +50,24 @@ export function AuthProvider({ children }) {
       }),
     });
     response = await response.json();
+
+    console.log(response)
     if (response.status === 200) {
-      Role?.changeRole("student", userDetails.rollNo, userDetails.email);
+
+      try{Role.changeRole("student", userDetails.rollno, userDetails.email);}
+      catch(error){
+        console.log(error)
+      }
+      console.log("the roll number you have setted is" ,Role)
       router.push("/Details");
     } else {
+
       alert("You have entered invalid credentials");
     }
   }
 
   async function getStudentResult() {
-    let url = new URL(`http://localhost:3001/app/users/getResult`);
+    let url = new URL(`http://43.204.234.139:3001/app/users/getResult`);
     let response = await fetch(url, {
       method: "GET",
       headers: {
@@ -66,17 +76,18 @@ export function AuthProvider({ children }) {
       },
     });
     response = await response.json();
-    if(response.status!==200){
+    console.log(response)
+    if (response.status !== 200) {
       alert("You are not authorized to view this page");
       router.push("/");
     }
-    else{
-    setStudentResult(response.data);
+    else {
+      setStudentResult(response.data);
     }
   }
 
   async function getStudentDetails() {
-    let url = new URL(`http://localhost:3001/app/users/getDetails`);
+    let url = new URL(`http://43.204.234.139:3001/app/users/getDetails`);
     let response = await fetch(url, {
       method: "GET",
       headers: {
@@ -91,7 +102,7 @@ export function AuthProvider({ children }) {
     try {
       const bucketName = "assignmentsolutions";
 
-      const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
+      const url = `http://43.204.234.139:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -112,8 +123,8 @@ export function AuthProvider({ children }) {
       console.error("Error fetching upload URL:", error);
     }
   }
-  async function getClassSchedule(classSection){
-   let url = new URL(`http://localhost:3001/app/users/getClassSchedule/${classSection}`);
+  async function getClassSchedule(classSection) {
+    let url = new URL(`http://43.204.234.139:3001/app/users/getClassSchedule/${classSection}`);
     let response = await fetch(url, {
       method: "GET",
       headers: {
@@ -122,12 +133,12 @@ export function AuthProvider({ children }) {
       },
     });
     response = await response.json();
-    if(response.status!==200){
+    if (response.status !== 200) {
       alert("You are not authorized to view this page");
       router.push("/");
     }
-    else{
-    setClassDetails(response.data);
+    else {
+      setClassDetails(response.data);
     }
   }
 

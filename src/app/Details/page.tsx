@@ -6,6 +6,7 @@ import Chart from "../Components/Chart";
 import { useRouter } from "next/router";
 import { AuthContext } from "../Context/AuthProvider";
 import Image from "next/image";
+import StudentHomePage from '@/app/Components/StudentHome';
 interface RoleContextType {
     role: any;
     changeRole: (newRole: any,rollno:any,email:any) => void;
@@ -25,13 +26,17 @@ const roboto = Roboto({
   });
 
 const Page: React.FC = () => {
-
-
-return(
-  <>
-  Page is Good
-  </>
-)
+  const Role = useContext(RoleContext) as RoleContextType | null;
+if(Role?.role==="student"){
+  return(<StudentHomePage/>)
+}
+else{
+  return(
+    <>
+    Invalid User
+    </>
+  )
+}
 }
 
 export default Page;

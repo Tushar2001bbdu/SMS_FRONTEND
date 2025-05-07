@@ -29,7 +29,7 @@ interface StudyMaterialList {
   getLearningMaterialsBySection: StudyMaterial[];
 }
 
-const LearningMaterialBySection: React.FC<Props> = ({ section }) => {
+const Page: React.FC<Props> = ({ section }) => {
   const role = useContext<RoleContextType | null>(RoleContext);
   const [addStudyMaterial, setFunction] = useState<boolean>(false);
   const rollNumber = role?.rollNumber;
@@ -79,4 +79,4 @@ const LearningMaterialBySection: React.FC<Props> = ({ section }) => {
   );
 };
 
-export default LearningMaterialBySection;
+export default Page;

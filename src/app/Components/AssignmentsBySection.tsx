@@ -35,7 +35,7 @@ interface AssignmentList {
   getAssignmentsBySection: Assignment[];
 }
 
-const AssignmentsBySection: React.FC<Props> = ({ section }) => {
+const Page: React.FC<Props> = ({ section }) => {
   const role = useContext<RoleContextType | null>(RoleContext);
   const [addAssignment, setAddAssignment] = useState<boolean>(false);
   const rollNumber = role?.rollNumber;
@@ -84,4 +84,4 @@ const AssignmentsBySection: React.FC<Props> = ({ section }) => {
   );
 };
 
-export default AssignmentsBySection;
+export default Page;

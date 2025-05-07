@@ -20,7 +20,7 @@ export default function Page() {
     const getListOfStudent = useCallback(async (selectedSection) => {
         setLoading(true);
         try {
-            const url = new URL("http://localhost:3001/app/teachers/listOfStudents");
+            const url = new URL("http://43.204.234.139:3001/app/teachers/listOfStudents");
             url.searchParams.set("section", selectedSection);
 
             const response = await fetch(url, {
