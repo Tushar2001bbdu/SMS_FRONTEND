@@ -4,22 +4,26 @@ import { FacultyContext } from "../Context/FacultyProvider";
 
 
 interface FacultyContextType {
-  getAssignmentUrl:(filename: string)=>Promise<any>;
   facultyData: any;
-  getFacultyProfile: () => Promise<void>;
-  getListOfStudents: (section: string) => Promise<void>;
-  studentList: any;
-  studentProfile: any;
-  getStudentProfile: (rollno: string) => Promise<any>;
-  updateResult: (rollno: string, marks: string | number) => Promise<void>;
-  logout: () => void;
+  getFacultyProfile?: () => Promise<void>;
+  studentProfile?: any;
+  getStudentProfile?: (rollno: string) => Promise<any>;
+  updateResult?: (rollno: string, marks: string | number) => Promise<void>;
+  uploadUrl?: string  | null;
+  getAssignmentUrl?:(filename: string)=>Promise<any>;
+ 
+  logout?: () => void;
 }
+
+
+
+
 
 
 const Page: React.FC = () => {
   const con = useContext<FacultyContextType | null>(FacultyContext);
   useEffect(() => {
-    if(con!==null){
+    if(con!==null && con.getFacultyProfile){
       con.getFacultyProfile();
     }
    

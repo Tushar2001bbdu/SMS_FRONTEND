@@ -7,7 +7,7 @@ export default function Page() {
     const context=useContext(AuthContext)
     useEffect(()=>{
         context.getStudentDetails()
-    },[])
+    },[context])
     if(context!==null && context.studentFeesPaymentDetails!==null){
         return (
 

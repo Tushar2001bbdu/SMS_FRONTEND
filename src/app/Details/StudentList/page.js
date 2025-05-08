@@ -17,7 +17,8 @@ export default function Page() {
     const [studentList, setStudentList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const GetListOfStudent = useCallback(async (selectedSection) => {
+    // useCallback should be defined outside of conditionals
+    const getListOfStudent = useCallback(async (selectedSection) => {
         setLoading(true);
         try {
             const url = new URL("http://43.204.234.139:3001/app/teachers/listOfStudents");
@@ -43,13 +44,14 @@ export default function Page() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, []);  // Empty dependency array means this won't change during re-renders
 
+    // useEffect will now always run when `section` changes
     useEffect(() => {
         if (section) {
             getListOfStudent(section);
         }
-    }, [section, getListOfStudent]);
+    }, [section, getListOfStudent]); // Removed context from dependency, it's not used directly
 
     return (
         <div className="text-center mt-4 mr-4">
@@ -126,7 +128,6 @@ export default function Page() {
                                 <th scope="col" className="px-6 py-3">
                                    Profile Picture
                                 </th>
-                                
                             </tr>
                         </thead>
                         <tbody>

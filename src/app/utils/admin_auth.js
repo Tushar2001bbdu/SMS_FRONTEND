@@ -1,9 +1,8 @@
-"use client";
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { getAnalytics } from "firebase/analytics";
 
-const firebaseConfig = {
+const firebaseConfigAdmin = {
   apiKey: "AIzaSyAsaoDT0CtyRPQ9x2C9OA3FLoG9wj3rdgk",
   authDomain: "admin-auth-10a35.firebaseapp.com",
   projectId: "admin-auth-10a35",
@@ -13,14 +12,13 @@ const firebaseConfig = {
   measurementId: "G-R212EVVCWG",
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const appAdmin = initializeApp(firebaseConfigAdmin, "admin");
+const auth = getAuth(appAdmin);
 const googleProvider = new GoogleAuthProvider();
 let analytics;
 
-
 if (typeof window !== "undefined") {
-  analytics = getAnalytics(app);
+  analytics = getAnalytics(appAdmin);
 }
 
 export { auth, googleProvider, signInWithPopup, signOut, analytics };
