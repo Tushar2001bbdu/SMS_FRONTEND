@@ -3,7 +3,7 @@ import OnlineClass from '@/app/Components/OnlineClass'
 import { OnlineClassContext } from '@/app/Context/OnlineClassProvider'
 import React,{useContext,useEffect,useState} from 'react'
 
-export default function page() {
+export default function Page() {
    const context=useContext(OnlineClassContext);
    const[emailId,setemailId]=useState(null);
    const[classSection,setClassSection]=useState(null);

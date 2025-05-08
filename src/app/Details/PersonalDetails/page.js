@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import FacultyProfile from "../../Components/FacultyProfile";
 import StudentDetails from "../../Components/StudentDetails";
 import { RoleContext } from "@/app/Context/RoleProvider";
-export default function page() {
+export default function Page() {
   const Role = useContext(RoleContext);
   return (
     <>

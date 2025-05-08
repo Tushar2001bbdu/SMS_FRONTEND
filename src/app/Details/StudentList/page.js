@@ -17,7 +17,7 @@ export default function Page() {
     const [studentList, setStudentList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    const getListOfStudent = useCallback(async (selectedSection) => {
+    const GetListOfStudent = useCallback(async (selectedSection) => {
         setLoading(true);
         try {
             const url = new URL("http://43.204.234.139:3001/app/teachers/listOfStudents");

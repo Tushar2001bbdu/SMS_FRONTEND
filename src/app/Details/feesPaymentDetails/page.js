@@ -3,7 +3,7 @@ import { AuthContext } from '@/app/Context/AuthProvider'
 import React,{useContext,useEffect} from 'react'
 
 
-export default function page() {
+export default function Page() {
     const context=useContext(AuthContext)
     useEffect(()=>{
         context.getStudentDetails()
