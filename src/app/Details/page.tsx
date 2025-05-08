@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { AuthContext } from "../Context/AuthProvider";
 import Image from "next/image";
 import StudentHomePage from '@/app/Components/StudentHome';
+import TeacherHomePage from '@/app/Components/TeacherHome'
 interface RoleContextType {
     role: any;
     changeRole: (newRole: any,rollno:any,email:any) => void;
@@ -29,6 +30,9 @@ const Page: React.FC = () => {
   const Role = useContext(RoleContext) as RoleContextType | null;
 if(Role?.role==="student"){
   return(<StudentHomePage/>)
+}
+else if(Role?.role==="faculty"){
+  return(<TeacherHomePage/>)
 }
 else{
   return(

@@ -24,6 +24,7 @@
     "@sentry/nextjs": "^8.51.0",
     "@zoomus/websdk": "^2.18.3",
     "chart.js": "^4.4.4",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "firebase": "^11.6.0",
     "graphql": "^16.9.0",

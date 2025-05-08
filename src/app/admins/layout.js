@@ -8,7 +8,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 
 
-import AdminSidebar from "@/app/Components/AdminSideBar";
+import AdminSidebar from "@/app/Components/AdminSidebar";
 
 const Layout = ({ children }) => {
   const { role } = useContext(RoleContext) || {};

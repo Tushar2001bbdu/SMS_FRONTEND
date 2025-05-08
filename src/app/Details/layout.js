@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 const StudentSidebar = dynamic(() => import("../Components/StudentSideBar"));
 const FacultySidebar = dynamic(() => import("../Components/FacultySideBar"));
-const AdminSidebar = dynamic(() => import("../Components/AdminSideBar"));
+const AdminSidebar = dynamic(() => import("@/app/Components/AdminSidebar"));
 
 const Layout = ({ children }) => {
   const { role } = useContext(RoleContext) || {};
@@ -22,8 +22,8 @@ const Layout = ({ children }) => {
     <div className="grid grid-cols-12">
       <div className="col-span-4 hidden md:block" role="navigation">
         {role === "student" && <StudentSidebar />}
-        {role === "teacher" && <FacultySidebar />}
-        {!["student", "teacher"].includes(role) && <div>Invalid role</div>}
+        {role === "faculty" && <FacultySidebar />}
+        {!["student", "faculty"].includes(role) && <div>Invalid role</div>}
       </div>
       <div className="col-span-8" role="main">
         <main>{children}</main>

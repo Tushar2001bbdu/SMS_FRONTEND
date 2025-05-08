@@ -48,7 +48,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       });
       response=await response.json()
       if(response.status===200){
-        Role?.changeRole("teacher",facultyDetails.rollNo,facultyDetails.email);
+        Role?.changeRole("faculty",facultyDetails.rollNo,facultyDetails.email);
         router.push("/Details")
       }
       else{

@@ -1,117 +1,74 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FacultyContext } from "../Context/FacultyProvider";
 
 const FacultySidebar: React.FC = () => {
   const router = useRouter();
-  const context = useContext(FacultyContext);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const menuItems = [
+    { label: "Dashboard", path: "/FacultyDashboard" },
+    { label: "Personal Details", path: "/Details/PersonalDetails" },
+    { label: "Student List", path: "/Details/StudentList" },
+    { label: "Start Online Class", path: "/Details/OnlineClasses" },
+    { label: "Student Assignments", path: "/Details/StudentAssignments" },
+    { label: "Student Learning Material", path: "/Details/StudentLearningMaterial" },
+  ];
 
   return (
-    <div className="relative flex h-full w-full max-w-[20rem] flex-col rounded-xl bg-white p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
-      <section className="p-4 mb-2">
-        <h5 className="text-xl font-semibold text-blue-gray-900">Faculty Corner</h5>
-      </section>
-      <nav className="flex flex-col gap-1 p-2 text-base text-blue-gray-700">
-        <div
-          role="button"
-          onClick={() => router.push("/FacultyDashboard")}
-          className="flex items-center w-full p-3 rounded-lg transition-all hover:bg-blue-gray-50 cursor-pointer"
+    <>
+      {/* Hamburger menu (visible on mobile only) */}
+      <button
+        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded shadow-md"
+        onClick={() => setIsOpen(!isOpen)}
+        aria-label="Toggle Sidebar"
+      >
+        <svg
+          className="w-6 h-6 text-gray-800"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          viewBox="0 0 24 24"
         >
-          <div className="grid mr-4 place-items-center">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                fillRule="evenodd"
-                d="M2.25 2.25a.75.75 0 000 1.5H3v10.5a3 3 0 003 3h1.21l-1.172 3.513a.75.75 0 001.424.474l.329-.987h8.418l.33.987a.75.75 0 001.422-.474l-1.17-3.513H18a3 3 0 003-3V3.75h.75a.75.75 0 000-1.5H2.25z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          Dashboard
-        </div>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      {/* Sidebar - responsive and toggleable */}
+      <div
+        className={`fixed top-0 left-0 z-40 h-full w-64 bg-white shadow-lg p-4 transform transition-transform duration-300 ease-in-out 
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:block`}
+      >
+        <section className="p-4 mb-4 border-b border-gray-200">
+          <h5 className="text-xl font-semibold text-gray-800">Faculty Corner</h5>
+        </section>
+
+        <nav className="flex flex-col gap-1 text-base text-gray-700">
+          {menuItems.map(({ label, path }) => (
+            <div
+              key={path}
+              role="button"
+              onClick={() => {
+                router.push(path);
+                setIsOpen(false); // close sidebar on mobile
+              }}
+              className="flex items-center w-full p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition"
+            >
+              <span>{label}</span>
+            </div>
+          ))}
+        </nav>
+      </div>
+
+      {/* Overlay on mobile when sidebar is open */}
+      {isOpen && (
         <div
-          role="button"
-          onClick={() => router.push("/Details/PersonalDetails")}
-          className="flex items-center w-full p-3 rounded-lg transition-all hover:bg-blue-gray-50 cursor-pointer"
-        >
-          <div className="grid mr-4 place-items-center">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                fillRule="evenodd"
-                d="M7.5 6v.75H5.513c-.96 0-1.764.724-1.865 1.679l-1.263 12A1.875 1.875 0 004.25 22.5h15.5a1.875 1.875 0 001.865-2.071l-1.263-12a1.875 1.875 0 00-1.865-1.679H16.5V6a4.5 4.5 0 10-9 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          Personal Details
-        </div>
-        <div
-          role="button"
-          onClick={() => router.push("/Details/StudentList")}
-          className="flex items-center w-full p-3 rounded-lg transition-all hover:bg-blue-gray-50 cursor-pointer"
-        >
-          <div className="grid mr-4 place-items-center">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                fillRule="evenodd"
-                d="M6.912 3a3 3 0 00-2.868 2.118l-2.411 7.838a3 3 0 00-.133.882V18a3 3 0 003 3h15a3 3 0 003-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0017.088 3H6.912z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          Student List
-        </div>
-        <div
-          role="button"
-          onClick={() => router.push("/Details/OnlineClasses")}
-          className="flex items-center w-full p-3 rounded-lg transition-all hover:bg-blue-gray-50 cursor-pointer"
-        >
-          <div className="grid mr-4 place-items-center">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                fillRule="evenodd"
-                d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          Start Online Class
-        </div>
-        <div
-          role="button"
-          onClick={() => router.push("/Details/StudentAssignments")}
-          className="flex items-center w-full p-3 rounded-lg transition-all hover:bg-blue-gray-50 cursor-pointer"
-        >
-          <div className="grid mr-4 place-items-center">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                fillRule="evenodd"
-                d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 00-.986.57L6.3 5.508a1.875 1.875 0 00-2.282.819l-.922 1.597a1.875 1.875 0 00.432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 000 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 00-.432 2.385l.922 1.597a1.875 1.875 0 002.282.818l1.019-.382a7.49 7.49 0 00.45.082c.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071a1.875 1.875 0 001.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072a1.875 1.875 0 00.297-.349 7.493 7.493 0 00.985-.57c.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 002.28-.819l.923-1.597a1.875 1.875 0 00-.432-2.385l-.84-.692a.75.75 0 01-.154-.43 7.614 7.614 0 000-1.139.75.75 0 01.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 00-2.282-.818l-1.02.382a.75.75 0 01-.449-.083 7.49 7.49 0 00-.985-.57.75.75 0 01-.297-.348l-.179-1.072a1.875 1.875 0 00-1.85-1.567h-1.843z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          Student Assignments
-        </div>
-        <div
-          role="button"
-          onClick={() => router.push("/Details/StudentLearningMaterial")}
-          className="flex items-center w-full p-3 rounded-lg transition-all hover:bg-blue-gray-50 cursor-pointer"
-        >
-          <div className="grid mr-4 place-items-center">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                fillRule="evenodd"
-                d="M12 2.25a.75.75 0 01.75.75v9a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM6.166 5.106a.75.75 0 010 1.06 8.25 8.25 0 1011.668 0 .75.75 0 111.06-1.06c3.808 3.807 3.808 9.98 0 13.788-3.807 3.808-9.98 3.808-13.788 0-3.808-3.807-3.808-9.98 0-13.788a.75.75 0 011.06 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          Student Learning Material
-        </div>
-      </nav>
-    </div>
+          className="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+    </>
   );
 };
 

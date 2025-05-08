@@ -30,6 +30,7 @@ const Chart = (props) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'bottom',
@@ -37,8 +38,9 @@ const Chart = (props) => {
         labels: {
           usePointStyle: true,
           boxWidth: 10,
-          padding: 20, 
-      }},
+          padding: 20,
+        },
+      },
       title: {
         display: true,
         text: 'Chart',
@@ -47,7 +49,7 @@ const Chart = (props) => {
   };
 
   return (
-    <div>
+    <div style={{ width: '100%', maxWidth: '500px', height: '300px', margin: 'auto' }}>
       <Doughnut data={data} options={options} />
     </div>
   );
