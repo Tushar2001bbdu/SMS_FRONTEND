@@ -1,12 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-
+import { FacultyContext } from "@/app/Context/FacultyProvider"
+interface FacultyContextType {
+  facultyData: any;
+  getFacultyProfile?: () => Promise<void>;
+  studentProfile?: any;
+  getStudentProfile?: (rollno: string) => Promise<any>;
+  updateResult?: (rollno: string, marks: string | number) => Promise<void>;
+  uploadUrl?: string  | null;
+  getAssignmentUrl?:(filename: string)=>Promise<any>;
+ 
+  logout?: () => void;
+}
 const FacultySidebar: React.FC = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-
+  const context=useContext(FacultyContext) as FacultyContextType | null;
   const menuItems = [
     { label: "Dashboard", path: "/FacultyDashboard" },
     { label: "Personal Details", path: "/Details/PersonalDetails" },
@@ -58,6 +69,16 @@ const FacultySidebar: React.FC = () => {
               <span>{label}</span>
             </div>
           ))}
+          <div
+              role="button"
+              onClick={() => {
+                if(context?.logout){
+                context?.logout()// close sidebar on mobile
+              }}}
+              className="flex items-center w-full p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition"
+            >
+              <span>Log Out</span>
+            </div>
         </nav>
       </div>
 

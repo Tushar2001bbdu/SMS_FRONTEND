@@ -1,3 +1,4 @@
+"use client"
 import React, { useRef, useState, useEffect, useContext } from "react";
 import questions from "../questions";
 import Webcam from "react-webcam";

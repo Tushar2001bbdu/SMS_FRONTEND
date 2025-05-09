@@ -52,6 +52,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
         router.push("/Details")
       }
       else{
+        Role?.changeRole(null,-1,-1);
         alert("You have entered invalid credentials")
       }
       
@@ -74,6 +75,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
     const data = await response.json();
     if(data.status!==200){
+      Role?.changeRole(null,-1,-1);
       alert("Error in fetching the faculty profile")
     }
     else{
@@ -96,6 +98,7 @@ async function getStudentProfile(rollno: string): Promise<any> {
 
     const data = await response.json();
     if(data.status!==200){
+      Role?.changeRole(null,-1,-1);
       alert("Error in fetching the student profile")
     }
     else{
@@ -158,7 +161,7 @@ async function getStudentProfile(rollno: string): Promise<any> {
 
   async function logout(): Promise<void> {
     localStorage.removeItem("teacherFirebaseToken");
-    Role?.changeRole(null,"xxxxxxxxxxxxxxxx",'XXXXXX');
+    Role?.changeRole(null,-1,-1);
     router.push("/faculty");
   }
 

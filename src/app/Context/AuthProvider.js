@@ -30,6 +30,7 @@ export function AuthProvider({ children }) {
     if (response.status !== 200) {
 
       alert("You are not authorized to view this page");
+      Role?.changeRole(null,-1,-1);
       router.push("/");
     }
     else {
@@ -61,7 +62,7 @@ export function AuthProvider({ children }) {
       console.log("the roll number you have setted is" ,Role)
       router.push("/Details");
     } else {
-
+      Role?.changeRole(null,-1,-1);
       alert("You have entered invalid credentials");
     }
   }
@@ -78,10 +79,12 @@ export function AuthProvider({ children }) {
     response = await response.json();
     console.log(response)
     if (response.status !== 200) {
+      Role?.changeRole(null,-1,-1);
       alert("You are not authorized to view this page");
       router.push("/");
     }
     else {
+
       setStudentResult(response.data);
     }
   }
@@ -134,6 +137,7 @@ export function AuthProvider({ children }) {
     });
     response = await response.json();
     if (response.status !== 200) {
+      Role?.changeRole(null,-1,-1);
       alert("You are not authorized to view this page");
       router.push("/");
     }
@@ -145,7 +149,7 @@ export function AuthProvider({ children }) {
   async function logout() {
     localStorage.removeItem("firebaseToken");
     Role.changeRole(null);
-    router.push("/Student_Services");
+    router.push("/student");
   }
 
   return (

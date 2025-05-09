@@ -2,6 +2,7 @@
 import  {useContext} from "react";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RoleContext } from "../Context/RoleProvider";
+import { useRouter } from "next/navigation";
 interface RoleContextType {
   role: any;
   changeRole: (newRole: any,rollno:any,email:any) => void;
@@ -44,7 +45,18 @@ export const login = createAsyncThunk(
     return data;
   }
 );
-
+export const logout = createAsyncThunk(
+  "admin/logout",
+  async () => {
+    const Role = useContext(RoleContext) as RoleContextType | null;
+    const router=useRouter();
+    Role?.changeRole(null,-1,-1);
+    localStorage.removeItem('adminFirebaseToken');
+    router.push("/administrator")
+    return "You have Logged In Successfully"
+    
+  }
+);
 export const sendPhoto = createAsyncThunk(
   "admin/sendPhoto",
   async (image: any, { getState }: any) => {

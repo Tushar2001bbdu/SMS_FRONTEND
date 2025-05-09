@@ -16,11 +16,11 @@ const Chart = (props) => {
       {
         data: [props.data1, props.data2],
         backgroundColor: [
-          'rgba(243, 231, 233, 0.9)',
+          'rgb(173, 216, 230)',
           'rgba(27, 11, 243, 0.6)',
         ],
         borderColor: [
-          'rgb(238, 229, 231)',
+          'rgb(173, 216, 230)',
           'rgb(11, 15, 235)',
         ],
         borderWidth: 1,

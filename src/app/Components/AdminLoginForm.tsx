@@ -71,8 +71,8 @@ const Page: React.FC = () =>
         
         let resultAction=await dispatch(login(userDetails)); 
         if (login.fulfilled.match(resultAction)) {
-          role?.changeRole("admin", userDetails.rollno, userDetails.email); // Update role
-          router.push("/admins"); // Redirect after login
+          role?.changeRole("admin", userDetails.rollno, userDetails.email);
+          router.push("/admins");
         }
       }
     } catch (error) {
@@ -179,12 +179,7 @@ const Page: React.FC = () =>
               >
                 Sign in
               </button>
-              <button
-                onClick={() => signInWithGoogle()}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Sign in With Google
-              </button>
+              
             </div>
           </form>
         </section>

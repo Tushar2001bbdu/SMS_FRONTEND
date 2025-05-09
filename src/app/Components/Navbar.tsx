@@ -82,7 +82,7 @@ const Page: React.FC = () => {
               </button>
             </div>
             <div className="hidden sm:flex sm:space-x-4 ml-6">
-              {!isLoggedIn && (
+              {Role?.role===null && (
                 <>
                   <NavLink href="/student">Student</NavLink>
                   <NavLink href="/faculty">Faculty</NavLink>

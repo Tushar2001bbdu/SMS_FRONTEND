@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <>
       {Role.role === "student" && <StudentDetails />}
-      {Role.role === "teacher" && <FacultyProfile />}
+      {Role.role === "faculty" && <FacultyProfile />}
     </>
   );
 }

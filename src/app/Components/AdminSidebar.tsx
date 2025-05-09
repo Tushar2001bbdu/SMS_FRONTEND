@@ -1,10 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React from "react";
-
+import { logout } from "../redux/adminSlice";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/app/redux/adminStore";
 const Page: React.FC = () => {
   const router = useRouter();
-
+  
+   const dispatch = useDispatch<AppDispatch>();
   return (
     <div className="relative flex h-full w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
       <div className="p-4 mb-2">
@@ -119,6 +122,27 @@ const Page: React.FC = () => {
             </svg>
           </div>
           Teachers
+        </div>
+        <div
+          role="button"
+          onClick={() => {dispatch(logout())}}
+          className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:text-blue-gray-900 active:bg-blue-gray-50 active:text-blue-gray-900"
+        >
+          <div className="grid mr-4 place-items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-5 h-5"
+            >
+              <path
+                fillRule="evenodd"
+                d="M6.912 3a3 3 0 00-2.868 2.118l-2.411 7.838a3 3 0 00-.133.882V18a3 3 0 003 3h15a3 3 0 003-3v-4.162c0-.299-.045-.596-.133-.882l-2.412-7.838A3 3 0 0017.088 3H6.912z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+          Logout
         </div>
       </nav>
     </div>

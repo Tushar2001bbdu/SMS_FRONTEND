@@ -41,7 +41,7 @@ const Page: React.FC = () => {
     if (teacher?.facultyData !== null && teacher?.facultyData!==undefined) {
         console.log(teacher?.facultyData)
         return (
-            <div className="my-4 text-grey-500 w-full">
+            <div className="my-4 text-grey-500 w-full text-bold">
                 <div className="grid text-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     <section className="bg-blue-200 p-4 rounded-lg">
                         <Image src="/students.png" alt="student" className="mx-auto" width={100} height={100} />
