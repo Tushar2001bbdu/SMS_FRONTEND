@@ -21,7 +21,7 @@ const initialState = {
   },
   teacherList: [],
 };
-
+ 
 export const login = createAsyncThunk(
   "admin/login",
   async (userDetails: any) => {
@@ -59,20 +59,25 @@ export const logout = createAsyncThunk(
 );
 export const sendPhoto = createAsyncThunk(
   "admin/sendPhoto",
-  async (image: any, { getState }: any) => {
-    const Role = useContext(RoleContext) as RoleContextType | null;
-    console.log("You are trying to update attendance")
+  async ({ image, rollno }: { image: any; rollno: string }) => {
+    try{
+   
+    console.log("The image is"+image)
     let url = `http://localhost:3001/app/attendance/sendphoto`;
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
 
-      body: JSON.stringify({ url: image, rollno: Role?.rollNumber }),
+      body: JSON.stringify({ url: image, rollno:rollno}),
     });
 
     const data = await res.json();
     console.log(data)
     return data.message;
+  }
+  catch(err){
+    console.log(err)
+  }
   }
 );
 export const createClass = createAsyncThunk(

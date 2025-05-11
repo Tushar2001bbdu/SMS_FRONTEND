@@ -1,110 +1,118 @@
-"use client"
+"use client";
+
 import { createContext, useState, useContext } from "react";
 import { RoleContext } from "./RoleProvider";
 import { useRouter } from "next/navigation";
+import { toastBus } from "@/app/Components/Toast";
 
 export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [studentData, setStudentData] = useState(null);
   const [studentResult, setStudentResult] = useState(null);
-  const [studentFeesPaymentDetails, setStudentFeesPaymentDetails] =
-    useState(null);
+  const [studentFeesPaymentDetails, setStudentFeesPaymentDetails] = useState(null);
   const [classDetails, setClassDetails] = useState(null);
   const [uploadUrl, setUploadUrl] = useState(null);
-  var Role = useContext(RoleContext);
+  const Role = useContext(RoleContext);
   const router = useRouter();
 
-  // Async functions for various other operations
   async function StudentDetails() {
-    let url = new URL(`http://43.204.234.139:3001/app/users/seeDetails`);
-    let response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("firebaseToken"),
-      },
-    });
-    response = await response.json();
-    console.log(response)
-    if (response.status !== 200) {
-
-      alert("You are not authorized to view this page");
-      Role?.changeRole(null,-1,-1);
-      router.push("/");
-    }
-    else {
-      setStudentData(response.data);
+    try {
+      const response = await fetch("http://43.204.234.139:3001/app/users/seeDetails", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("firebaseToken"),
+        },
+      });
+      const data = await response.json();
+      if (data.status !== 200) {
+        toastBus.show("Error fetching student details", "error");
+        Role?.changeRole(null, -1, -1);
+        router.push("/")
+      } else {
+        setStudentData(data.data);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      toastBus.show("Something went wrong", "error");
     }
   }
 
   async function StudentLogin(userDetails) {
-    let url = new URL("http://43.204.234.139:3001/app/users/login");
-    let response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("firebaseToken"),
-      },
-      body: JSON.stringify({
-        userDetails: userDetails,
-      }),
-    });
-    response = await response.json();
+    try {
+      const response = await fetch("http://43.204.234.139:3001/app/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("firebaseToken"),
+        },
+        body: JSON.stringify({ userDetails }),
+      });
 
-    console.log(response)
-    if (response.status === 200) {
-
-      try{Role.changeRole("student", userDetails.rollno, userDetails.email);}
-      catch(error){
-        console.log(error)
+      const data = await response.json();
+      if (data.status === 200) {
+        Role.changeRole("student", userDetails.rollno, userDetails.email);
+        toastBus.show("Logged in successfully", "success");
+        router.push("/Details");
+      } else {
+        Role?.changeRole(null, -1, -1);
+        toastBus.show(data.message || "Login failed", "error");
+        router.push("/")
       }
-      console.log("the roll number you have setted is" ,Role)
-      router.push("/Details");
-    } else {
-      Role?.changeRole(null,-1,-1);
-      alert("You have entered invalid credentials");
+    } catch (error) {
+      console.error("Login error:", error);
+      toastBus.show("Something went wrong during login", "error");
+      router.push("/")
     }
   }
 
   async function getStudentResult() {
-    let url = new URL(`http://43.204.234.139:3001/app/users/getResult`);
-    let response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("firebaseToken"),
-      },
-    });
-    response = await response.json();
-    console.log(response)
-    if (response.status !== 200) {
-      Role?.changeRole(null,-1,-1);
-      alert("You are not authorized to view this page");
-      router.push("/");
-    }
-    else {
+    try {
+      const response = await fetch("http://43.204.234.139:3001/app/users/getResult", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("firebaseToken"),
+        },
+      });
 
-      setStudentResult(response.data);
+      const data = await response.json();
+      if (data.status !== 200) {
+        Role?.changeRole(null, -1, -1);
+        toastBus.show("Failed to fetch result", "error");
+        router.push("/")
+      } else {
+        setStudentResult(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching result:", error);
+      toastBus.show("Something went wrong", "error");
     }
   }
 
   async function getStudentDetails() {
-    let url = new URL(`http://43.204.234.139:3001/app/users/getDetails`);
-    let response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("firebaseToken"),
-      },
-    });
-    response = await response.json();
-    setStudentFeesPaymentDetails(response.data);
+    try {
+      const response = await fetch("http://43.204.234.139:3001/app/users/getDetails", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("firebaseToken"),
+        },
+      });
+
+      const data = await response.json();
+      setStudentFeesPaymentDetails(data.data);
+    } catch (error) {
+      console.error("Error fetching payment details:", error);
+      toastBus.show("Failed to fetch fee details", "error");
+      router.push("/")
+    }
   }
+
   async function getAssignmentUrl(filename) {
     try {
       const bucketName = "assignmentsolutions";
-
       const url = `http://43.204.234.139:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
 
       const response = await fetch(url, {
@@ -120,35 +128,44 @@ export function AuthProvider({ children }) {
       if (data.status === 200) {
         setUploadUrl(data.uploadUrl);
       } else {
-        console.error("Error in response:", data);
+        toastBus.show(data.message || "Failed to get upload URL", "error");
       }
     } catch (error) {
       console.error("Error fetching upload URL:", error);
+      toastBus.show("Something went wrong", "error");
+      router.push("/")
     }
   }
+
   async function getClassSchedule(classSection) {
-    let url = new URL(`http://43.204.234.139:3001/app/users/getClassSchedule/${classSection}`);
-    let response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("firebaseToken"),
-      },
-    });
-    response = await response.json();
-    if (response.status !== 200) {
-      Role?.changeRole(null,-1,-1);
-      alert("You are not authorized to view this page");
-      router.push("/");
-    }
-    else {
-      setClassDetails(response.data);
+    try {
+      const url = `http://43.204.234.139:3001/app/users/getClassSchedule/${classSection}`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("firebaseToken"),
+        },
+      });
+
+      const data = await response.json();
+      if (data.status !== 200) {
+        Role?.changeRole(null, -1, -1);
+        toastBus.show("Failed to get class schedule", "error");
+      } else {
+        setClassDetails(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching class schedule:", error);
+      toastBus.show("Something went wrong", "error");
+      router.push("/")
     }
   }
 
   async function logout() {
     localStorage.removeItem("firebaseToken");
     Role.changeRole(null);
+    toastBus.show("Logged out successfully", "success");
     router.push("/student");
   }
 
@@ -167,7 +184,7 @@ export function AuthProvider({ children }) {
         uploadUrl,
         setUploadUrl,
         getClassSchedule,
-        classDetails
+        classDetails,
       }}
     >
       {children}

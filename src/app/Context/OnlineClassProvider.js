@@ -9,8 +9,8 @@ export const OnlineClassProvider = (props) => {
   const socket = useMemo(() => {
     try {
       return io("http://43.204.234.139:3001", {
-        transports: ["websocket"], // Ensure only WebSocket transport is used to avoid CORS issues
-        withCredentials: true, // Send credentials (if needed, like cookies) with CORS requests
+        transports: ["websocket"], 
+        withCredentials: true,
       });
     } catch (error) {
       console.error("Socket connection error:", error);

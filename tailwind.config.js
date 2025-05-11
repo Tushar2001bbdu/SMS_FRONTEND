@@ -18,13 +18,22 @@ module.exports = {
         '20%': '20%', 
       },
       keyframes: {
+		"fade-in-out": {
+        "0%": { opacity: "0" },
+        "10%": { opacity: "1" },
+        "90%": { opacity: "1" },
+        "100%": { opacity: "0" },
+      },
         'border-pulse': {
           '0%': { borderColor: 'red-500' },
           '50%': { borderColor: 'red-300' },
           '100%': { borderColor: 'red-500' },
         }
-      }}, // Removed any custom theme extensions (backgrounds, colors, radius)
+      },
+	animation:{
+		 "fade-in-out": "fade-in-out 15s ease-in-out",
+	}}, 
 	},
-	plugins: [], // Removed any added plugins (e.g., tailwindcss-animate)
+	plugins: [require('daisyui')], 
   };
   

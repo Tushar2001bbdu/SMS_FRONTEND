@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useRef, useContext } from "react";
 import Webcam from "react-webcam";
 import { useDispatch } from "react-redux";
@@ -28,10 +29,11 @@ const Page: React.FC = () => {
       const image = webcamRef.current.getScreenshot();
       if (image) {
         setImageSrc(image);
-        await dispatch(sendPhoto(image));
+       
+        dispatch(sendPhoto({image:image,rollno:Role?.rollNumber}));
       }
-      setVisibility(false);
       setImageSrc(null);
+      setVisibility(false);
     }
   };
 

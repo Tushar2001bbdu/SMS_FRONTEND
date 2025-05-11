@@ -11,6 +11,7 @@ import { AuthProvider } from "../Context/AuthProvider";
 
 export const AppProviders = ({ children }) => {
   return (
+    
     <RoleProvider>
     <ApolloProvider client={graphqlClient}>
       <OnlineClassProvider>
@@ -24,6 +25,7 @@ export const AppProviders = ({ children }) => {
       </OnlineClassProvider>
     </ApolloProvider>
     </RoleProvider>
+   
   );
 };
 
