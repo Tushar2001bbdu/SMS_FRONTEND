@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../Context/AuthProvider";
 import { gql, useMutation } from "@apollo/client";
 import { useDispatch } from "react-redux";
-import { MarkAssignent } from "../redux/adminSlice";
+import { MarkAssignment } from "../redux/adminSlice";
 
 export default function Page(props) {
   const [file, setFile] = useState(null);
@@ -61,8 +61,8 @@ export default function Page(props) {
           },
         });
 
-        await dispatch(
-          MarkAssignent({
+        dispatch(
+          MarkAssignment({
             rollno: props.assignment.rollno,
             s3Link: s3Url,
             fileType: file.type,

@@ -121,19 +121,19 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ rollno, marks }),
+        body: JSON.stringify({ rollno:rollno, marks:marks }),
       });
 
       response = await response.json();
       if (response.status === 200) {
         toastBus.show("Result updated successfully", "success");
-        router.push("/Details");
       } else {
+        console.log(response);
         toastBus.show("Error in updating the result", "error");
       }
     } catch (error) {
       toastBus.show("An error occurred while updating the result", "error");
-      console.error(error);
+      console.log(error);
     }
   }
 

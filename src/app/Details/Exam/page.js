@@ -32,7 +32,7 @@ export default function Page() {
         localStorage.setItem("firebaseToken", token);
         localStorage.setItem("rollno", role?.rollNumber);
         await context.StudentLogin({ ...userDetails });
-        router.push(`/details/exam/startExam`);
+        router.push(`/Details/Exam/StartExam`);
       }
     } catch (error) {
       alert("You have entered invalid credentials");
@@ -65,7 +65,7 @@ export default function Page() {
                             <input
                               type="email"
                               name="email"
-                              value={userDetails.email}
+                              defaultValue={userDetails.email}
                               className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
                               placeholder="Email"
                               style={{ transition: "all 0.15s ease 0s" }}

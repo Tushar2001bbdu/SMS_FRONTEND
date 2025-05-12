@@ -51,7 +51,10 @@ export function AuthProvider({ children }) {
       });
 
       const data = await response.json();
+      console.log(userDetails)
       if (data.status === 200) {
+        console.log(data)
+        localStorage.setItem("rollno",userDetails.rollno)
         Role.changeRole("student", userDetails.rollno, userDetails.email);
         toastBus.show("Logged in successfully", "success");
         router.push("/Details");

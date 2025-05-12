@@ -3,7 +3,7 @@
 import { createContext, ReactNode, useState } from "react";
 interface RoleContextType {
   role: any;
-  changeRole: (newRole: any,rollno:any,email:any) => void;
+  changeRole: (newRole: any,newRollno:any,newEmail:any) => void;
   email:any;
   rollNumber:any;
 
@@ -13,13 +13,16 @@ export const RoleContext = createContext<RoleContextType | null>(null);
 export function RoleProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
-  const [rollNumber, setrollNumber] = useState<string | null>(null);
+  const [rollNumber, setRollNumber] = useState<string | null>(null);
 
-  const changeRole =(newRole: any,rollno:any,email:any) =>{
-    
+  const changeRole =(newRole: any,newRollno:any,newEmail:any) =>{
+    console.log("You have called me for setting the role")
+    console.log("the roll no is",newRollno)
     setRole(newRole);
-    setEmail(email);
-    setrollNumber(rollno)
+    setRollNumber(newRollno);
+    setEmail(newEmail);
+    console.log("The final rol number is"+rollNumber)
+  
 
   };
 

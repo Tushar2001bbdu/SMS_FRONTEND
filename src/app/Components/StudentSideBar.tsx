@@ -201,6 +201,28 @@ const Page: React.FC = () => {
           
           <div
           role="button"
+          onClick={() => router.push("/Details/OnlineClasses")}
+          className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
+        >
+          <div className="grid mr-4 place-items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              className="w-5 h-5"
+            >
+              <path
+                fillRule="evenodd"
+                d="M5.25 3A2.25 2.25 0 003 5.25v13.5A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V5.25A2.25 2.25 0 0018.75 3H5.25zM4.5 5.25c0-.414.336-.75.75-.75h13.5c.414 0 .75.336.75.75v13.5a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V5.25zM8.25 7.5a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5h-7.5zM8.25 10.5a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </div>
+         Join Online Class
+        </div>
+          <div
+          role="button"
           onClick={() => router.push("/Details/Contact/Student")}
           className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900"
         >

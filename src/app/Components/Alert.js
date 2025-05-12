@@ -6,27 +6,33 @@ function Alert(props) {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsVisible(false);
-    }, 60000);
+    }, 60000); // The alert will auto-close after 60 seconds
 
     return () => clearTimeout(timeoutId);
   }, [props.message]);
 
   const handleClose = () => {
     setIsVisible(false);
-    if (onClose) {
-      onClose();
+    if (props.onClose) {
+      props.onClose();
     }
   };
 
   return (
     <div 
-      className={`alert alert-warning ${isVisible ? 'visible border-4 border-red-500 animate-border' : 'hidden'} fixed top-20% left-1/2  p-4`} 
+      className={`fixed top-20% left-1/2 transform -translate-x-1/2 w-full max-w-lg p-6 bg-red-600 text-white rounded-lg shadow-xl ${isVisible ? 'opacity-100 animate-fadeIn' : 'opacity-0 animate-fadeOut'} transition-all duration-500`} 
       role="alert"
     >
-      <p className="text-black font-bold">{props.message}</p>
-      <button type="button" className="close-button" onClick={handleClose}>
-        Close Modal
-      </button>
+      <div className="flex justify-between items-center">
+        <p className="font-semibold text-xl">{props.message}</p>
+        <button 
+          type="button" 
+          className="text-white font-bold bg-transparent hover:bg-white hover:text-red-600 rounded-full p-2 ml-4 transition-colors duration-300"
+          onClick={handleClose}
+        >
+          ×
+        </button>
+      </div>
     </div>
   );
 }

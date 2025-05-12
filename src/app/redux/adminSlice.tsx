@@ -63,7 +63,7 @@ export const sendPhoto = createAsyncThunk(
     try{
    
     console.log("The image is"+image)
-    let url = `http://localhost:3001/app/attendance/sendphoto`;
+    let url = `http://43.204.234.139:3001/app/attendance/sendphoto`;
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -130,11 +130,11 @@ export const getClassList = createAsyncThunk("admin/getClassList", async () => {
 
   return data.data;
 });
-export const MarkAssignent = createAsyncThunk("admin/markAssignment", async (file:{rollno:string,s3Link:string,fileType:string,subject:string}) => {
-  let url = `http://43.204.234.139:3001/app/assignments/markAssignment/${file.rollno}`;
+export const MarkAssignment = createAsyncThunk("admin/markAssignment", async (file:{rollno:string,s3Link:string,fileType:string,subject:string}) => {
+  let url = `http://localhost:3001/app/assignments/markAssignment/${file.rollno}`;
 
   const res = await fetch(url, {
-    method: "GET",
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       authorization: localStorage.getItem("adminFirebaseToken") || "",
@@ -143,7 +143,7 @@ export const MarkAssignent = createAsyncThunk("admin/markAssignment", async (fil
   });
 
   const data = await res.json();
-
+  console.log(data)
   return data.data;
 });
 export const getTeacherList = createAsyncThunk(
