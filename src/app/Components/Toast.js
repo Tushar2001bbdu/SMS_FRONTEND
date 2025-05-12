@@ -11,7 +11,7 @@ export default function Toast() {
   const [type, setType] = useState("info");
 
   useEffect(() => {
-    // Update the show method to update the state of the component
+   
     toastBus.show = (msg, type = "info") => {
       setMessage(msg);
       setType(type);

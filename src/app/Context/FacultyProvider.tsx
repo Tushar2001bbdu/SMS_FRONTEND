@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { RoleContext } from "./RoleProvider";
 import { toastBus } from "@/app/Components/Toast";
 
-interface FacultyDetails {
+export interface FacultyDetails {
   rollno: string;
   email?: string;
   [key: string]: any;
 }
 
-interface FacultyContextType {
+export interface FacultyContextType {
   facultyData: any;
   facultyLogin: (facultyDetails: FacultyDetails) => Promise<void>;
   getFacultyProfile: () => Promise<void>;

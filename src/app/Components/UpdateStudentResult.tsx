@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
-import { AnyAaaaRecord } from "dns";
+
 
 interface FacultyContextType {
   facultyData: any;

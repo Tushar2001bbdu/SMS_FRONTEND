@@ -2,18 +2,8 @@
 
 import React, { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FacultyContext } from "@/app/Context/FacultyProvider"
-interface FacultyContextType {
-  facultyData: any;
-  getFacultyProfile?: () => Promise<void>;
-  studentProfile?: any;
-  getStudentProfile?: (rollno: string) => Promise<any>;
-  updateResult?: (rollno: string, marks: string | number) => Promise<void>;
-  uploadUrl?: string  | null;
-  getAssignmentUrl?:(filename: string)=>Promise<any>;
- 
-  logout?: () => void;
-}
+import { FacultyContext ,FacultyContextType} from "@/app/Context/FacultyProvider"
+
 const FacultySidebar: React.FC = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);

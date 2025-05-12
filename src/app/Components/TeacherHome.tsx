@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { Roboto } from 'next/font/google'
 import Chart from "../Components/Chart";
 import Image from "next/image";
-import { FacultyContext } from "../Context/FacultyProvider";
+import { FacultyContext ,FacultyContextType} from "../Context/FacultyProvider";
 interface RoleContextType {
     role: any;
     changeRole: (newRole: any, rollno: any, email: any) => void;
@@ -12,17 +12,7 @@ interface RoleContextType {
     rollNumber: any;
 
 }
-interface FacultyContextType {
-    facultyData: any;
-    getFacultyProfile?: () => Promise<void>;
-    studentProfile?: any;
-    getStudentProfile?: (rollno: string) => Promise<any>;
-    updateResult?: (rollno: string, marks: string | number) => Promise<void>;
-    uploadUrl?: string | null;
-    getAssignmentUrl?: (filename: string) => Promise<any>;
 
-    logout?: () => void;
-}
 const roboto = Roboto({
     subsets: ['latin'],
     weight: ['400', '700'],

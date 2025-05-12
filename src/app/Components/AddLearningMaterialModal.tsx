@@ -17,8 +17,14 @@ interface RoleContextType {
 
 interface FacultyContextType {
   facultyData: any;
-  getAssignmentUrl?: (filename: string) => Promise<any>;
-  uploadUrl?: string | null;
+  facultyLogin: (facultyDetails: any) => Promise<void>;
+  getFacultyProfile: () => Promise<void>;
+  studentProfile: any;
+  getStudentProfile: (rollno: string) => Promise<any>;
+  updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  getAssignmentUrl: (filename: string) => Promise<void>;
+  uploadUrl: string | null;
+  logout: () => void;
 }
 
 const Page: FC<Props> = ({

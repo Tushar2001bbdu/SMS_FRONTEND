@@ -11,12 +11,7 @@ interface FacultyDetails {
   [key: string]: any;
 }
 
-interface FacultyContextType{
-  facultyData: any;
-  facultyLogin?: (facultyDetails: FacultyDetails) => Promise<void>;
-  getFacultyProfile?: () => Promise<void>;
 
-}
 const Page: React.FC = () => {
 
   const [userDetails, setUserDetails] = useState(
@@ -92,7 +87,7 @@ const Page: React.FC = () => {
               <div className="mt-2">
                 <input
                   id="rollno"
-                  name="rollno"
+                  name="rollNo"
                   type="text"
                   value={userDetails.rollno}
                   onChange={(e) => {

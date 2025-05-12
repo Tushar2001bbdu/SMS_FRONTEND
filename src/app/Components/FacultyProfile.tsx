@@ -1,19 +1,9 @@
 "use client";
 import React, { useEffect, useContext } from "react";
-import { FacultyContext } from "../Context/FacultyProvider";
+import { FacultyContext,FacultyContextType } from "../Context/FacultyProvider";
 
 
-interface FacultyContextType {
-  facultyData: any;
-  getFacultyProfile?: () => Promise<void>;
-  studentProfile?: any;
-  getStudentProfile?: (rollno: string) => Promise<any>;
-  updateResult?: (rollno: string, marks: string | number) => Promise<void>;
-  uploadUrl?: string  | null;
-  getAssignmentUrl?:(filename: string)=>Promise<any>;
- 
-  logout?: () => void;
-}
+
 
 
 
