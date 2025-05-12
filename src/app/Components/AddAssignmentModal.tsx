@@ -15,14 +15,10 @@ interface RoleContextType {
   rollNumber: any;
 }
 
-interface FacultyDetails {
-  rollno: string;
-  [key: string]: any;
-}
 
 interface FacultyContextType {
   facultyData: any;
-  facultyLogin?: (facultyDetails: FacultyDetails) => Promise<void>;
+  facultyLogin?: (facultyDetails: any) => Promise<void>;
   getFacultyProfile?: () => Promise<void>;
   getAssignmentUrl?: (filename: string) => Promise<any>;
   uploadUrl?: string | null;
@@ -31,7 +27,7 @@ interface FacultyContextType {
 const Page: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) => {
   const [file, setFile] = useState<File | null>(null);
   const [subject, setSubject] = useState<string>("");
-  const context = useContext<FacultyContextType | null>(FacultyContext);
+  const context = useContext(FacultyContext) as FacultyContextType | null;
   const [AddAssignment, { loading, error }] = useMutation(addAssignment);
   const role = useContext<RoleContextType | null>(RoleContext);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
