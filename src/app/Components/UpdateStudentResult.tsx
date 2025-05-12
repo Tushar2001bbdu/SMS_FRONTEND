@@ -1,11 +1,17 @@
 import React, { useState, useContext } from "react";
 import { FacultyContext } from "../Context/FacultyProvider";
+import { AnyAaaaRecord } from "dns";
 
 interface FacultyContextType {
   facultyData: any;
-  studentProfile?: any;
-  getStudentProfile?: (rollno: string) => Promise<any>;
-  updateResult?: (rollno: string, marks: string | number) => Promise<void>;
+  facultyLogin: (facultyDetails: any) => Promise<void>;
+  getFacultyProfile: () => Promise<void>;
+  studentProfile: any;
+  getStudentProfile: (rollno: string) => Promise<any>;
+  updateResult: (rollno: string, marks: string | number) => Promise<void>;
+  getAssignmentUrl: (filename: string) => Promise<void>;
+  uploadUrl: string | null;
+  logout: () => void;
 }
 
 interface StudentProfileProps {

@@ -6,7 +6,7 @@ import { RoleContext } from "./RoleProvider";
 import { toastBus } from "@/app/Components/Toast";
 
 interface FacultyDetails {
-  rollNo: string;
+  rollno: string;
   email?: string;
   [key: string]: any;
 }
