@@ -1,11 +1,8 @@
 "use client";
 import AssignmentsBySection from "@/app/Components/AssignmentsBySection";
-import { FacultyContext } from "@/app/Context/FacultyProvider";
+import { FacultyContext,FacultyContextType } from "@/app/Context/FacultyProvider";
 import React, { FC, useContext} from "react";
-interface FacultyContextType {
-  facultyData: any;
-  getFacultyProfile?: () => Promise<void>;
-}
+
 const StudentAssignments: FC = () => {
   const headingStyle = {
     fontSize: "40px",

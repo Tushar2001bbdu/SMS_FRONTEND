@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
 
   async function StudentDetails() {
     try {
-      const response = await fetch("http://43.204.234.139:3001/app/users/seeDetails", {
+      const response = await fetch("https://10c3-43-204-234-139.ngrok-free.app/app/users/seeDetails", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
 
   async function StudentLogin(userDetails) {
     try {
-      const response = await fetch("http://43.204.234.139:3001/app/users/login", {
+      const response = await fetch("https://project-backend.online/app/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export function AuthProvider({ children }) {
 
   async function getStudentResult() {
     try {
-      const response = await fetch("http://43.204.234.139:3001/app/users/getResult", {
+      const response = await fetch("https://project-backend.online/app/users/getResult", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export function AuthProvider({ children }) {
 
   async function getStudentDetails() {
     try {
-      const response = await fetch("http://43.204.234.139:3001/app/users/getDetails", {
+      const response = await fetch("https://project-backend.online/app/users/getDetails", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -116,7 +116,7 @@ export function AuthProvider({ children }) {
   async function getAssignmentUrl(filename) {
     try {
       const bucketName = "assignmentsolutions";
-      const url = `http://43.204.234.139:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
+      const url = `https://project-backend.online/app/assignments/get-upload-url/${filename}/${bucketName}`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -142,7 +142,7 @@ export function AuthProvider({ children }) {
 
   async function getClassSchedule(classSection) {
     try {
-      const url = `http://43.204.234.139:3001/app/users/getClassSchedule/${classSection}`;
+      const url = `https://project-backend.online/app/users/getClassSchedule/${classSection}`;
       const response = await fetch(url, {
         method: "GET",
         headers: {

@@ -1,15 +1,7 @@
 "use client";
 import React, { useContext, useEffect,useState } from 'react';
-import { FacultyContext } from '@/app/Context/FacultyProvider'
+import { FacultyContext,FacultyContextType } from '@/app/Context/FacultyProvider'
 import ChatApp from '@/app/Components/ChatApp'
-
-interface FacultyContextType {
-  facultyData: any;
-  getFacultyProfile?: () => Promise<void>;
-  uploadUrl?: string  | null;
-  getAssignmentUrl?:(filename: string)=>Promise<any>;
-  logout?: () => void;
-}
 const Page: React.FC = () => {
   const context = useContext<FacultyContextType | null>(FacultyContext);
   const[receiverId,setReceiverId]=useState<string | null>(null);

@@ -25,7 +25,7 @@ const initialState = {
 export const login = createAsyncThunk(
   "admin/login",
   async (userDetails: any) => {
-    let url = `http://43.204.234.139:3001/app/details/login`;
+    let url = `https://project-backend.online/app/details/login`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -63,7 +63,7 @@ export const sendPhoto = createAsyncThunk(
     try{
    
     console.log("The image is"+image)
-    let url = `http://43.204.234.139:3001/app/attendance/sendphoto`;
+    let url = `https://project-backend.online/app/attendance/sendphoto`;
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -84,7 +84,7 @@ export const createClass = createAsyncThunk(
   "admin/createClass",
   async (name: string) => {
     console.log("the class name is"+name)
-    let url = `http://43.204.234.139:3001/app/details/createClass`;
+    let url = `https://project-backend.online/app/details/createClass`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -103,7 +103,7 @@ export const sendFrame = createAsyncThunk(
   "admin/sendFrame",
   async (image: any, { getState }: any) => {
     const role = getState().role;
-    let url = `http://43.204.234.139:3001/app/exam/sendphoto`;
+    let url = `https://project-backend.online/app/exam/sendphoto`;
 
     const res = await fetch(url, {
       method: "POST",
@@ -116,7 +116,7 @@ export const sendFrame = createAsyncThunk(
   }
 );
 export const getClassList = createAsyncThunk("admin/getClassList", async () => {
-  let url = `http://43.204.234.139:3001/app/details/getClassList`;
+  let url = `https://project-backend.online/app/details/getClassList`;
 
   const res = await fetch(url, {
     method: "GET",
@@ -131,7 +131,7 @@ export const getClassList = createAsyncThunk("admin/getClassList", async () => {
   return data.data;
 });
 export const MarkAssignment = createAsyncThunk("admin/markAssignment", async (file:{rollno:string,s3Link:string,fileType:string,subject:string}) => {
-  let url = `http://localhost:3001/app/assignments/markAssignment/${file.rollno}`;
+  let url = `https://project-backend.online/app/assignments/markAssignment/${file.rollno}`;
 
   const res = await fetch(url, {
     method: "POST",
@@ -149,7 +149,7 @@ export const MarkAssignment = createAsyncThunk("admin/markAssignment", async (fi
 export const getTeacherList = createAsyncThunk(
   "admin/getTeacherList",
   async () => {
-    let url = `http://43.204.234.139:3001/app/details/getTeacherList`;
+    let url = `https://project-backend.online/app/details/getTeacherList`;
 
     const res = await fetch(url, {
       method: "GET",
@@ -168,7 +168,7 @@ export const getPhotoUploadUrl = createAsyncThunk(
   "admin/getPhotoUploadUrl",
   async (filename: any) => {
     try {
-      const url = `http://43.204.234.139:3001/app/details/get-upload-url/${filename}`;
+      const url = `https://project-backend.online/app/details/get-upload-url/${filename}`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -203,7 +203,7 @@ export const createStudentRecord = createAsyncThunk(
     classteacherrollno: string;
     profilepictureLink: string;
   }) => {
-    let url = `http://43.204.234.139:3001/app/details/createStudentRecord`;
+    let url = `https://project-backend.online/app/details/createStudentRecord`;
     let response: any = await fetch(url, {
       method: "POST",
       headers: {
@@ -229,7 +229,7 @@ export const createTeacherRecord = createAsyncThunk(
     gender: string;
     profilepictureLink: string;
   }) => {
-    let url = `http://43.204.234.139:3001/app/details/createTeacherRecord`;
+    let url = `https://project-backend.online/app/details/createTeacherRecord`;
     let response: any = await fetch(url, {
       method: "POST",
       headers: {
@@ -246,7 +246,7 @@ export const createTeacherRecord = createAsyncThunk(
 export const deleteStudentRecord = createAsyncThunk(
   "admin/deleteStudentRecord",
   async (userDetails: { rollno: string; section: string }) => {
-    let url = `http://43.204.234.139:3001/app/details/deleteStudentRecord/${userDetails.rollno}/${userDetails.section}`;
+    let url = `https://project-backend.online/app/details/deleteStudentRecord/${userDetails.rollno}/${userDetails.section}`;
     let response: any = await fetch(url, {
       method: "DELETE",
       headers: {
@@ -264,7 +264,7 @@ export const deleteStudentRecord = createAsyncThunk(
 export const deleteTeacherRecord = createAsyncThunk(
   "admin/deleteTeacherRecord",
   async (userDetails: { rollno: string }) => {
-    let url = `http://43.204.234.139:3001/app/details/deleteTeacherRecord/${userDetails.rollno}`;
+    let url = `https://project-backend.online/app/details/deleteTeacherRecord/${userDetails.rollno}`;
     let response: any = await fetch(url, {
       method: "DELETE",
       headers: {

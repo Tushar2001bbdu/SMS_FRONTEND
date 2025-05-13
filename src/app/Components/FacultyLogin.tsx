@@ -3,13 +3,11 @@ import React, { useContext, useState } from "react";
 import Image from "next/image";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "../utils/teacher_auth";
-import { FacultyContext } from "../Context/FacultyProvider";
+import { FacultyContextType,FacultyContext } from "@/app/Context/FacultyProvider";
 
 
-interface FacultyDetails {
-  rollno: string;
-  [key: string]: any;
-}
+
+
 
 
 const Page: React.FC = () => {

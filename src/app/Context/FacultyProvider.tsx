@@ -34,7 +34,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function facultyLogin(facultyDetails: FacultyDetails): Promise<void> {
     try {
-      const url = new URL("http://43.204.234.139:3001/app/teachers/login");
+      const url = new URL("https://project-backend.online/app/teachers/login");
       url.searchParams.set("rollno", facultyDetails.rollNo);
 
       let response = await fetch(url.toString(), {
@@ -63,7 +63,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function getFacultyProfile(): Promise<void> {
     try {
-      const url = new URL(`http://43.204.234.139:3001/app/teachers/seeDetails`);
+      const url = new URL(`https://project-backend.online/app/teachers/seeDetails`);
       const response = await fetch(url.toString(), {
         method: "GET",
         headers: {
@@ -87,7 +87,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function getStudentProfile(rollno: string): Promise<any> {
     try {
-      const url = new URL(`http://43.204.234.139:3001/app/teachers/getStudentProfile`);
+      const url = new URL(`https://project-backend.online/app/teachers/getStudentProfile`);
       url.searchParams.set("rollno", rollno);
 
       const response = await fetch(url.toString(), {
@@ -115,7 +115,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function updateResult(rollno: string, marks: string | number): Promise<void> {
     try {
-      const url = new URL(`http://43.204.234.139:3001/app/teachers/updateResult`);
+      const url = new URL(`https://project-backend.online/app/teachers/updateResult`);
       let response = await fetch(url.toString(), {
         method: "PATCH",
         headers: {
@@ -140,7 +140,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
   async function getAssignmentUrl(filename: string): Promise<void> {
     try {
       const bucketName = "student-assignment-questions";
-      const url = `http://43.204.234.139:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
+      const url = `https://project-backend.online/app/assignments/get-upload-url/${filename}/${bucketName}`;
 
       const response = await fetch(url, {
         method: "GET",

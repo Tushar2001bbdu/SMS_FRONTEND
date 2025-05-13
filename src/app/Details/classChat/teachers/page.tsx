@@ -1,13 +1,9 @@
 "use client";
 import React, { useContext, useEffect,useState } from 'react';
-import { FacultyContext } from '@/app/Context/FacultyProvider'
+import { FacultyContext,FacultyContextType } from '@/app/Context/FacultyProvider'
 import GroupChatApp from '@/app/Components/GroupChatApp'
 
-interface FacultyContextType {
-  facultyData: any;
-  getFacultyProfile?: () => Promise<void>;
-
-}
+// Removed local FacultyContextType definition as it is imported from FacultyProvider
 const Page: React.FC = () => {
   const context = useContext<FacultyContextType | null>(FacultyContext);
   const[receiverId,setReceiverId]=useState<string | null>(null);
