@@ -8,7 +8,7 @@ export const OnlineClassProvider = (props) => {
 
   const socket = useMemo(() => {
     try {
-      return io("", {
+      return io("https://project-backend.online", {
         transports: ["websocket"], 
         withCredentials: true,
       });

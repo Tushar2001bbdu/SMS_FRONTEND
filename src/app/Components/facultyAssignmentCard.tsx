@@ -5,7 +5,7 @@ interface Props {
     rollno: string;
     title: string;
     assignmentLink: string;
-    SolutionLink: string;
+    solutionLink: string;
     subject: string;
     section: string;
     assignmentDate: string;
@@ -47,7 +47,7 @@ const Page: React.FC<Props> = ({ Assignment }) => {
 
       <div className="px-6 py-3 flex flex-row items-center justify-between bg-gray-100">
         <span className="py-1 text-xs font-regular text-gray-900 mr-1 flex flex-row items-center">
-          <a href={Assignment.SolutionLink} target="_blank" className="ml-1">
+          <a href={Assignment.solutionLink} target="_blank" className="ml-1">
             Solution Link
           </a>
         </span>
