@@ -20,8 +20,8 @@ interface Props {
 interface Assignment {
   rollno: string;
   title: string;
-  AssignmentLink: string;
-  SolutionLink: string;
+  assignmentLink: string;
+  solutionLink: string;
   subject: string;
   section: string;
   assignmentDate: string;
