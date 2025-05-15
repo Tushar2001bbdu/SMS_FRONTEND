@@ -16,7 +16,7 @@ const GET_ASSIGNMENTS = gql`
     getAssignmentsByRollno(rollno: $rollno) {
       rollno
       title
-      AssignmentLink
+      assignmentLink
       subject
       assignmentDate
       dueDate
@@ -30,7 +30,7 @@ const GET_ASSIGNMENTS = gql`
 interface Assignment {
   rollno: string;
   title: string;
-  AssignmentLink: string;
+  assignmentLink: string;
   subject: string;
   assignmentDate: string;
   dueDate: string;

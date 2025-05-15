@@ -139,8 +139,8 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function getAssignmentUrl(filename: string): Promise<void> {
     try {
-      const bucketName = "student-assignment-questions";
-      const url = `https://project-backend.online/app/assignments/get-upload-url/${filename}/${bucketName}`;
+      const bucketName = "assignmentsquestions";
+      const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
 
       const response = await fetch(url, {
         method: "GET",

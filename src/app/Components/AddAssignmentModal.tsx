@@ -25,6 +25,7 @@ interface FacultyContextType {
 }
 
 const Page: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) => {
+  var filename = "";
   const [file, setFile] = useState<File | null>(null);
   const [subject, setSubject] = useState<string>("");
   const context = useContext(FacultyContext) as FacultyContextType | null;
@@ -33,7 +34,7 @@ const Page: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) => {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       setFile(event.target.files[0]);
-      let filename = `${subject}${event.target.files[0].name}`;
+     filename = `${subject}${event.target.files[0].name}`;
       if(context?.getAssignmentUrl){
         context?.getAssignmentUrl(filename);
       }
@@ -42,44 +43,56 @@ const Page: FC<AddAssignmentModalProps> = ({ section,setIsOpen }) => {
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const formData = new FormData(event.target as HTMLFormElement);
-    const title = formData.get("title") as string;
-    const dateAssigned = formData.get("date-given") as string;
-    const dueDate = formData.get("date-due") as string;
-    if (context?.uploadUrl && context?.uploadUrl.length <= 0) {
-      try{
-        await fetch(context?.uploadUrl, {
-          method: "PUT",
-          body: file,
-          headers: {
-            "Content-Type": file?.type || "application/octet-stream",
-          },
-        });
-      }
-      catch(error){
-        console.error(error);
-      }
-     
-    } else {
-      let inputData = {
-        classCode: section,
-        title: title,
-        AssignmentLink: `https://student-assignment-questions.s3.ap-south-1.amazonaws.com/${file?.name}`,
-        subject: subject,
-        assignmentDate: dateAssigned,
-        dueDate: dueDate,
-        marks: 0,
-        postedBy: role?.rollNumber,
-      };
-      await AddAssignment({
-        variables: {
-          input: inputData,
-        },
-      });
-      setIsOpen(false);
+  event.preventDefault();
+  const formData = new FormData(event.target as HTMLFormElement);
+  const title = formData.get("title") as string;
+  const dateAssigned = formData.get("date-given") as string;
+  const dueDate = formData.get("date-due") as string;
+
+  if (!file || !context?.uploadUrl) {
+    console.error("File or upload URL missing");
+    return;
+  }
+
+  try {
+   
+    const uploadResponse = await fetch(context.uploadUrl, {
+      method: "PUT",
+      body: file,
+      headers: {
+        "Content-Type": file?.type || "application/octet-stream",
+      },
+    });
+
+    if (uploadResponse.status !== 200) {
+      throw new Error("Upload to S3 failed");
     }
-  };
+
+  
+    const inputData = {
+      classCode: section,
+      title: title,
+      assignmentLink: `https://assignmentsquestions.s3.ap-south-1.amazonaws.com/${subject}${file.name}`,
+      subject: subject,
+      assignmentDate: dateAssigned,
+      dueDate: dueDate,
+      marks: 0,
+      postedBy: role?.rollNumber || "221078897",
+    };
+
+    const res = await AddAssignment({
+      variables: {
+        input: inputData,
+      },
+    });
+
+    console.log("Assignment added:", res);
+    setIsOpen(false);
+  } catch (error) {
+    console.error("Error during file upload or assignment submission:", error);
+  }
+};
+
 
   return (
     <div className="bg-opacity-50 flex w-full h-full items-center justify-center z-40">

@@ -8,7 +8,7 @@ export const OnlineClassProvider = (props) => {
 
   const socket = useMemo(() => {
     try {
-      return io("http://43.204.234.139:3001", {
+      return io("", {
         transports: ["websocket"], 
         withCredentials: true,
       });

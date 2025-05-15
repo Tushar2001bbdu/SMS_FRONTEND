@@ -15,7 +15,7 @@ export default function Page(props) {
       submitAssignment(rollno: $rollno, title: $title, solutionLink: $solutionLink) {
         rollno
         title
-        AssignmentLink
+        assignmentLink
         subject
         assignmentDate
         dueDate
@@ -51,7 +51,7 @@ export default function Page(props) {
           },
         });
 
-        const s3Url = `https://assignment-solutions.s3.ap-south-1.amazonaws.com/${file.name}`;
+        const s3Url = `https://assignmentssolutions.s3.ap-south-1.amazonaws.com/${file.name}`;
 
         await updateSubmission({
           variables: {
@@ -104,7 +104,7 @@ export default function Page(props) {
           />
           <div className="flex mt-4 md:mt-6">
             <a
-              href={props.assignment.AssignmentLink}
+              href={props.assignment.assignmentLink}
               className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none"
               target="_blank"
               rel="noopener noreferrer"

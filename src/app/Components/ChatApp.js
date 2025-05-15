@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('http://43.204.234.139:3001');
+const socket = io('https://project-backend.online');
 
 const ChatApp = (props) => {
   const senderId = props.senderId;
@@ -12,7 +12,7 @@ const ChatApp = (props) => {
 
   useEffect(() => {
     socket.emit("register", senderId);
-    fetch(`http://43.204.234.139:3001/app/details/messages/${senderId}/${receiverId}`)
+    fetch(`https://project-backend.online/app/details/messages/${senderId}/${receiverId}`)
       .then((response) => response.json())
       .then((data) => setMessages(data));
     socket.on('receive_message', (messageData) => {

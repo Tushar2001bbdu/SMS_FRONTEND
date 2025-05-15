@@ -25,7 +25,7 @@ interface StudentContextType {
 
 const Page: React.FC<Props> = ({ senderName,senderRollNo, groupName }) => {
   const student = useContext<StudentContextType | null>(AuthContext);
-  const socket = useMemo(() => io("http://43.204.234.139:3001/group-chat"), []);
+  const socket = useMemo(() => io("https://project-backend.online/group-chat"), []);
   const groupId = groupName;
   interface SenderData{
     rollNo:string,
@@ -48,7 +48,7 @@ const Page: React.FC<Props> = ({ senderName,senderRollNo, groupName }) => {
     socket.emit("join-group", { groupId });
 
     const fetchMessages = () => {
-      fetch(`http://43.204.234.139:3001/app/details/groupMessages/${groupId}`, {
+      fetch(`https://project-backend.online/app/details/groupMessages/${groupId}`, {
         method: "GET",
         headers: {
           authorization: localStorage.getItem("firebaseToken") || "",

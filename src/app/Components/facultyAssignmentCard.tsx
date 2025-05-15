@@ -4,7 +4,7 @@ interface Props {
   Assignment: {
     rollno: string;
     title: string;
-    AssignmentLink: string;
+    assignmentLink: string;
     SolutionLink: string;
     subject: string;
     section: string;
@@ -36,7 +36,7 @@ const Page: React.FC<Props> = ({ Assignment }) => {
 
       <div className="px-6 py-4 mb-auto">
         <a
-          href={Assignment.AssignmentLink}
+          href={Assignment.assignmentLink}
           target="_blank"
           className="font-medium text-lg inline-block hover:text-indigo-600 transition duration-500 ease-in-out inline-block mb-2"
         >

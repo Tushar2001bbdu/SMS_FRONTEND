@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
 
   async function StudentDetails() {
     try {
-      const response = await fetch("https://10c3-43-204-234-139.ngrok-free.app/app/users/seeDetails", {
+      const response = await fetch("https://project-backend.online/app/users/seeDetails", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -115,7 +115,7 @@ export function AuthProvider({ children }) {
 
   async function getAssignmentUrl(filename) {
     try {
-      const bucketName = "assignmentsolutions";
+      const bucketName = "assignmentssolutions";
       const url = `https://project-backend.online/app/assignments/get-upload-url/${filename}/${bucketName}`;
 
       const response = await fetch(url, {

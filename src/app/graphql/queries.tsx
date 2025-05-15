@@ -4,8 +4,8 @@ export const getAssignmentsBySection=gql`
     getAssignmentsBySection(section: $section,postedBy:$postedBy) {
       rollno
       title
-      AssignmentLink 
-      SolutionLink
+      assignmentLink 
+      solutionLink
       subject
       assignmentDate
       dueDate
