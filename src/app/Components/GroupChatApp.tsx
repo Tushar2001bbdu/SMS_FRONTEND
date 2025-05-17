@@ -111,10 +111,8 @@ const Page: React.FC<Props> = ({ senderName,senderRollNo, groupName }) => {
       >
         {groupId}
       </header>
-      <div
-        className="sm:width-screen lg:width-full max-h-[70vh] overflow-y-scroll"
-        style={{ border: "1px solid #ccc", padding: "10px" }}
-      >
+      <div className="w-full max-h-[70vh] overflow-y-scroll border border-gray-300 p-2">
+
         {messages?.map((msg, index) => (
           <div
             key={index}
@@ -151,43 +149,45 @@ const Page: React.FC<Props> = ({ senderName,senderRollNo, groupName }) => {
         ))}
       </div>
 
-      <div className="mt-2 flex justify-center">
-        <Button
-          variant="contained"
-          component="label"
-          startIcon={<UploadFileIcon />}
-        >
-          Add File
-          <input type="file" hidden onChange={handleFileChange} />
-        </Button>
-        <TextField
-          className="w-2/3"
-          value={message}
-          sx={{
-            "& .MuiOutlinedInput-root": {
-              backgroundColor: "white",
-            },
-          }}
-          onChange={(e) => setMessage(e.target.value)}
-        />
+      <div className="mt-2 flex flex-col md:flex-row items-center gap-2 w-full px-4">
+  <Button
+    variant="contained"
+    component="label"
+    startIcon={<UploadFileIcon />}
+    className="w-full md:w-auto"
+  >
+    Add File
+    <input type="file" hidden onChange={handleFileChange} />
+  </Button>
 
-        <button
-          onClick={handleSendMessage}
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-          className="w-1/4"
-          style={{
-            padding: "10px",
-            marginLeft: "10px",
-            backgroundColor: hovered ? "#2d2d2d" : "transparent",
-            color: hovered ? "white" : "black",
-            borderRadius: "10%",
-            border: "1px solid black",
-          }}
-        >
-          Send
-        </button>
-      </div>
+  <TextField
+    className="w-full md:w-2/3"
+    value={message}
+    sx={{
+      "& .MuiOutlinedInput-root": {
+        backgroundColor: "white",
+      },
+    }}
+    onChange={(e) => setMessage(e.target.value)}
+  />
+
+  <button
+    onClick={handleSendMessage}
+    onMouseEnter={() => setHovered(true)}
+    onMouseLeave={() => setHovered(false)}
+    className="w-full md:w-1/4"
+    style={{
+      padding: "10px",
+      backgroundColor: hovered ? "#2d2d2d" : "transparent",
+      color: hovered ? "white" : "black",
+      borderRadius: "10%",
+      border: "1px solid black",
+    }}
+  >
+    Send
+  </button>
+</div>
+
     </div>
   );
 };

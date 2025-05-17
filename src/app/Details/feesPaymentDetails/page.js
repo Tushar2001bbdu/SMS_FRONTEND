@@ -13,11 +13,11 @@ export default function Page() {
 
             <div className='my-7  align-items-center justify-content-center'>
             <div className="heading text-center my-3">
-            <h2 className="text-4xl font-extrabold dark:text-white my-auto">Your Fees Payment Details</h2>
+            <h2 className="font-extrabold dark:text-white my-auto text-center w-auto">Your Fees Payment Details</h2>
             </div>
              
         
-        <section class=" relative overflow-x-auto shadow-md sm:rounded-lg">
+        <section class=" relative w-full shadow-md sm:rounded-lg text-center">
             <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>

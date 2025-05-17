@@ -13,8 +13,8 @@ const Page: React.FC = () => {
   }, [context]);
 
   return (
-    <div className="flex h-screen">
-      <aside className="w-1/3 bg-gray-800 text-white p-4">
+    <div className="flex flex-col md:flex-row h-screen">
+      <aside className="w-full md:w-1/3 bg-gray-800 text-white p-4">
         <h2 className="text-2xl font-bold mb-6">Students</h2>
         <div className="space-y-4">
           {context?.facultyData?.students.map((student:any, index:number) => (
@@ -22,7 +22,7 @@ const Page: React.FC = () => {
               key={index}
               role="button"
               onClick={()=>{setReceiverId(student.rollno);setReceiverName(student.name)}}
-              className="flex w-full items-center space-x-2 p-2 rounded-lg hover:bg-gray-700 transition-colors"
+              className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 transition-colors"
             >
               <h2>bar</h2>
               <h2 className="text-gray-400">{student.rollno}</h2>
@@ -30,7 +30,7 @@ const Page: React.FC = () => {
           ))}
         </div>
       </aside>
-      { receiverId!==null && <section className="w-2/3 p-6">
+      { receiverId!==null && <section className="w-full md:w-2/3 p-4">
         <ChatApp senderId={context?.facultyData.rollno} receiverId={receiverId} receiverName={receiverName}/>
       </section> }
       

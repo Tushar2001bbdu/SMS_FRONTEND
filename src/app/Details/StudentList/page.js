@@ -17,7 +17,7 @@ export default function Page() {
     const [studentList, setStudentList] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    // useCallback should be defined outside of conditionals
+   
     const getListOfStudent = useCallback(async (selectedSection) => {
         setLoading(true);
         try {
@@ -44,20 +44,20 @@ export default function Page() {
         } finally {
             setLoading(false);
         }
-    }, []);  // Empty dependency array means this won't change during re-renders
+    }, []);  
 
-    // useEffect will now always run when `section` changes
+  
     useEffect(() => {
         if (section) {
             getListOfStudent(section);
         }
-    }, [section, getListOfStudent]); // Removed context from dependency, it's not used directly
+    }, [section, getListOfStudent]);
 
     return (
-        <div className="text-center mt-4 mr-4">
-            <div className="flex flex-row w-full justify-between">
+        <div className="container mx-auto mt-4">
+            <div className="flex flex-row flex-wrap w-full justify-between items-center gap-4">
                 <div className="text-center w-full text-black">Student List</div>
-                <div>
+                <div className="mb-4">
                     <button
                         id="dropdownDefaultButton"
                         className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none ..."
@@ -83,9 +83,9 @@ export default function Page() {
                     <div
                         id="dropdown"
                         className={`${visibility ? "block" : "hidden"
-                            } bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
+                            } w-full sm:w-auto bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700`}
                     >
-                        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
+                        <ul className="py-2 text-sm text-gray-700 dark:text-gray-200 mb-3">
                             {["CCML-4", "CCML-3", "CCML-2", "CCML-1"].map(
                                 (sec) => (
                                     <li key={sec}>
@@ -111,7 +111,7 @@ export default function Page() {
             ) : (
                 <div
                     className={`relative ${section ? "block" : "hidden"
-                        } overflow-x-auto shadow-md sm:rounded-lg`}
+                        } w-full shadow-md sm:rounded-lg`}
                 >
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">

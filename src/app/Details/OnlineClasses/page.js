@@ -1,10 +1,15 @@
 const OnlineClass = () => {
   return (
-    <iframe
-      src="https://meet.jit.si/MyOnlineClassRoom123"
-      style={{ height: '100vh', width: '100%', border: 0 }}
-      allow="camera; microphone; fullscreen; display-capture"
-    />
+    <div className="container mx-auto flex justify-center">
+      <div className="sm:w-auto">
+        <iframe
+          src="https://meet.jit.si/MyOnlineClassRoom123"
+          className="block h-screen"
+          style={{ width: "800px", maxWidth: "100%" }}
+          allow="camera; microphone; fullscreen; display-capture"
+        />
+      </div>
+    </div>
   );
 };
 export default OnlineClass;

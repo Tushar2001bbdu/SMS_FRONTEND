@@ -15,6 +15,7 @@ const FacultySidebar: React.FC = () => {
     { label: "Start Online Class", path: "/Details/OnlineClasses" },
     { label: "Student Assignments", path: "/Details/StudentAssignments" },
     { label: "Student Learning Material", path: "/Details/StudentLearningMaterial" },
+    { label: "Contact Students", path: "/Details/Contact/Teacher"},
   ];
 
   return (

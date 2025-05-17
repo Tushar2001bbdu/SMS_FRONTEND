@@ -5,8 +5,8 @@ import React, { FC, useContext} from "react";
 
 const StudentAssignments: FC = () => {
   const headingStyle = {
-    fontSize: "40px",
-    fontWeight: 600,
+    fontSize: "30px",
+    fontWeight: 500,
     backgroundImage: "linear-gradient(to left, #553c9a, #b393d3)",
     color: "transparent",
     backgroundClip: "text",
@@ -18,9 +18,9 @@ const StudentAssignments: FC = () => {
  }
   
   return (
-    <div>
+    <div className="w-full flex flex-col items-center justify-center">
       <header>
-        <h1 style={headingStyle} className="flex w-full justify-center">STUDENT ASSIGNMENTS</h1>
+        <h1 style={headingStyle} className="text-center text-3xl sm:text-4xl md:text-5xl font-semibold px-2">STUDENT ASSIGNMENTS</h1>
       </header>
       {context?.facultyData?.allotedSections?.map(
         (element: string, index: number) => (

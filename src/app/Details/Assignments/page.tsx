@@ -68,7 +68,7 @@ export default function Page() {
   };*/
 
   return (
-    <div>
+    <div className="w-full flex flex-col items-center justify-center">
       <section className="text-2xl font-bold mb-6 text-center text-gray-800">
       Your Assignments
       </section>
