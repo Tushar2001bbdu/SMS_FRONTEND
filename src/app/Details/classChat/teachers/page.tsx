@@ -3,10 +3,11 @@ import React, { useContext, useEffect,useState } from 'react';
 import { FacultyContext,FacultyContextType } from '@/app/Context/FacultyProvider'
 import GroupChatApp from '@/app/Components/GroupChatApp'
 
-// Removed local FacultyContextType definition as it is imported from FacultyProvider
+
 const Page: React.FC = () => {
   const context = useContext<FacultyContextType | null>(FacultyContext);
-  const[receiverId,setReceiverId]=useState<string | null>(null);
+  const[receiverId,setReceiverId]=context?.facultyData?.section || "";
+  const[sidebarOpen,setSidebarOpen]=useState(false);
   useEffect(() => {
     if (context?.facultyData === null && context?.getFacultyProfile) {
       context.getFacultyProfile();
@@ -14,26 +15,34 @@ const Page: React.FC = () => {
   }, [context]);
 
   return (
-    <div className="flex max-h-[80wh]">
-      <aside className="w-1/3 bg-gray-800 text-center text-white p-4">
-        <h2 className="text-2xl font-bold mb-6">Classes</h2>
-        <div className="space-y-4">
-          {context?.facultyData?.allotedSections.map((section:any, index:number) => (
-            <div
-              key={index}
-              role="button"
-              className="w-full space-x-2 p-2 rounded-lg hover:bg-gray-700 transition-colors"
-              onClick={()=>{setReceiverId(section)}}
-            >
-              <h2 className="text-gray-400">{section}</h2>
-            </div>
-          ))}
+    <div className="flex flex-col md:flex-row h-screen overflow-hidden">
+     
+      <aside
+        className={`fixed top-0 left-0 h-full w-64 z-40 bg-gray-800 text-white p-4 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } md:w-1/3 md:block`}
+      >
+       
+        <div className="flex justify-between items-center mb-6 md:hidden">
+          <h2 className="text-2xl font-bold">Class Groups</h2>
+          
         </div>
-      </aside>
-      { receiverId && receiverId.length > 0 && <section className="w-2/3 p-6">
-        <GroupChatApp senderName={context?.facultyData?.name} senderRollNo={context?.facultyData.rollno} groupName={receiverId} />
-      </section> }
-      
+
+        <div className="space-y-4 text-center text-lg">
+          {receiverId}
+        </div>
+      </aside>      
+
+   
+      {receiverId.length > 0 && (
+        <section className="flex-1 overflow-y-auto p-4 mt-2 md:mt-0">
+          <GroupChatApp
+            senderName={context?.facultyData?.name || ""}
+            senderRollNo={context?.facultyData?.rollno || ""}
+            groupName={context?.facultyData?.section || ""}
+          />
+        </section>
+      )}
     </div>
   );
 };

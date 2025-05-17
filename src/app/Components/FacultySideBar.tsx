@@ -1,87 +1,92 @@
 "use client";
-
-import React, { useContext, useState } from "react";
+import React, { useState, useContext } from "react";
 import { useRouter } from "next/navigation";
-import { FacultyContext ,FacultyContextType} from "@/app/Context/FacultyProvider"
 
-const FacultySidebar: React.FC = () => {
+import { FacultyContext, FacultyContextType } from "../Context/FacultyProvider";
+interface StudentContext {
+  logout: () => void;
+}
+const Page: React.FC = () => {
   const router = useRouter();
-  const [isOpen, setIsOpen] = useState(false);
-  const context=useContext(FacultyContext) as FacultyContextType | null;
-  const menuItems = [
-    { label: "Dashboard", path: "/FacultyDashboard" },
-    { label: "Personal Details", path: "/Details/PersonalDetails" },
-    { label: "Student List", path: "/Details/StudentList" },
-    { label: "Start Online Class", path: "/Details/OnlineClasses" },
-    { label: "Student Assignments", path: "/Details/StudentAssignments" },
-    { label: "Student Learning Material", path: "/Details/StudentLearningMaterial" },
-    { label: "Contact Students", path: "/Details/Contact/Teacher"},
-  ];
+  const context = useContext(FacultyContext) as FacultyContextType | null;
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const MenuItem = ({
+    label,
+    route,
+    onClick,
+  }: {
+    label: string;
+    route?: string;
+    onClick?: () => void;
+  }) => (
+    <div
+      role="button"
+      onClick={() => {
+        if (onClick) onClick();
+        else if (route) router.push(route);
+        setMenuOpen(false);
+      }}
+      className="flex items-center w-full p-3 rounded-lg hover:bg-gray-100 cursor-pointer"
+    >
+      <div className="w-5 h-5 mr-4 bg-gray-300 rounded" />
+      {label}
+    </div>
+  );
 
   return (
-    <>
-      {/* Hamburger menu (visible on mobile only) */}
-      <button
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-white rounded shadow-md"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle Sidebar"
-      >
-        <svg
-          className="w-6 h-6 text-gray-800"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          viewBox="0 0 24 24"
+    <div className="w-full z-50 mt-5 ">
+
+      <div className="p-4 sm:hidden w-full items-center">
+        <button
+          onClick={() => {
+
+            setMenuOpen((prev) => !prev);
+          }}
+          className="flex z-50 bg-blue-500 p-2 border rounded flex flex-col space-y-1"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
+          <span className="w-6 h-0.5 bg-black"></span>
+          <span className="w-6 h-0.5 bg-black"></span>
+          <span className="w-6 h-0.5 bg-black"></span>
+        </button>
+      </div>
 
-      {/* Sidebar - responsive and toggleable */}
-      <div
-        className={`fixed top-0 left-0 z-40 h-full w-64 bg-white shadow-lg p-4 transform transition-transform duration-300 ease-in-out 
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:static md:block`}
-      >
-        <section className="p-4 mb-4 border-b border-gray-200">
-          <h5 className="text-xl font-semibold text-gray-800">Faculty Corner</h5>
-        </section>
+      <div className="p-4 hidden sm:block bg-white shadow-lg rounded-xl">
+        <h5 className="text-xl font-semibold mb-4">Faculty Corner</h5>
+        <nav className="flex flex-col gap-1">
+          <MenuItem label="Dashboard" route="/Details" />
+          <MenuItem label="Personal Details" route="/Details/PersonalDetails" />
+          <MenuItem label="Manage Assignments" route="/Details/StudentAssignments" />
+          <MenuItem label="Class Chat" route="/Details/ClassChat/Teachers" />
+          <MenuItem label="Contact Students" route="/Details/Contact/Teachers" />
+          <MenuItem label="Start Online Class" route="/Details/OnlineClasses" />
 
-        <nav className="flex flex-col gap-1 text-base text-gray-700">
-          {menuItems.map(({ label, path }) => (
-            <div
-              key={path}
-              role="button"
-              onClick={() => {
-                router.push(path);
-                setIsOpen(false); // close sidebar on mobile
-              }}
-              className="flex items-center w-full p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition"
-            >
-              <span>{label}</span>
-            </div>
-          ))}
-          <div
-              role="button"
-              onClick={() => {
-                if(context?.logout){
-                context?.logout()// close sidebar on mobile
-              }}}
-              className="flex items-center w-full p-3 rounded-lg hover:bg-gray-100 cursor-pointer transition"
-            >
-              <span>Log Out</span>
-            </div>
+          <MenuItem label="Add Learning Material" route="/Details/StudentLearningMaterial" />
+
+
+          <MenuItem label="Logout" onClick={() => context?.logout()} />
         </nav>
       </div>
 
-      {/* Overlay on mobile when sidebar is open */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden"
-          onClick={() => setIsOpen(false)}
-        />
+
+      {menuOpen && (
+        <div className="top-16 left-0 right-0 z-50 bg-white p-4 shadow-md">
+          <MenuItem label="Dashboard" route="/Details" />
+          <MenuItem label="Personal Details" route="/Details/PersonalDetails" />
+
+          <MenuItem label="Class Chat" route="/Details/ClassChat/Students" />
+          <MenuItem label="Contact Teachers" route="/Details/Contact/Student" />
+          <MenuItem label="Attend Online Class" route="/Details/OnlineClasses" />
+          <MenuItem label="Give Online Exam" route="/Details/Exam/StartExam" />
+          <MenuItem label="See Assignments" route="/Details/Assignments" />
+          <MenuItem label="Learning Material" route="/Details/LearningMaterial" />
+          <MenuItem label="Class Schedule" route="/Details/ClassSchedule" />
+
+          <MenuItem label="Logout" onClick={() => context?.logout()} />
+        </div>
       )}
-    </>
+    </div>
   );
 };
 
-export default FacultySidebar;
+export default Page;
