@@ -8,7 +8,7 @@ import { AppDispatch } from "@/app/redux/adminStore";
 const Page: React.FC = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(true);
 
   const MenuItem = ({
     label,
@@ -22,24 +22,20 @@ const Page: React.FC = () => {
     <div
       role="button"
       onClick={() => {
-        if (onClick) onClick();
-        else if (route) router.push(route);
-        setMenuOpen(false); // Close menu on mobile tap
+  
+        setMenuOpen(false); // close mobile menu on click
       }}
-      className="flex items-center w-full p-3 leading-tight transition-all rounded-lg outline-none text-start hover:bg-blue-gray-50 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:text-blue-gray-900 active:bg-blue-gray-50 active:text-blue-gray-900"
+      className="flex items-center w-full p-3 rounded-lg hover:bg-gray-100 cursor-pointer"
     >
-      <div className="grid mr-4 place-items-center">
-        {/* You can place an icon here */}
-        <div className="w-5 h-5 bg-gray-300 rounded" />
-      </div>
+      <div className="w-5 h-5 mr-4 bg-gray-300 rounded" />
       {label}
     </div>
   );
 
   return (
-    <>
-      {/* Hamburger menu for mobile */}
-      <div className="sm:hidden p-4">
+    <div className="w-full">
+      {/* Mobile Hamburger Button */}
+      <div className="p-4">
         <button
           onClick={() => setMenuOpen((prev) => !prev)}
           className="p-2 border rounded"
@@ -48,14 +44,10 @@ const Page: React.FC = () => {
         </button>
       </div>
 
-      {/* Sidebar container (mobile and desktop) */}
-      <div className="relative flex flex-col p-4 text-gray-700 bg-white shadow-xl shadow-blue-gray-900/5 rounded-xl w-full sm:max-w-[20rem]">
-        <div className="p-4 mb-2">
-          <h5 className="text-xl font-semibold text-blue-gray-900">Admin Corner</h5>
-        </div>
-
-        {/* Desktop Sidebar */}
-        <nav className="hidden sm:flex flex-col gap-1 p-2 text-base font-normal text-blue-gray-700">
+      {/* Desktop Sidebar */}
+      <div className="p-4 bg-white shadow-lg rounded-xl">
+        <h5 className="text-xl font-semibold mb-4">Admin Corner</h5>
+        <nav className="flex flex-col gap-1">
           <MenuItem label="Dashboard" route="/dashboard" />
           <MenuItem label="Personal Details" route="/personal-details" />
           <MenuItem label="Create Class" route="/admins/createClass" />
@@ -63,21 +55,20 @@ const Page: React.FC = () => {
           <MenuItem label="Teachers" route="/admins/teachers" />
           <MenuItem label="Logout" onClick={() => dispatch(logout())} />
         </nav>
-
-        {/* Mobile Sidebar */}
-       {menuOpen && (
-  <div className="fixed top-16 left-0 right-0 z-50 bg-white p-4 shadow-md">
-    <MenuItem label="Dashboard" route="/dashboard" />
-    <MenuItem label="Personal Details" route="/personal-details" />
-    <MenuItem label="Create Class" route="/admins/createClass" />
-    <MenuItem label="Students" route="/admins/students" />
-    <MenuItem label="Teachers" route="/admins/teachers" />
-    <MenuItem label="Logout" onClick={() => dispatch(logout())} />
-  </div>
-)}
-
       </div>
-    </>
+
+      {/* Mobile Dropdown Menu */}
+      {menuOpen && (
+        <div className="fixed top-16 left-0 right-0 z-50 bg-white p-4 shadow-md">
+          <MenuItem label="Dashboard" route="/dashboard" />
+          <MenuItem label="Personal Details" route="/personal-details" />
+          <MenuItem label="Create Class" route="/admins/createClass" />
+          <MenuItem label="Students" route="/admins/students" />
+          <MenuItem label="Teachers" route="/admins/teachers" />
+          <MenuItem label="Logout" onClick={() => dispatch(logout())} />
+        </div>
+      )}
+    </div>
   );
 };
 
