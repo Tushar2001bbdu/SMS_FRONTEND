@@ -64,7 +64,7 @@ export default function OnlineExam() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full px-4 md:px-8">
+    <div className="flex flex-col w-full items-center w-full px-4 md:px-8">
       <Webcam
         audio={false}
         ref={webcamRef}
@@ -95,7 +95,8 @@ export default function OnlineExam() {
                     {element.question}
                   </h3>
 
-                  <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 question-options">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 question-options">
+
                     {[element.option1, element.option2, element.option3, element.option4].map((option, i) => {
                       const selectedAnswer = selectedAnswers.get(index); // Get the selected answer for this question
                       const isSelected = selectedAnswer && selectedAnswer.optionSelected === option;
