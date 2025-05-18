@@ -35,7 +35,7 @@ const Page: React.FC = () => {
   );
 
   return (
-    <div className="w-full z-50 mt-5 ">
+    <div className="w-full">
 
       <div className="p-4 sm:hidden w-full items-center">
         <button

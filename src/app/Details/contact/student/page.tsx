@@ -26,7 +26,7 @@ const Page: React.FC = () => {
   const context = useContext<StudentContextType | null>(AuthContext);
   const [receiverId, setReceiverId] = useState<string | null>(null);
   const [receiverName, setReceiverName] = useState<string | null>(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false); 
+  const [sidebarOpen, setSidebarOpen] = useState(true); 
   useEffect(() => {
     if (context?.studentData === null) {
       context.StudentDetails();
@@ -34,15 +34,16 @@ const Page: React.FC = () => {
   }, [context]);
 
   return (
-    <div className="flex flex-col md:flex-row h-screen overflow-hidden">
+    <div className="flex flex-col md:flex-row h-[80vh] overflow-hidden">
     
      
       <aside
+
         className={`fixed z-40 top-0 left-0 h-full w-64 bg-gray-800 text-white p-4 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } md:w-1/3 md:block`}
       >
-        <div className="flex justify-between items-center mb-6 md:hidden">
+        <div className="flex justify-between items-center  md:hidden">
           <h2 className="text-2xl font-bold">Faculty</h2>
           <button onClick={() => setSidebarOpen(false)}>✕</button>
         </div>
@@ -55,9 +56,9 @@ const Page: React.FC = () => {
               onClick={() => {
                 setReceiverId(teacher.rollno);
                 setReceiverName(teacher.name);
-                setSidebarOpen(false); // auto-close on mobile
+               setSidebarOpen(false);
               }}
-              className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 transition-colors"
+              className="flex items-center sticky justify-between p-2 rounded-lg hover:bg-gray-700 transition-colors"
             >
               <span>{teacher.name}</span>
               <span className="text-gray-400">{teacher.rollno}</span>

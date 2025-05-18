@@ -23,6 +23,7 @@
     "@reduxjs/toolkit": "^2.5.1",
     "@sentry/nextjs": "^8.51.0",
     "@zoomus/websdk": "^2.18.3",
+    "agora-rtc-sdk-ng": "^4.23.3",
     "chart.js": "^4.4.4",
     "daisyui": "^5.0.35",
     "date-fns": "^4.1.0",

@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image';
 import { useState } from 'react';
-
+import ChatBot from '@/app/Components/ChatBot';
 export default function Home() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -43,14 +43,9 @@ export default function Home() {
             Take a tour of our campus and discover what makes UniLife the perfect place for your academic journey.
             Our video tour will guide you through all the facilities and opportunities we offer.
           </p>
-          <div className="mt-8">
-            <button className="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold">
-              Take a Tour
-            </button>
-          </div>
+          
         </div>
       </div>
-      <div className="max-w-6xl mx-auto mt-12 px-6">
         <div className="relative">
           <button
             onClick={prevSlide}
@@ -85,7 +80,7 @@ export default function Home() {
             &#10095;
           </button>
         </div>
-      </div>
+        
     </main>
   );
 }

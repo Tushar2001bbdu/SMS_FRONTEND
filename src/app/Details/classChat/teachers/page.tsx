@@ -15,7 +15,7 @@ const Page: React.FC = () => {
   }, [context]);
 
   return (
-    <div className="flex flex-col md:flex-row h-screen overflow-hidden">
+    <div className="flex flex-col md:flex-row md:flex-row h-[80vh]  overflow-hidden">
      
       <aside
         className={`fixed top-0 left-0 h-full w-64 z-40 bg-gray-800 text-white p-4 transform transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${
@@ -28,7 +28,7 @@ const Page: React.FC = () => {
           
         </div>
 
-        <div className="space-y-4 text-center text-lg">
+        <div className="space-y-4  sticky text-center text-lg">
           {receiverId}
         </div>
       </aside>      

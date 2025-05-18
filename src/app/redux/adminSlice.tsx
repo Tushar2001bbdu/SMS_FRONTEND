@@ -39,6 +39,7 @@ export const login = createAsyncThunk(
     const data = await res.json();
 
     if (data.status !== 200) {
+      localStorage.removeItem("adminFirebaseToken")
       throw new Error(data.message || "Login failed");
     }
 
@@ -293,6 +294,7 @@ const adminSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         console.error(action.error.message);
+        localStorage.removeItem("adminFirebaseToken")
       });
     builder.addCase(createStudentRecord.fulfilled, (state, action) => {
       state.message = action.payload;
@@ -302,6 +304,7 @@ const adminSlice = createSlice({
         typeof action.payload === "string"
           ? action.payload
           : "creating student record failed";
+      localStorage.removeItem("adminFirebaseToken")
     });
     builder.addCase(deleteStudentRecord.fulfilled, (state, action) => {
       state.message = action.payload;
@@ -311,6 +314,7 @@ const adminSlice = createSlice({
         typeof action.payload === "string"
           ? action.payload
           : "deleting student record failed";
+      localStorage.removeItem("adminFirebaseToken")
     });
     builder.addCase(deleteTeacherRecord.fulfilled, (state, action) => {
       state.message = action.payload;
@@ -320,15 +324,18 @@ const adminSlice = createSlice({
         typeof action.payload === "string"
           ? action.payload
           : "deleting teacher record failed";
+      localStorage.removeItem("adminFirebaseToken")
     });
     builder.addCase(createTeacherRecord.fulfilled, (state, action) => {
       state.message = action.payload;
     });
     builder.addCase(createTeacherRecord.rejected, (state, action) => {
+
       state.message =
         typeof action.payload === "string"
           ? action.payload
           : "creating teacher record failed";
+      localStorage.removeItem("adminFirebaseToken")
     });
     builder.addCase(getPhotoUploadUrl.fulfilled, (state, action) => {
       state.photoUploadUrl = action.payload;
@@ -338,6 +345,7 @@ const adminSlice = createSlice({
     }),
     builder.addCase(getClassList.rejected, (state, action) => {
       console.log(action.payload)
+      localStorage.removeItem("adminFirebaseToken")
     }),
       builder.addCase(getTeacherList.fulfilled, (state, action) => {
         state.teacherList = action.payload;

@@ -29,6 +29,7 @@ export function AuthProvider({ children }) {
       if (data.status !== 200) {
         toastBus.show("Error fetching student details", "error");
         Role?.changeRole(null, -1, -1);
+         localStorage.removeItem("firebaseToken")
         router.push("/")
       } else {
         setStudentData(data.data);
@@ -62,11 +63,13 @@ export function AuthProvider({ children }) {
         Role?.changeRole(null, -1, -1);
         toastBus.show(data.message || "Login failed", "error");
         router.push("/")
+        localStorage.removeItem("firebaseToken")
       }
     } catch (error) {
       console.error("Login error:", error);
       toastBus.show("Something went wrong during login", "error");
       router.push("/")
+       localStorage.removeItem("firebaseToken")
     }
   }
 
@@ -85,11 +88,14 @@ export function AuthProvider({ children }) {
         Role?.changeRole(null, -1, -1);
         toastBus.show("Failed to fetch result", "error");
         router.push("/")
+         localStorage.removeItem("firebaseToken")
       } else {
         setStudentResult(data.data);
       }
     } catch (error) {
       console.error("Error fetching result:", error);
+      Role?.changeRole(null, -1, -1);
+       localStorage.removeItem("firebaseToken")
       toastBus.show("Something went wrong", "error");
     }
   }
@@ -109,6 +115,7 @@ export function AuthProvider({ children }) {
     } catch (error) {
       console.error("Error fetching payment details:", error);
       toastBus.show("Failed to fetch fee details", "error");
+        localStorage.removeItem("firebaseToken")
       router.push("/")
     }
   }
@@ -131,12 +138,14 @@ export function AuthProvider({ children }) {
       if (data.status === 200) {
         setUploadUrl(data.uploadUrl);
       } else {
+        localStorage.removeItem("firebaseToken")
         toastBus.show(data.message || "Failed to get upload URL", "error");
       }
     } catch (error) {
       console.error("Error fetching upload URL:", error);
       toastBus.show("Something went wrong", "error");
       router.push("/")
+      localStorage.removeItem("firebaseToken")
     }
   }
 
@@ -154,14 +163,17 @@ export function AuthProvider({ children }) {
       const data = await response.json();
       if (data.status !== 200) {
         Role?.changeRole(null, -1, -1);
+        localStorage.removeItem("firebaseToken")
         toastBus.show("Failed to get class schedule", "error");
       } else {
         setClassDetails(data.data);
+       
       }
     } catch (error) {
       console.error("Error fetching class schedule:", error);
       toastBus.show("Something went wrong", "error");
       router.push("/")
+        localStorage.removeItem("firebaseToken")
     }
   }
 

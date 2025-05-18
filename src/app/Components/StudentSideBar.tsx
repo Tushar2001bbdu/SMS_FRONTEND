@@ -37,7 +37,7 @@ const Page: React.FC = () => {
   );
 
   return (
-    <div className="w-full z-50 mt-5 ">
+    <div className="w-full z-50">
      
       <div className="p-4 sm:hidden w-full items-center">
   <button
@@ -73,7 +73,7 @@ const Page: React.FC = () => {
 
      
       {menuOpen && (
-        <div className="top-16 left-0 right-0 z-50 bg-white p-4 shadow-md">
+        <div className="top-16 sm:hidden left-0 right-0 z-50 bg-white p-4 shadow-md">
         <MenuItem label="Dashboard" route="/Details" />
           <MenuItem label="Personal Details" route="/Details/PersonalDetails" />
           

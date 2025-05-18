@@ -6,6 +6,7 @@ const Page: React.FC = () => {
   const context = useContext<FacultyContextType | null>(FacultyContext);
   const[receiverId,setReceiverId]=useState<string | null>(null);
   const[receiverName,setReceiverName]=useState<string | null>(null);
+   const [sidebarOpen, setSidebarOpen] = useState(true); 
   useEffect(() => {
     if (context?.facultyData === null && context?.getFacultyProfile) {
       context.getFacultyProfile();
@@ -21,10 +22,10 @@ const Page: React.FC = () => {
             <div
               key={index}
               role="button"
-              onClick={()=>{setReceiverId(student.rollno);setReceiverName(student.name)}}
-              className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 transition-colors"
+              onClick={()=>{setReceiverId(student.rollno);setReceiverName(student.name);}}
+              className="flex items-center sticky justify-between p-2 rounded-lg hover:bg-gray-700 transition-colors"
             >
-              <h2>bar</h2>
+              <h2>{student.name}</h2>
               <h2 className="text-gray-400">{student.rollno}</h2>
             </div>
           ))}

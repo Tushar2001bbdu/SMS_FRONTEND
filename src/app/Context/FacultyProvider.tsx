@@ -54,10 +54,12 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       } else {
         Role?.changeRole(null, -1, -1);
         toastBus.show("Invalid credentials", "error");
+        localStorage.removeItem("teacherFirebaseToken")
       }
     } catch (error) {
       toastBus.show("An error occurred while logging in", "error");
       console.error(error);
+      localStorage.removeItem("teacherFirebaseToken")
     }
   }
 
@@ -78,10 +80,12 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       } else {
         Role?.changeRole(null, -1, -1);
         toastBus.show("Failed to fetch faculty profile", "error");
+        localStorage.removeItem("teacherFirebaseToken")
       }
     } catch (error) {
       console.error(error);
       toastBus.show("An error occurred while fetching faculty profile", "error");
+      localStorage.removeItem("teacherFirebaseToken")
     }
   }
 
@@ -104,11 +108,13 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       } else {
         Role?.changeRole(null, -1, -1);
         toastBus.show("Failed to fetch student profile", "error");
+        localStorage.removeItem("teacherFirebaseToken")
         return null;
       }
     } catch (error) {
       toastBus.show("An error occurred while fetching student profile", "error");
       console.error(error);
+      localStorage.removeItem("teacherFirebaseToken")
       return null;
     }
   }
@@ -128,10 +134,12 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       if (response.status === 200) {
         toastBus.show("Result updated successfully", "success");
       } else {
+        localStorage.removeItem("teacherFirebaseToken")
         console.log(response);
         toastBus.show("Error in updating the result", "error");
       }
     } catch (error) {
+      localStorage.removeItem("teacherFirebaseToken")
       toastBus.show("An error occurred while updating the result", "error");
       console.log(error);
     }
@@ -154,9 +162,11 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       if (data.status === 200) {
         setUploadUrl(data.uploadUrl);
       } else {
+        localStorage.removeItem("teacherFirebaseToken")
         toastBus.show("Invalid file format or upload error", "error");
       }
     } catch (error) {
+      localStorage.removeItem("teacherFirebaseToken")
       toastBus.show("An error occurred while getting upload URL", "error");
       console.error("Error fetching upload URL:", error);
     }
@@ -167,6 +177,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
     Role?.changeRole(null, -1, -1);
     toastBus.show("Logged out successfully", "success");
     router.push("/faculty");
+    localStorage.removeItem("teacherFirebaseToken")
   }
 
   return (

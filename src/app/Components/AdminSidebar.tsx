@@ -34,9 +34,9 @@ const Page: React.FC = () => {
   );
 
   return (
-    <div className="w-full z-50 mt-5">
+    <div className="w-full z-50 ">
      
-      <div className="p-4 w-full items-center">
+      <div  className="sm:hidden p-4 w-full items-center">
   <button
     onClick={() => {
     
@@ -58,6 +58,7 @@ const Page: React.FC = () => {
           <MenuItem label="Create Class" route="/admins/createClass" />
           <MenuItem label="Students" route="/admins/students" />
           <MenuItem label="Teachers" route="/admins/teachers" />
+          <MenuItem label="Start Online Call" route="/admins/callMembers" />
           <MenuItem label="Logout" onClick={() => dispatch(logout())} />
         </nav>
       </div>
@@ -68,6 +69,7 @@ const Page: React.FC = () => {
           <MenuItem label="Dashboard" route="/dashboard" />
           <MenuItem label="Personal Details" route="/personal-details" />
           <MenuItem label="Create Class" route="/admins/createClass" />
+          <MenuItem label="Start Online Call" route="/admins/callMembers" />
           <MenuItem label="Students" route="/admins/students" />
           <MenuItem label="Teachers" route="/admins/teachers" />
           <MenuItem label="Logout" onClick={() => dispatch(logout())} />
