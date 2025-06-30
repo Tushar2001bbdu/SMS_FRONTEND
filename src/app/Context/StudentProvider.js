@@ -5,9 +5,9 @@ import { RoleContext } from "./RoleProvider";
 import { useRouter } from "next/navigation";
 import { toastBus } from "@/app/Components/Toast";
 
-export const AuthContext = createContext();
+export const StudentContext = createContext();
 
-export function AuthProvider({ children }) {
+export function StudentProvider({ children }) {
   const [studentData, setStudentData] = useState(null);
   const [studentResult, setStudentResult] = useState(null);
   const [studentFeesPaymentDetails, setStudentFeesPaymentDetails] = useState(null);
@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
 
   async function StudentDetails() {
     try {
-      const response = await fetch("https://project-backend.online/app/users/seeDetails", {
+      const response = await fetch("http://localhost:3001/app/users/seeDetails", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
 
   async function StudentLogin(userDetails) {
     try {
-      const response = await fetch("https://project-backend.online/app/users/login", {
+      const response = await fetch("http://localhost:3001/app/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export function AuthProvider({ children }) {
         localStorage.setItem("rollno",userDetails.rollno)
         Role.changeRole("student", userDetails.rollno, userDetails.email);
         toastBus.show("Logged in successfully", "success");
-        router.push("/Details");
+        router.push("/student-section");
       } else {
         Role?.changeRole(null, -1, -1);
         toastBus.show(data.message || "Login failed", "error");
@@ -75,7 +75,7 @@ export function AuthProvider({ children }) {
 
   async function getStudentResult() {
     try {
-      const response = await fetch("https://project-backend.online/app/users/getResult", {
+      const response = await fetch("http://localhost:3001/app/users/getResult", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -102,7 +102,7 @@ export function AuthProvider({ children }) {
 
   async function getStudentDetails() {
     try {
-      const response = await fetch("https://project-backend.online/app/users/getDetails", {
+      const response = await fetch("http://localhost:3001/app/users/getDetails", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ export function AuthProvider({ children }) {
   async function getAssignmentUrl(filename) {
     try {
       const bucketName = "assignmentssolutions";
-      const url = `https://project-backend.online/app/assignments/get-upload-url/${filename}/${bucketName}`;
+      const url = `http://localhost:3001/app/assignments/get-upload-url/${filename}/${bucketName}`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -151,7 +151,7 @@ export function AuthProvider({ children }) {
 
   async function getClassSchedule(classSection) {
     try {
-      const url = `https://project-backend.online/app/users/getClassSchedule/${classSection}`;
+      const url = `http://localhost:3001/app/users/getClassSchedule/${classSection}`;
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -173,7 +173,7 @@ export function AuthProvider({ children }) {
       console.error("Error fetching class schedule:", error);
       toastBus.show("Something went wrong", "error");
       router.push("/")
-        localStorage.removeItem("firebaseToken")
+      localStorage.removeItem("firebaseToken")
     }
   }
 
@@ -185,7 +185,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider
+    <StudentContext.Provider
       value={{
         StudentLogin,
         studentData,
@@ -203,6 +203,6 @@ export function AuthProvider({ children }) {
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </StudentContext.Provider>
   );
 }

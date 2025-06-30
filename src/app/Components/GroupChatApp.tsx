@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import UploadFileIcon from "@mui/icons-material/UploadFile";
 import { Space_Grotesk } from "next/font/google";
-import { AuthContext } from "@/app/Context/AuthProvider";
+import { StudentContext } from "@/app/Context/StudentProvider";
 import FilePresentIcon from '@mui/icons-material/FilePresent';
 
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], weight: ["500"] });
@@ -24,8 +24,8 @@ interface StudentContextType {
 }
 
 const Page: React.FC<Props> = ({ senderName,senderRollNo, groupName }) => {
-  const student = useContext<StudentContextType | null>(AuthContext);
-  const socket = useMemo(() => io("https://project-backend.online/group-chat"), []);
+  const student = useContext<StudentContextType | null>(StudentContext);
+  const socket = useMemo(() => io("http://localhost:3001/group-chat"), []);
   const groupId = groupName;
   interface SenderData{
     rollNo:string,
@@ -48,7 +48,7 @@ const Page: React.FC<Props> = ({ senderName,senderRollNo, groupName }) => {
     socket.emit("join-group", { groupId });
 
     const fetchMessages = () => {
-      fetch(`https://project-backend.online/app/details/groupMessages/${groupId}`, {
+      fetch(`http://localhost:3001/app/details/groupMessages/${groupId}`, {
         method: "GET",
         headers: {
           authorization: localStorage.getItem("firebaseToken") || "",

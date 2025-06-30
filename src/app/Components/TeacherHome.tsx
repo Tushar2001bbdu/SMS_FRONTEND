@@ -5,13 +5,7 @@ import { Roboto } from 'next/font/google'
 import Chart from "../Components/Chart";
 import Image from "next/image";
 import { FacultyContext ,FacultyContextType} from "../Context/FacultyProvider";
-interface RoleContextType {
-    role: any;
-    changeRole: (newRole: any, rollno: any, email: any) => void;
-    email: any;
-    rollNumber: any;
 
-}
 
 const roboto = Roboto({
     subsets: ['latin'],

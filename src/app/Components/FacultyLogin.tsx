@@ -4,7 +4,8 @@ import Image from "next/image";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "../utils/teacher_auth";
 import { FacultyContextType,FacultyContext } from "@/app/Context/FacultyProvider";
-
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { toastBus } from "@/app/Components/Toast";
 
 
 
@@ -19,7 +20,14 @@ const Page: React.FC = () => {
       rollno: ""
     }
   );
- 
+     const handleReset = async () => {
+    try {
+      await sendPasswordResetEmail(Auth, userDetails.email);
+     
+    } catch (error) {
+      toastBus.show("Kindly provide the email first", "error");
+    }
+  };
   const context = useContext<FacultyContextType | null >(FacultyContext);
  
 
@@ -132,6 +140,9 @@ const Page: React.FC = () => {
                   <a
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    onClick={() => {
+                      handleReset();
+                    }}
                   >
                     Forgot password?
                   </a>

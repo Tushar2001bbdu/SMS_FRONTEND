@@ -34,7 +34,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function facultyLogin(facultyDetails: FacultyDetails): Promise<void> {
     try {
-      const url = new URL("https://project-backend.online/app/teachers/login");
+      const url = new URL("http://localhost:3001/app/teachers/login");
       url.searchParams.set("rollno", facultyDetails.rollNo);
 
       let response = await fetch(url.toString(), {
@@ -50,7 +50,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
       if (response.status === 200) {
         Role?.changeRole("faculty", facultyDetails.rollNo, facultyDetails.email || "");
         toastBus.show("Logged in successfully", "success");
-        router.push("/Details");
+        router.push("/faculty-section");
       } else {
         Role?.changeRole(null, -1, -1);
         toastBus.show("Invalid credentials", "error");
@@ -65,7 +65,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function getFacultyProfile(): Promise<void> {
     try {
-      const url = new URL(`https://project-backend.online/app/teachers/seeDetails`);
+      const url = new URL(`http://localhost:3001/app/teachers/seeDetails`);
       const response = await fetch(url.toString(), {
         method: "GET",
         headers: {
@@ -91,7 +91,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function getStudentProfile(rollno: string): Promise<any> {
     try {
-      const url = new URL(`https://project-backend.online/app/teachers/getStudentProfile`);
+      const url = new URL(`http://localhost:3001/app/teachers/getStudentProfile`);
       url.searchParams.set("rollno", rollno);
 
       const response = await fetch(url.toString(), {
@@ -121,7 +121,7 @@ export function FacultyProvider({ children }: { children: ReactNode }) {
 
   async function updateResult(rollno: string, marks: string | number): Promise<void> {
     try {
-      const url = new URL(`https://project-backend.online/app/teachers/updateResult`);
+      const url = new URL(`http://localhost:3001/app/teachers/updateResult`);
       let response = await fetch(url.toString(), {
         method: "PATCH",
         headers: {

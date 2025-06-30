@@ -7,7 +7,7 @@ import {FacultyProvider}  from "../Context/FacultyProvider";
 
 import { ApolloProvider } from "@apollo/client";
 import graphqlClient from "../graphql/client";
-import { AuthProvider } from "../Context/AuthProvider";
+import { StudentProvider } from "../Context/StudentProvider";
 
 export const AppProviders = ({ children }) => {
   return (
@@ -18,7 +18,7 @@ export const AppProviders = ({ children }) => {
         <Provider store={store}>
           <FacultyProvider>
             
-              <AuthProvider>{children}</AuthProvider>
+              <StudentProvider>{children}</StudentProvider>
            
           </FacultyProvider>
         </Provider>

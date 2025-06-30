@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useContext } from "react";
-import { AuthContext } from "../../Context/AuthProvider";
+import { StudentContext } from "../../Context/StudentProvider";
 
 interface StudentData {
   email: string;
@@ -11,7 +11,7 @@ interface StudentData {
   teacherrollno: string;
 }
 
-interface StudentContext {
+interface StudentContextType {
   studentData: StudentData | null;
   StudentDetails: () => Promise<any>;
   getClassSchedule: (value: string) => Promise<any>;
@@ -19,7 +19,7 @@ interface StudentContext {
 }
 
 const Page: React.FC = () => {
-  const context = useContext<StudentContext | null>(AuthContext);
+  const context = useContext<StudentContextType | null>(StudentContext);
   const days: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   let daySchedule: any;
 

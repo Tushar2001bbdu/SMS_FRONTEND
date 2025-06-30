@@ -4,7 +4,7 @@ import { Roboto } from 'next/font/google'
 import { RoleContext } from "../Context/RoleProvider";
 import Chart from "../Components/Chart";
 import { useRouter } from "next/router";
-import { AuthContext } from "../Context/AuthProvider";
+import { StudentContext } from "../Context/StudentProvider";
 import Image from "next/image";
 import StudentHomePage from '@/app/Components/StudentHome';
 import TeacherHomePage from '@/app/Components/TeacherHome'

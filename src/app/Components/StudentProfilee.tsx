@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useContext } from 'react';
-import { AuthContext } from '../Context/AuthProvider';
+import { StudentContext } from '../Context/StudentProvider';
 interface teacherData {
   name: string;
   rollno: string;
@@ -15,14 +15,14 @@ interface StudentData {
 }
 
 
-interface AuthContextType {
+interface StudentContextType {
   studentData: StudentData | null;
   StudentDetails: () => void;
 }
 
 const Page: React.FC = () => {
   
-  const con = useContext<AuthContextType | null>(AuthContext);
+  const con = useContext<StudentContextType | null>(StudentContext);
 
   useEffect(() => {
     if (con?.studentData === null) {

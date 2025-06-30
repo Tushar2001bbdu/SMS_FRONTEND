@@ -8,16 +8,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
 
-  // Add rewrite rules to proxy GraphQL
-  async rewrites() {
-    return [
-      {
-        source: '/graphql',
-        destination: 'https://project-backend.online/graphql', // Proxy to backend
-      },
-    ];
-  },
-};
+  
 
 // Uncomment below to enable Sentry in production
 
@@ -55,6 +46,6 @@ export default withSentryConfig(nextConfig, {
   // Enables automatic instrumentation of Vercel Cron Monitors.
   automaticVercelMonitors: true,
 });
-*/
+*/}
 
 export default nextConfig;

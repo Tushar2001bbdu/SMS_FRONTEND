@@ -9,7 +9,8 @@ import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import {auth} from "../utils/admin_auth";
 import { useRouter } from "next/navigation";
 import { RoleContext } from "../Context/RoleProvider";
-
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { toastBus } from "@/app/Components/Toast";
 
 interface RoleContextType{
   role:any;
@@ -29,6 +30,14 @@ const Page: React.FC = () =>
 
   const dispatch = useDispatch<AppDispatch>();
   let router=useRouter();
+      const handleReset = async () => {
+      try {
+        await sendPasswordResetEmail(auth, userDetails.email);
+       
+      } catch (error) {
+        toastBus.show("Kindly provide the email first", "error");
+      }
+    };
   const signInWithGoogle = async () => {
     try {
       const authProvider=new GoogleAuthProvider();
@@ -55,6 +64,7 @@ const Page: React.FC = () =>
       [name]: value,
     }));
   }
+
 
   async function handleSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault();
@@ -153,6 +163,9 @@ const Page: React.FC = () =>
                   <a
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
+                     onClick={() => {
+                      handleReset();
+                    }}
                   >
                     Forgot password?
                   </a>

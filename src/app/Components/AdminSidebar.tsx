@@ -69,7 +69,7 @@ const Page: React.FC = () => {
           <MenuItem label="Dashboard" route="/dashboard" />
           <MenuItem label="Personal Details" route="/personal-details" />
           <MenuItem label="Create Class" route="/admins/createClass" />
-          <MenuItem label="Start Online Call" route="/admins/callMembers" />
+         
           <MenuItem label="Students" route="/admins/students" />
           <MenuItem label="Teachers" route="/admins/teachers" />
           <MenuItem label="Logout" onClick={() => dispatch(logout())} />

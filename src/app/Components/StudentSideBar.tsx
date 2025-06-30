@@ -3,15 +3,16 @@ import React, { useState,useContext } from "react";
 import { useRouter } from "next/navigation";
 import { logout } from "../redux/adminSlice";
 import { AppDispatch } from "@/app/redux/adminStore";
-import { AuthContext } from "../Context/AuthProvider";
+import { StudentContext } from "../Context/StudentProvider";
 interface StudentContext
 {
   logout: () => void;
 }
 const Page: React.FC = () => {
   const router = useRouter();
-  const context=useContext(AuthContext) as StudentContext | null;
+  const context=useContext(StudentContext) as StudentContext | null;
   const [menuOpen, setMenuOpen] = useState(false);
+  const mainRoute ="student-corner"
 
   const MenuItem = ({
     label,
@@ -56,16 +57,16 @@ const Page: React.FC = () => {
       <div className="p-4 hidden sm:block bg-white shadow-lg rounded-xl">
         <h5 className="text-xl font-semibold mb-4">Student Corner</h5>
         <nav className="flex flex-col gap-1">
-          <MenuItem label="Dashboard" route="/Details" />
-          <MenuItem label="Personal Details" route="/Details/PersonalDetails" />
-          <MenuItem label="Class Schedule" route="/Details/classSchedule" />
-          <MenuItem label="Class Chat" route="/Details/ClassChat/Students" />
-          <MenuItem label="Contact Teachers" route="/Details/Contact/Student" />
-          <MenuItem label="Attend Online Class" route="/Details/OnlineClasses" />
-          <MenuItem label="Give Online Exam" route="/Details/Exam/StartExam" />
-          <MenuItem label="See Assignments" route="/Details/Assignments" />
-          <MenuItem label="Learning Material" route="/Details/LearningMaterial" />
-          <MenuItem label="Class Schedule" route="/Details/ClassSchedule" />
+          <MenuItem label="Dashboard" route={mainRoute} />
+          <MenuItem label="Personal Details" route={`/${mainRoute}/personal-details`} />
+          <MenuItem label="Class Schedule" route= {`/${mainRoute}/classSchedule` } />
+          <MenuItem label="Class Chat" route= {`/${mainRoute}/classChat/for-students`} />
+          <MenuItem label="Contact Teachers" route={ `/${mainRoute}/contact/student`} />
+          <MenuItem label="Attend Online Class" route= { `/${mainRoute}/onlineClasses`} />
+          <MenuItem label="Give Online Exam" route= { `/${mainRoute}/exam/startExam`} />
+          <MenuItem label="See Assignments" route= { `/${mainRoute}/assignments`} />
+          <MenuItem label="Learning Material" route= { `${mainRoute}/studentLearningMaterial `}/>
+          <MenuItem label="Class Schedule" route= { `${mainRoute}/classSchedule`} />
 
           <MenuItem label="Logout" onClick={() => context?.logout()} />
         </nav>

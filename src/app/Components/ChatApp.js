@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
-const socket = io('https://project-backend.online');
+const socket = io('http://localhost:3001');
 
 const ChatApp = ({ senderId, receiverId, receiverName }) => {
   const [messages, setMessages] = useState([]);
@@ -11,7 +11,7 @@ const ChatApp = ({ senderId, receiverId, receiverName }) => {
 
   useEffect(() => {
     socket.emit("register", senderId);
-    fetch(`https://project-backend.online/app/details/messages/${senderId}/${receiverId}`)
+    fetch(`http://localhost:3001/app/details/messages/${senderId}/${receiverId}`)
       .then((response) => response.json())
       .then((data) => setMessages(data));
     

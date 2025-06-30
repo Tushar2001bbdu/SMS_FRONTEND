@@ -1,10 +1,13 @@
 "use client";
 import React, { useContext, useState } from "react";
+
 import Image from "next/image";
-import { AuthContext } from "../Context/AuthProvider";
+import { StudentContext } from "../Context/StudentProvider";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Auth } from "../utils/student_auth";
-interface Context{
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { toastBus } from "@/app/Components/Toast";
+interface StudentContextType{
   StudentLogin: (details:{
     rollno: string,
     email: string,
@@ -19,7 +22,7 @@ const Page: React.FC = () =>
     password: "",
   });
 
-  const User_Context = useContext<Context | null>(AuthContext);
+  const User_Context = useContext<StudentContextType | null>(StudentContext);
 
   
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -29,7 +32,15 @@ const Page: React.FC = () =>
       [name]: value,
     }));
   }
-
+  
+  const handleReset = async () => {
+    try {
+      await sendPasswordResetEmail(Auth, userDetails.email);
+     
+    } catch (error) {
+      toastBus.show("Kindly provide the email first", "error");
+    }
+  };
   async function handleSubmit(e: { preventDefault: () => void; }) {
     e.preventDefault();
     
@@ -125,6 +136,7 @@ const Page: React.FC = () =>
                   <a
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    onClick={()=>{handleReset()}}
                   >
                     Forgot password?
                   </a>

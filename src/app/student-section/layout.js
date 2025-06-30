@@ -7,8 +7,8 @@ import dynamic from "next/dynamic";
 const inter = Inter({ subsets: ["latin"] });
 
 
-const StudentSidebar = dynamic(() => import("../Components/StudentSideBar"));
-const FacultySidebar = dynamic(() => import("../Components/FacultySideBar"));
+const StudentSidebar = dynamic(() => import("@/app/Components/StudentSideBar"));
+const FacultySidebar = dynamic(() => import("@/app/Components/FacultySideBar"));
 const AdminSidebar = dynamic(() => import("@/app/Components/AdminSidebar"));
 
 const Layout = ({ children }) => {

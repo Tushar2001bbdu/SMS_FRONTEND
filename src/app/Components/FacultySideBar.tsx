@@ -10,7 +10,7 @@ const Page: React.FC = () => {
   const router = useRouter();
   const context = useContext(FacultyContext) as FacultyContextType | null;
   const [menuOpen, setMenuOpen] = useState(false);
-
+  const mainRoute = "faculty-corner"
   const MenuItem = ({
     label,
     route,
@@ -54,14 +54,14 @@ const Page: React.FC = () => {
       <div className="p-4 hidden sm:block bg-white shadow-lg rounded-xl">
         <h5 className="text-xl font-semibold mb-4">Faculty Corner</h5>
         <nav className="flex flex-col gap-1">
-          <MenuItem label="Dashboard" route="/Details" />
-          <MenuItem label="Personal Details" route="/Details/PersonalDetails" />
-          <MenuItem label="Manage Assignments" route="/Details/StudentAssignments" />
-          <MenuItem label="Class Chat" route="/Details/ClassChat/Teachers" />
-          <MenuItem label="Contact Students" route="/Details/Contact/Teachers" />
-          <MenuItem label="Start Online Class" route="/Details/OnlineClasses" />
+          <MenuItem label="Dashboard" route={mainRoute} />
+          <MenuItem label="Personal Details" route= {`/${mainRoute}/personal-details`} />
+          <MenuItem label="Manage Assignments" route= {`/${mainRoute}/student-assignments`} />
+          <MenuItem label="Class Chat" route={`/${mainRoute}/classChat/for-teachers`} />
+          <MenuItem label="Contact Students" route= {`/${mainRoute}/contact/students`} />
+          <MenuItem label="Start Online Class" route={`/${mainRoute}/onlineClasses`} />
 
-          <MenuItem label="Add Learning Material" route="/Details/StudentLearningMaterial" />
+          <MenuItem label="Add Learning Material" route={ `/${mainRoute}/studentLearningMaterial`} />
 
 
           <MenuItem label="Logout" onClick={() => context?.logout()} />

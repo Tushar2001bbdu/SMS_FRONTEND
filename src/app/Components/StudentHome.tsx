@@ -3,7 +3,7 @@ import React,{useContext,useEffect} from "react";
 import { Roboto } from 'next/font/google'
 import { RoleContext } from "../Context/RoleProvider";
 import Chart from "../Components/Chart";
-import { AuthContext } from "../Context/AuthProvider";
+import { StudentContext } from "../Context/StudentProvider";
 import Image from "next/image";
 interface RoleContextType {
     role: any;
@@ -12,7 +12,7 @@ interface RoleContextType {
     rollNumber:any;
   
   }
-interface studentContextType{
+interface StudentContextType{
     StudentDetails: () => Promise<any>;
     studentData: any;
     getStudentResult: () => Promise<any>;
@@ -26,7 +26,7 @@ const roboto = Roboto({
 const Page: React.FC = () => {
 
 const role=useContext<RoleContextType | null>(RoleContext)
-const student=useContext<studentContextType | null>(AuthContext)
+const student=useContext<StudentContextType | null>(StudentContext)
 useEffect(()=>{
     student?.getStudentResult()
     student?.StudentDetails()
